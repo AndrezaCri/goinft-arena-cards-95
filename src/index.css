@@ -1,58 +1,21 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 231 42% 5%;
+    --background: 231 42% 5%; /* Dark cyberpunk background */
     --foreground: 210 40% 98%;
-
-    --card: 232 35% 12%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 231 42% 5%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 263 79% 74%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 217 24% 23%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 174 100% 48%;
-    --accent-foreground: 231 42% 5%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 263 79% 20%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 263 79% 74%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 224 22% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 263 79% 74%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 224 22% 14%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 224 22% 16%;
-    --sidebar-ring: 263 79% 74%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground font-montserrat;
+    background-color: #0E121A; /* Deep cyberpunk dark blue-black */
+    color: #FFFFFF;
   }
 }
 

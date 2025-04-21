@@ -1,16 +1,15 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
-	prefix: "",
-	theme: {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
+  theme: {
 		container: {
 			center: true,
 			padding: '2rem',
@@ -18,12 +17,15 @@ export default {
 				'2xl': '1400px'
 			}
 		},
-		extend: {
-			colors: {
+    extend: {
+      colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
+				background: {
+          DEFAULT: "#0E121A", // Deep cyberpunk dark blue-black
+          foreground: "#FFFFFF"
+        },
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -71,7 +73,7 @@ export default {
 					green: '#50E6B4',
 				},
 				goinft: {
-					dark: '#1A1F2C',
+					dark: "#1A1F2C",
 					darker: '#0E121A',
 					light: '#2C3347',
 					card: '#262D40',
@@ -146,6 +148,6 @@ export default {
 				'glow': 'glow 3s ease-in-out infinite'
 			}
 		}
-	},
-	plugins: [require("tailwindcss-animate")],
+  },
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
