@@ -1,7 +1,29 @@
-
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
+import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
 import { Trophy, Zap } from "lucide-react";
+
+const STICKERS = [
+  {
+    name: "Barcelona",
+    club: "La Liga",
+    img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
+    rarity: "legendary" as const,
+  },
+  {
+    name: "Atlético Madrid",
+    club: "La Liga",
+    img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
+    rarity: "epic" as const,
+  },
+  {
+    name: "Arsenal",
+    club: "Premier League",
+    img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
+    rarity: "rare" as const,
+  },
+];
 
 const Index = () => {
   const navigate = useNavigate();
@@ -25,7 +47,32 @@ const Index = () => {
             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
             
-            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 text-center mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
+              {STICKERS.map((sticker, i) => (
+                <div key={i} className="flex justify-center">
+                  <NFTFloatingCard
+                    isHolographic
+                    size="md"
+                    delay={`${i * 0.2}s`}
+                    glowColor={
+                      sticker.rarity === "legendary"
+                        ? "rgba(234,179,8,0.6)"
+                        : sticker.rarity === "epic"
+                        ? "rgba(168,85,247,0.6)"
+                        : "rgba(59,130,246,0.5)"
+                    }
+                  >
+                    <img
+                      src={sticker.img}
+                      alt={sticker.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </NFTFloatingCard>
+                </div>
+              ))}
+            </div>
+            
+            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 text-center">
               <p className="text-white text-lg sm:text-xl max-w-2xl mx-auto font-montserrat">
                 Colecione cards NFT de futebol e complete álbuns digitais na Chiliz Chain
               </p>
@@ -36,7 +83,7 @@ const Index = () => {
                 className="group relative btn-neon text-base sm:text-lg font-orbitron px-8 sm:px-16 py-4 sm:py-5 overflow-hidden"
                 onClick={() => navigate("/welcome")}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-neon-purple/0 via-neon-purple/30 to-neon-purple/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 animate-[shine_3s_ease-in-out_infinite]"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-neon-green/30 to-neon-green/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 animate-[shine_3s_ease-in-out_infinite]"></span>
                 <span className="relative z-10 flex items-center gap-2">
                   <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                   COLLECT
