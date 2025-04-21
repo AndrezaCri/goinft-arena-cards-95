@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import { AppHeader } from "@/components/navigation/app-header";
 import { useLocation } from "react-router-dom";
+import { NavBarDemo } from "@/components/ui/tubelight-navbar";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -34,6 +35,7 @@ export function AppLayout({
       <main className={`flex-1 ${!isLandingPage && 'pt-16'}`}>
         {children}
       </main>
+      {!isLandingPage && <NavBarDemo />}
     </div>
   );
 }
