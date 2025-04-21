@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,7 @@ import Marketplace from "@/pages/Marketplace";
 import Packs from "@/pages/Packs";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/NotFound";
+import { NavbarMain } from "@/components/ui/navbar-main";
 
 const queryClient = new QueryClient();
 
@@ -44,8 +44,11 @@ const App = () => {
             onConnectWallet={handleConnectWallet}
             onDisconnectWallet={handleDisconnectWallet}
           >
+            <NavbarMain />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/nfts" element={<NFTs />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/albums" element={<Albums />} />
