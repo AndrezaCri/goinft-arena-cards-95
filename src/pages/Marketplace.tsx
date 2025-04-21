@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { NFTCard } from "@/components/ui/nft-card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { MarketplaceCardList } from "@/components/marketplace/MarketplaceCardList";
+import { MarketplaceFilters } from "@/components/marketplace/MarketplaceFilters";
+import { MarketplaceCardDetailsDialog } from "@/components/marketplace/MarketplaceCardDetailsDialog";
+import { MarketplaceTradeDialog } from "@/components/marketplace/MarketplaceTradeDialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Search, Filter } from "lucide-react";
+import { MarketplaceCard } from "@/types/marketplace";
 
 const marketplaceCards = [
   {
@@ -160,14 +159,14 @@ const rarities = ["comum", "raro", "épico", "lendário"];
 const Marketplace = () => {
   const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
   const [tradeDialogOpen, setTradeDialogOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState<typeof marketplaceCards[0] | null>(null);
+  const [selectedCard, setSelectedCard] = useState<MarketplaceCard | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
   const [selectedRarities, setSelectedRarities] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
   const [showFilters, setShowFilters] = useState(false);
 
-  const handleOpenCardDetails = (card: typeof marketplaceCards[0]) => {
+  const handleOpenCardDetails = (card: MarketplaceCard) => {
     setSelectedCard(card);
     setDetailsDialogOpen(true);
   };
@@ -175,22 +174,6 @@ const Marketplace = () => {
   const handleOpenTradeDialog = () => {
     setDetailsDialogOpen(false);
     setTradeDialogOpen(true);
-  };
-
-  const togglePosition = (position: string) => {
-    if (selectedPositions.includes(position)) {
-      setSelectedPositions(selectedPositions.filter(p => p !== position));
-    } else {
-      setSelectedPositions([...selectedPositions, position]);
-    }
-  };
-
-  const toggleRarity = (rarity: string) => {
-    if (selectedRarities.includes(rarity)) {
-      setSelectedRarities(selectedRarities.filter(r => r !== rarity));
-    } else {
-      setSelectedRarities([...selectedRarities, rarity]);
-    }
   };
 
   const filteredCards = marketplaceCards.filter(card => {
@@ -206,7 +189,7 @@ const Marketplace = () => {
       return false;
     }
     
-    if (card.price < priceRange.min || card.price > priceRange.max) {
+    if (card.price && (card.price < priceRange.min || card.price > priceRange.max)) {
       return false;
     }
     
@@ -240,166 +223,31 @@ const Marketplace = () => {
             </TabsList>
           </div>
           
-          <div className="mb-6 space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" />
-                <Input 
-                  placeholder="Buscar cards..." 
-                  className="bg-goinft-card/50 border-neon-purple/30 pl-10 text-white backdrop-blur-sm" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              
-              <Button
-                variant="outline"
-                className="bg-goinft-card/50 border-neon-purple/30 text-white backdrop-blur-sm hover:bg-neon-purple/20"
-                onClick={() => setShowFilters(!showFilters)}
-              >
-                <Filter className="mr-2 h-4 w-4" />
-                Filtros
-              </Button>
-            </div>
-            
-            {showFilters && (
-              <div className="p-6 bg-goinft-card/30 rounded-xl backdrop-blur-sm border border-neon-purple/20 animate-fade-in">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <Label className="text-white mb-2 block">Posição</Label>
-                    <div className="space-y-2">
-                      {positions.map((position) => (
-                        <div key={position} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            id={`position-${position}`}
-                            checked={selectedPositions.includes(position)}
-                            onChange={() => togglePosition(position)}
-                            className="mr-2 accent-neon-purple"
-                          />
-                          <label htmlFor={`position-${position}`} className="text-white/70 hover:text-white transition-colors">
-                            {position}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <Label className="text-white mb-2 block">Raridade</Label>
-                    <div className="space-y-2">
-                      {rarities.map((rarity) => (
-                        <div key={rarity} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            id={`rarity-${rarity}`}
-                            checked={selectedRarities.includes(rarity)}
-                            onChange={() => toggleRarity(rarity)}
-                            className="mr-2 accent-neon-purple"
-                          />
-                          <label htmlFor={`rarity-${rarity}`} className="text-white/70 hover:text-white transition-colors capitalize">
-                            {rarity}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <Label className="text-white mb-2 block">Faixa de Preço (CHZ)</Label>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="number"
-                        placeholder="Mín"
-                        className="bg-goinft-card/50 border-neon-purple/30 text-white"
-                        value={priceRange.min}
-                        onChange={(e) => setPriceRange({ ...priceRange, min: Number(e.target.value) })}
-                      />
-                      <span className="text-white">até</span>
-                      <Input
-                        type="number"
-                        placeholder="Máx"
-                        className="bg-goinft-card/50 border-neon-purple/30 text-white"
-                        value={priceRange.max}
-                        onChange={(e) => setPriceRange({ ...priceRange, max: Number(e.target.value) })}
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-6 flex justify-end gap-3">
-                  <Button 
-                    variant="outline" 
-                    className="border-neon-purple text-white hover:bg-neon-purple/20"
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSelectedPositions([]);
-                      setSelectedRarities([]);
-                      setPriceRange({ min: 0, max: 100 });
-                    }}
-                  >
-                    Limpar
-                  </Button>
-                  <Button 
-                    className="bg-gradient-to-r from-neon-purple to-neon-pink text-white hover:opacity-90"
-                    onClick={() => setShowFilters(false)}
-                  >
-                    Aplicar Filtros
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
+          <MarketplaceFilters 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedPositions={selectedPositions}
+            setSelectedPositions={setSelectedPositions}
+            selectedRarities={selectedRarities}
+            setSelectedRarities={setSelectedRarities}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            showFilters={showFilters}
+            setShowFilters={setShowFilters}
+          />
           
-          <TabsContent value="buy" className="mt-0 space-y-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {filteredCards.map((card) => (
-                <NFTCard 
-                  key={card.id} 
-                  {...card} 
-                  onClick={() => handleOpenCardDetails(card)}
-                  className="transform hover:scale-105 transition-transform duration-300" 
-                />
-              ))}
-            </div>
-            
-            {filteredCards.length === 0 && (
-              <div className="text-center py-12 bg-goinft-card/30 rounded-xl backdrop-blur-sm border border-neon-purple/20">
-                <p className="text-white/70 text-lg mb-4">Nenhum card encontrado com os filtros selecionados.</p>
-                <Button 
-                  className="bg-gradient-to-r from-neon-purple to-neon-pink text-white hover:opacity-90"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedPositions([]);
-                    setSelectedRarities([]);
-                    setPriceRange({ min: 0, max: 100 });
-                  }}
-                >
-                  Limpar Filtros
-                </Button>
-              </div>
-            )}
+          <TabsContent value="buy" className="mt-0">
+            <MarketplaceCardList 
+              cards={filteredCards}
+              onCardClick={handleOpenCardDetails}
+            />
           </TabsContent>
           
           <TabsContent value="sell" className="mt-0">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {ownedCards.map((card) => (
-                <NFTCard 
-                  key={card.id} 
-                  {...card} 
-                  onClick={() => setSelectedCard(card as any)} 
-                />
-              ))}
-            </div>
-            
-            {ownedCards.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-white/70 text-lg">Você ainda não tem cards para vender.</p>
-                <Button className="mt-4 bg-goinft-light text-white">
-                  Comprar Pacotes
-                </Button>
-              </div>
-            )}
+            <MarketplaceCardList 
+              cards={ownedCards}
+              onCardClick={handleOpenCardDetails}
+            />
           </TabsContent>
           
           <TabsContent value="trade" className="mt-0">
@@ -511,204 +359,19 @@ const Marketplace = () => {
         </Tabs>
       </div>
       
-      <Dialog open={detailsDialogOpen} onOpenChange={setDetailsDialogOpen}>
-        <DialogContent className="bg-goinft-dark border-goinft-light sm:max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-center text-xl font-orbitron text-white">
-              Detalhes do Card
-            </DialogTitle>
-          </DialogHeader>
-          
-          {selectedCard && (
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="w-full md:w-64">
-                <NFTCard 
-                  {...selectedCard} 
-                  onClick={() => {}} 
-                  className="w-full md:w-64"
-                />
-              </div>
-              
-              <div className="flex-1">
-                <h2 className="text-white font-orbitron text-2xl font-bold mb-2">
-                  {selectedCard.name}
-                </h2>
-                
-                <div className="grid grid-cols-2 gap-4 text-white/70 mb-6">
-                  <div>
-                    <span className="block text-sm">Time</span>
-                    <span className="block text-white">{selectedCard.team}</span>
-                  </div>
-                  
-                  <div>
-                    <span className="block text-sm">Posição</span>
-                    <span className="block text-white">{selectedCard.position}</span>
-                  </div>
-                  
-                  <div>
-                    <span className="block text-sm">Raridade</span>
-                    <span className="block text-white capitalize">{selectedCard.rarity}</span>
-                  </div>
-                  
-                  <div>
-                    <span className="block text-sm">ID do Card</span>
-                    <span className="block text-white">{selectedCard.id}</span>
-                  </div>
-                </div>
-                
-                <div className="border-t border-goinft-light pt-4 mb-4">
-                  <div className="text-white/70 text-sm mb-2">Estatísticas do Card</div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Velocidade</span>
-                        <span className="text-white">92</span>
-                      </div>
-                      <div className="w-full bg-goinft-darker rounded-full h-1.5 mt-1">
-                        <div className="bg-neon-purple h-1.5 rounded-full" style={{ width: "92%" }}></div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Finalização</span>
-                        <span className="text-white">95</span>
-                      </div>
-                      <div className="w-full bg-goinft-darker rounded-full h-1.5 mt-1">
-                        <div className="bg-neon-purple h-1.5 rounded-full" style={{ width: "95%" }}></div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Passe</span>
-                        <span className="text-white">88</span>
-                      </div>
-                      <div className="w-full bg-goinft-darker rounded-full h-1.5 mt-1">
-                        <div className="bg-neon-purple h-1.5 rounded-full" style={{ width: "88%" }}></div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Drible</span>
-                        <span className="text-white">97</span>
-                      </div>
-                      <div className="w-full bg-goinft-darker rounded-full h-1.5 mt-1">
-                        <div className="bg-neon-purple h-1.5 rounded-full" style={{ width: "97%" }}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {'price' in selectedCard ? (
-                  <div className="mt-6">
-                    <div className="flex items-center mb-4">
-                      <span className="text-white/70 mr-2">Preço:</span>
-                      <span className="text-white text-xl font-bold font-orbitron">
-                        {selectedCard.price} CHZ
-                      </span>
-                    </div>
-                    
-                    <Button 
-                      className="w-full py-6 bg-gradient-to-r from-neon-purple to-neon-pink text-white font-orbitron"
-                    >
-                      Comprar Agora
-                    </Button>
-                    
-                    <Button 
-                      variant="outline" 
-                      className="w-full mt-3 border-neon-purple text-white"
-                      onClick={handleOpenTradeDialog}
-                    >
-                      Oferecer Troca
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="mt-6">
-                    <Button 
-                      className="w-full py-6 bg-gradient-to-r from-neon-purple to-neon-pink text-white font-orbitron"
-                    >
-                      Vender Card
-                    </Button>
-                    
-                    <Button 
-                      variant="outline" 
-                      className="w-full mt-3 border-neon-purple text-white"
-                    >
-                      Usar no Álbum
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      <MarketplaceCardDetailsDialog
+        card={selectedCard}
+        isOpen={detailsDialogOpen}
+        onClose={() => setDetailsDialogOpen(false)}
+        onTradeClick={handleOpenTradeDialog}
+      />
       
-      <Dialog open={tradeDialogOpen} onOpenChange={setTradeDialogOpen}>
-        <DialogContent className="bg-goinft-dark border-goinft-light sm:max-w-3xl">
-          <DialogHeader>
-            <DialogTitle className="text-center text-xl font-orbitron text-white">
-              Propor Troca
-            </DialogTitle>
-          </DialogHeader>
-          
-          {selectedCard && (
-            <div>
-              <div className="flex flex-col md:flex-row gap-4 items-center justify-center mb-6">
-                <div>
-                  <h3 className="text-center text-white/70 mb-2">Você Recebe</h3>
-                  <NFTCard 
-                    {...selectedCard} 
-                    onClick={() => {}} 
-                    className="w-full sm:w-48"
-                  />
-                </div>
-                
-                <div className="text-3xl font-bold text-white/50 px-4">
-                  ↔️
-                </div>
-                
-                <div>
-                  <h3 className="text-center text-white/70 mb-2">Você Oferece</h3>
-                  <div className="w-full sm:w-48 aspect-[3/4] rounded-xl border-2 border-dashed border-goinft-light/40 bg-goinft-card/30 flex items-center justify-center">
-                    <span className="text-white/50 text-center p-4">
-                      Selecione um card para oferecer
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <h3 className="text-white font-orbitron mb-3">Seus Cards</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                  {ownedCards.map((card) => (
-                    <NFTCard 
-                      key={card.id} 
-                      {...card} 
-                      onClick={() => {}} 
-                    />
-                  ))}
-                </div>
-              </div>
-              
-              <div className="flex justify-end space-x-3">
-                <Button 
-                  variant="outline" 
-                  className="text-white"
-                  onClick={() => setTradeDialogOpen(false)}
-                >
-                  Cancelar
-                </Button>
-                <Button className="bg-gradient-to-r from-neon-purple to-neon-pink text-white">
-                  Propor Troca
-                </Button>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      <MarketplaceTradeDialog
+        card={selectedCard}
+        ownedCards={ownedCards}
+        isOpen={tradeDialogOpen}
+        onClose={() => setTradeDialogOpen(false)}
+      />
     </div>
   );
 };
