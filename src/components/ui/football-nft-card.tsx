@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { useCardAnimation } from "@/hooks/use-card-animation";
 import { getRarityColor, getRarityGlow, type CardRarity } from "@/utils/rarity-utils";
@@ -42,8 +41,6 @@ export function FootballNFTCard({
     handleMouseEnter
   } = useCardAnimation(isHolographic);
   
-  const defaultClubLogo = "https://placehold.co/300x300/1a1f2c/ffffff?text=Club";
-  
   return (
     <div
       className={cn(
@@ -62,20 +59,6 @@ export function FootballNFTCard({
         transformStyle: 'preserve-3d'
       }}
     >
-      {/* Card border glow */}
-      <div 
-        className={cn(
-          "absolute inset-0 rounded-xl",
-          isHolographic && "animate-pulse-glow"
-        )}
-        style={{
-          background: `linear-gradient(135deg, transparent, ${isHovered ? 'rgba(155, 135, 245, 0.5)' : 'rgba(155, 135, 245, 0.2)'})`,
-          border: isHovered ? '1px solid rgba(155, 135, 245, 0.8)' : '1px solid rgba(155, 135, 245, 0.3)',
-          boxShadow: isHovered ? '0 0 15px rgba(155, 135, 245, 0.5)' : 'none',
-          zIndex: -1
-        }}
-      />
-      
       {/* Card background */}
       <div className="absolute inset-0 rounded-xl overflow-hidden bg-goinft-card">
         <div className="absolute inset-0 opacity-20 bg-circuit-pattern" />
