@@ -14,9 +14,6 @@ import Marketplace from "@/pages/Marketplace";
 import Packs from "@/pages/Packs";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/NotFound";
-import { NavbarMain } from "@/components/ui/navbar-main";
-import About from "@/pages/About";
-import NFTs from "@/pages/NFTs";
 
 const queryClient = new QueryClient();
 
@@ -46,13 +43,9 @@ const App = () => {
             walletAddress={walletAddress}
             onConnectWallet={handleConnectWallet}
             onDisconnectWallet={handleDisconnectWallet}
-            showNavbar={false} /* Desativamos o AppHeader navbar aqui */
           >
-            <NavbarMain />
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/nfts" element={<NFTs />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/albums" element={<Albums />} />

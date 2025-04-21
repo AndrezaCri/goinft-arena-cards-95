@@ -1,9 +1,7 @@
-
 import { useNavigate } from "react-router-dom";
 import { Trophy, Award } from "lucide-react";
 
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
-import { NavbarMain } from "@/components/ui/navbar-main";
 
 const STICKERS = [
   {
@@ -28,8 +26,6 @@ const Index = () => {
 
   return (
     <BackgroundGradientAnimation>
-      {/* Navbar está presente na LP */}
-      <NavbarMain />
       <div className="min-h-screen w-full overflow-hidden relative flex flex-col items-center justify-center py-16">
         <div className="text-center mb-10 animate-float">
           <h1 className="text-7xl sm:text-8xl font-bold font-orbitron neon-text mb-4">
