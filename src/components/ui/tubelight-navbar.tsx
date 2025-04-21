@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -46,7 +47,7 @@ export function NavBar({ items, className }: NavBarProps) {
         className,
       )}
     >
-      <div className="flex items-center gap-3 bg-goinft-dark/80 border border-neon-purple/30 backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+      <div className="flex items-center gap-3 bg-goinft-dark/30 backdrop-blur-lg border border-neon-purple/20 py-1 px-1 rounded-full shadow-lg">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.name;
