@@ -45,17 +45,19 @@ const Index = () => {
           <div className="flex flex-col items-center gap-8 py-4 px-2">
             <div className="flex gap-6">
               {STICKERS.map((sticker, i) => (
-                <div key={i} className="cyberpunk-card hologram-effect w-32 h-44 rounded-xl overflow-hidden flex flex-col items-center shadow-lg border-2 border-neon-blue/40 bg-goinft-dark relative animate-float">
-                  <img
-                    src={sticker.img}
-                    alt={sticker.name}
-                    className="w-20 h-20 rounded-md mt-4 object-cover border-2 border-neon-blue/60 shadow"
-                  />
-                  <div className="flex flex-col items-center justify-center mt-2">
+                <div key={i} className="group">
+                  <div className="cyberpunk-card hologram-effect w-32 h-44 rounded-xl overflow-hidden flex items-center justify-center shadow-lg border-2 border-neon-blue/40 bg-goinft-dark relative animate-float">
+                    <img
+                      src={sticker.img}
+                      alt={sticker.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="mt-2 text-center">
                     <span className="font-orbitron text-sm text-neon-blue">
                       {sticker.name}
                     </span>
-                    <span className="font-montserrat text-xs text-white/80">
+                    <span className="block font-montserrat text-xs text-white/80">
                       {sticker.club}
                     </span>
                   </div>
