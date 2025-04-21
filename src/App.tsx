@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { AppLayout } from "@/components/layout/app-layout";
+import Index from "@/pages/Index";
 import Welcome from "@/pages/Welcome";
 import Dashboard from "@/pages/Dashboard";
 import Albums from "@/pages/Albums";
@@ -44,7 +45,8 @@ const App = () => {
             onDisconnectWallet={handleDisconnectWallet}
           >
             <Routes>
-              <Route path="/" element={<Welcome />} />
+              <Route path="/" element={<Index />} />
+              <Route path="/welcome" element={<Welcome />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/albums" element={<Albums />} />
               <Route path="/marketplace" element={<Marketplace />} />
