@@ -78,7 +78,7 @@ const featuredPacks = [
 ];
 
 const Dashboard = () => {
-  const [walletBalance] = useState(100); // Mock wallet balance
+  const [walletBalance] = useState(100);
 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
@@ -165,7 +165,7 @@ const Dashboard = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
             {recentNFTs.map((nft) => (
               <NFTCard key={nft.id} {...nft} />
             ))}
@@ -181,7 +181,7 @@ const Dashboard = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {featuredAlbums.map((album) => (
               <AlbumCard key={album.id} {...album} />
             ))}
@@ -197,7 +197,7 @@ const Dashboard = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {featuredPacks.map((pack) => (
               <PackCard key={pack.id} {...pack} />
             ))}
