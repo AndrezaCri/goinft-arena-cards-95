@@ -22,7 +22,7 @@ export function AppLayout({
   const isLandingPage = location.pathname === "/";
 
   return (
-    <div className="min-h-screen bg-goinft-dark flex flex-col font-montserrat">
+    <div className="min-h-screen flex flex-col font-montserrat">
       {!isLandingPage && (
         <AppHeader
           isConnected={isConnected}
@@ -31,8 +31,18 @@ export function AppLayout({
           onDisconnectWallet={onDisconnectWallet}
         />
       )}
-      <main className={`flex-1 ${!isLandingPage && 'pt-16'}`}>
-        {children}
+      <main className={cn(
+        "flex-1",
+        !isLandingPage && "pt-16",
+        "relative z-20"
+      )}>
+        <div className="container mx-auto px-4 py-6">
+          <div className="bg-goinft-card/80 rounded-3xl p-4 sm:p-6 shadow-2xl backdrop-blur-lg border border-neon-purple/20 relative">
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
+            {children}
+          </div>
+        </div>
       </main>
     </div>
   );

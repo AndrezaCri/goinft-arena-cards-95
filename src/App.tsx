@@ -14,6 +14,7 @@ import Marketplace from "@/pages/Marketplace";
 import Packs from "@/pages/Packs";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/NotFound";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,6 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState("");
 
   const handleConnectWallet = () => {
-    // This would connect to the actual wallet in a real implementation
     setIsConnected(true);
     setWalletAddress("0x1234...5678");
   };
@@ -38,23 +38,27 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AppLayout 
-            isConnected={isConnected}
-            walletAddress={walletAddress}
-            onConnectWallet={handleConnectWallet}
-            onDisconnectWallet={handleDisconnectWallet}
-          >
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/albums" element={<Albums />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/packs" element={<Packs />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AppLayout>
+          <div className="min-h-screen w-full bg-goinft-dark font-montserrat">
+            <BackgroundGradientAnimation>
+              <AppLayout 
+                isConnected={isConnected}
+                walletAddress={walletAddress}
+                onConnectWallet={handleConnectWallet}
+                onDisconnectWallet={handleDisconnectWallet}
+              >
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/welcome" element={<Welcome />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/albums" element={<Albums />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/packs" element={<Packs />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AppLayout>
+            </BackgroundGradientAnimation>
+          </div>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
