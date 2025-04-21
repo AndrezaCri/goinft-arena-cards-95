@@ -9,8 +9,6 @@ const Welcome = () => {
 
   const handleConnectWallet = (provider: string) => {
     console.log(`Connecting with ${provider}`);
-    // In a real implementation, this would connect to the actual wallet
-    // For demo purposes, we'll just navigate to the dashboard
     setWalletModalOpen(false);
     navigate("/dashboard");
   };
