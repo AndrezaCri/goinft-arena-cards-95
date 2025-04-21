@@ -37,11 +37,7 @@ export function AppLayout({
         "relative z-20"
       )}>
         <div className="container mx-auto px-2 py-4">
-          <div className="bg-goinft-card/80 rounded-2xl p-2 sm:p-4 shadow-xl backdrop-blur-lg border border-neon-purple/20 relative">
-            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
-            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
-            {children}
-          </div>
+          {children}
         </div>
       </main>
     </div>
