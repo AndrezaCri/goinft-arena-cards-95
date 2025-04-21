@@ -28,7 +28,7 @@ const albums = [
   {
     id: "3",
     name: "Sulamericana 2025",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=Sulamericana",
+    coverImage: "/lovable-uploads/8959e228-6687-4e32-bf1e-849b2c9ea30c.png",
     progress: 45,
     totalCards: 30,
     collectedCards: 13,
