@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -67,6 +68,7 @@ export default {
 					purple: '#9b87f5',
 					pink: '#ff71e1',
 					blue: '#00d9ff',
+					green: '#50E6B4',
 				},
 				goinft: {
 					dark: '#1A1F2C',

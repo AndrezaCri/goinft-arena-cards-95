@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
+import { Trophy, Zap } from "lucide-react";
 
 const STICKERS = [
   {
@@ -40,7 +41,11 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="relative max-w-6xl mx-auto flex flex-col items-center justify-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg">
+        <div className="relative max-w-6xl mx-auto flex flex-col items-center justify-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg border border-neon-purple/20">
+          {/* Elemento decorativo de linhas neon */}
+          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
+          
           <div className="flex flex-nowrap justify-center items-center gap-6 overflow-x-auto p-4 w-full">
             {STICKERS.map((sticker, i) => (
               <NFTFloatingCard
@@ -67,6 +72,11 @@ const Index = () => {
           </div>
           
           <div className="w-full max-w-4xl">
+            <div className="flex items-center justify-center mb-4 gap-2">
+              <Trophy className="text-neon-purple h-6 w-6" />
+              <h2 className="text-2xl font-orbitron text-white">SEU ÁLBUM DIGITAL</h2>
+              <Trophy className="text-neon-purple/50 h-6 w-6" />
+            </div>
             <AlbumStickerGrid 
               rows={3} 
               cols={4} 
@@ -76,10 +86,17 @@ const Index = () => {
           </div>
           
           <button 
-            className="btn-neon text-lg font-orbitron px-12 py-4" 
+            className="group relative btn-neon text-lg font-orbitron px-16 py-5 mt-4 overflow-hidden"
             onClick={() => navigate("/welcome")}
           >
-            Começar Coleção
+            {/* Efeito de brilho no hover */}
+            <span className="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-neon-green/30 to-neon-green/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 animate-[shine_3s_ease-in-out_infinite]"></span>
+            
+            {/* Texto com ícone */}
+            <span className="relative z-10 flex items-center gap-2">
+              <Zap className="w-5 h-5" />
+              COLLECT
+            </span>
           </button>
         </div>
       </div>
