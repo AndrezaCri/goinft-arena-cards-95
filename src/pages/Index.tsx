@@ -31,56 +31,57 @@ const Index = () => {
 
   return (
     <BackgroundGradientAnimation>
-      <div className="flex min-h-screen flex-col items-center justify-between py-8 px-4 gap-8">
-        {/* Hero Section */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center animate-float">
-            <h1 className="text-7xl sm:text-8xl font-bold font-orbitron neon-text mb-4">
+      <div className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 px-3 sm:px-4 gap-4 sm:gap-8">
+        {/* Hero Section with better mobile responsiveness */}
+        <div className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto">
+          <div className="text-center animate-float px-4">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold font-orbitron neon-text mb-4">
               GoINFT
             </h1>
-            <p className="text-white text-xl sm:text-2xl max-w-2xl mx-auto font-montserrat">
+            <p className="text-white text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto font-montserrat">
               Colecione cards NFT de futebol e complete álbuns digitais na Chiliz Chain
             </p>
           </div>
         </div>
 
-        {/* Cards Section */}
-        <div className="flex-1 w-full max-w-6xl mx-auto">
-          <div className="bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg border border-neon-purple/20 relative">
+        {/* Cards Section with improved responsiveness */}
+        <div className="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6">
+          <div className="bg-goinft-card/80 rounded-3xl p-4 sm:p-6 shadow-2xl backdrop-blur-lg border border-neon-purple/20 relative">
             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
             
-            {/* NFT Cards Container */}
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
+            {/* NFT Cards Container with responsive grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
               {STICKERS.map((sticker, i) => (
-                <NFTFloatingCard
-                  key={i}
-                  isHolographic
-                  size="lg"
-                  delay={`${i * 0.2}s`}
-                  glowColor={
-                    sticker.rarity === "legendary"
-                      ? "rgba(234,179,8,0.6)"
-                      : sticker.rarity === "epic"
-                      ? "rgba(168,85,247,0.6)"
-                      : "rgba(59,130,246,0.5)"
-                  }
-                >
-                  <img
-                    src={sticker.img}
-                    alt={sticker.name}
-                    className="w-full h-full object-cover"
-                  />
-                </NFTFloatingCard>
+                <div key={i} className="flex justify-center">
+                  <NFTFloatingCard
+                    isHolographic
+                    size="sm"
+                    delay={`${i * 0.2}s`}
+                    glowColor={
+                      sticker.rarity === "legendary"
+                        ? "rgba(234,179,8,0.6)"
+                        : sticker.rarity === "epic"
+                        ? "rgba(168,85,247,0.6)"
+                        : "rgba(59,130,246,0.5)"
+                    }
+                  >
+                    <img
+                      src={sticker.img}
+                      alt={sticker.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </NFTFloatingCard>
+                </div>
               ))}
             </div>
             
-            {/* Album Section */}
-            <div className="w-full max-w-4xl mx-auto">
+            {/* Album Section with responsive sizing */}
+            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4">
               <div className="flex items-center justify-center mb-4 gap-2">
-                <Trophy className="text-neon-purple h-6 w-6" />
-                <h2 className="text-2xl font-orbitron text-white">SEU ÁLBUM DIGITAL</h2>
-                <Trophy className="text-neon-purple/50 h-6 w-6" />
+                <Trophy className="text-neon-purple h-5 w-5 sm:h-6 sm:w-6" />
+                <h2 className="text-xl sm:text-2xl font-orbitron text-white">SEU ÁLBUM DIGITAL</h2>
+                <Trophy className="text-neon-purple/50 h-5 w-5 sm:h-6 sm:w-6" />
               </div>
               <AlbumStickerGrid 
                 rows={2} 
@@ -90,15 +91,15 @@ const Index = () => {
               />
             </div>
             
-            {/* CTA Button */}
-            <div className="flex justify-center mt-8">
+            {/* CTA Button with responsive sizing */}
+            <div className="flex justify-center mt-6 sm:mt-8">
               <button 
-                className="group relative btn-neon text-lg font-orbitron px-16 py-5 overflow-hidden"
+                className="group relative btn-neon text-base sm:text-lg font-orbitron px-8 sm:px-16 py-4 sm:py-5 overflow-hidden"
                 onClick={() => navigate("/welcome")}
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-neon-green/30 to-neon-green/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 animate-[shine_3s_ease-in-out_infinite]"></span>
                 <span className="relative z-10 flex items-center gap-2">
-                  <Zap className="w-5 h-5" />
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                   COLLECT
                 </span>
               </button>
