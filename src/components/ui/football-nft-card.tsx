@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Trophy, Award } from "lucide-react";
 import { useState } from "react";
@@ -36,6 +35,32 @@ export function FootballNFTCard({
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   
+  const getRarityColor = () => {
+    switch (rarity) {
+      case "common":
+        return "from-neon-purple to-neon-blue";
+      case "rare":
+        return "from-neon-blue to-neon-purple";
+      case "epic":
+        return "from-neon-purple to-neon-pink";
+      case "legendary":
+        return "from-neon-orange to-neon-yellow";
+    }
+  };
+  
+  const getRarityGlow = () => {
+    switch (rarity) {
+      case "common":
+        return "shadow-[0_0_20px_rgba(155,135,245,0.7)]";
+      case "rare":
+        return "shadow-[0_0_30px_rgba(14,165,233,0.9)]";
+      case "epic":
+        return "shadow-[0_0_40px_rgba(168,85,247,1)]";
+      case "legendary":
+        return "shadow-[0_0_50px_rgba(255,165,0,1)]";
+    }
+  };
+
   // Handle mouse movement for 3D effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isHolographic) return;
@@ -61,35 +86,6 @@ export function FootballNFTCard({
     setRotateY(0);
   };
   
-  // Rarity-based styles
-  const getRarityColor = () => {
-    switch (rarity) {
-      case "common":
-        return "from-gray-400 to-gray-300";
-      case "rare":
-        return "from-neon-blue to-blue-400";
-      case "epic":
-        return "from-neon-purple to-purple-500";
-      case "legendary":
-        return "from-yellow-400 to-neon-orange";
-    }
-  };
-  
-  const getRarityGlow = () => {
-    if (!isHovered && !isHolographic) return "";
-    
-    switch (rarity) {
-      case "common":
-        return "shadow-[0_0_10px_rgba(148,163,184,0.5)]";
-      case "rare":
-        return "shadow-[0_0_15px_rgba(14,165,233,0.6)]";
-      case "epic":
-        return "shadow-[0_0_20px_rgba(155,135,245,0.7)]";
-      case "legendary":
-        return "shadow-[0_0_25px_rgba(249,115,22,0.8)]";
-    }
-  };
-  
   // Default images if not provided
   const defaultPlayerImage = "https://placehold.co/600x800/1a1f2c/ffffff?text=Player";
   const defaultClubLogo = "https://placehold.co/300x300/1a1f2c/ffffff?text=Club";
@@ -99,8 +95,8 @@ export function FootballNFTCard({
       className={cn(
         "relative aspect-[3/4] w-full max-w-[280px] transition-all duration-300 cursor-pointer",
         isHovered && "scale-105 z-10",
-        isHolographic && "transition-all duration-200",
         getRarityGlow(),
+        `neon-border after:opacity-70 hover:after:opacity-100`,
         className
       )}
       onMouseEnter={() => setIsHovered(true)}
