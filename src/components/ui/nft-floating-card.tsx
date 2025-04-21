@@ -24,7 +24,6 @@ export function NFTFloatingCard({
 }: NFTFloatingCardProps) {
   const [position, setPosition] = useState(getRandomPosition());
   const [rotation, setRotation] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,17 +34,6 @@ export function NFTFloatingCard({
     return () => clearInterval(interval);
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) / 25;
-    const y = (e.clientY - rect.top - rect.height / 2) / 25;
-    setMousePosition({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setMousePosition({ x: 0, y: 0 });
-  };
-
   return (
     <div 
       className={cn(
@@ -54,14 +42,12 @@ export function NFTFloatingCard({
         className
       )}
       style={{
-        transform: `translate(${position.x + mousePosition.x}px, ${position.y + mousePosition.y}px) rotate(${rotation}deg)`,
-        transition: `transform 0.3s ease-out`,
+        transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg)`,
+        transition: `transform 5s ease-in-out`,
         animationDelay: delay,
         animationDuration: duration,
         boxShadow: `0 0 20px ${glowColor}`
       }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-neon-purple/50 via-neon-blue/30 to-neon-purple/50 opacity-30 animate-pulse-glow" />
       
@@ -82,3 +68,4 @@ export function NFTFloatingCard({
     </div>
   );
 }
+
