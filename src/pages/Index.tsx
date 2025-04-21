@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
@@ -39,14 +40,14 @@ const Index = () => {
         </div>
 
         <div className="relative max-w-6xl mx-auto flex flex-col items-center justify-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg">
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-nowrap justify-center items-center gap-6 overflow-x-auto p-4 w-full">
             {STICKERS.map((sticker, i) => (
               <NFTFloatingCard
                 key={i}
                 isHolographic
                 size={i === 0 ? "lg" : "md"}
                 delay={`${i * 0.2}s`}
-                className="w-full"
+                className="flex-shrink-0"
                 glowColor={
                   sticker.rarity === "legendary"
                     ? "rgba(234,179,8,0.6)"
