@@ -3,10 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WalletButton } from "@/components/ui/wallet-button";
 import { WalletConnectModal } from "@/components/ui/wallet-connect-modal";
-import { WelcomeBackground } from "@/components/welcome/WelcomeBackground";
-import { WelcomeHero } from "@/components/welcome/WelcomeHero";
-import { FeaturesGrid } from "@/components/welcome/FeaturesGrid";
-import { WelcomeFooter } from "@/components/welcome/WelcomeFooter";
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -20,12 +16,51 @@ const Welcome = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col bg-goinft-darker">
-      <WelcomeBackground />
+      <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full bg-neon-purple/20 filter blur-3xl"></div>
+      <div className="absolute top-1/3 -right-32 w-64 h-64 rounded-full bg-neon-blue/20 filter blur-3xl"></div>
+      <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-neon-pink/20 filter blur-3xl"></div>
       
       <main className="container mx-auto px-4 py-8 flex-1 flex flex-col justify-center items-center relative z-10">
-        <WelcomeHero />
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-6xl font-bold font-orbitron bg-gradient-to-r from-neon-purple to-neon-pink bg-clip-text text-transparent mb-4 animate-float">
+            GoINFT
+          </h1>
+          <p className="text-white/70 text-lg md:text-xl max-w-md mx-auto">
+            Colecione, troque e jogue com cards digitais de futebol na blockchain
+          </p>
+        </div>
         
-        <FeaturesGrid />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full mb-10">
+          <div className="bg-goinft-card rounded-xl p-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-neon-purple to-neon-pink flex items-center justify-center mx-auto mb-2">
+              <span className="text-xl font-bold text-white">1</span>
+            </div>
+            <h3 className="text-white font-orbitron text-base font-bold mb-2">Colecionar</h3>
+            <p className="text-white/70 text-xs">
+              Compre pacotes e colecione cards NFT raros dos seus jogadores favoritos
+            </p>
+          </div>
+          
+          <div className="bg-goinft-card rounded-xl p-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-neon-purple to-neon-pink flex items-center justify-center mx-auto mb-2">
+              <span className="text-xl font-bold text-white">2</span>
+            </div>
+            <h3 className="text-white font-orbitron text-base font-bold mb-2">Trocar</h3>
+            <p className="text-white/70 text-xs">
+              Troque cards com outros colecionadores para completar seu álbum
+            </p>
+          </div>
+          
+          <div className="bg-goinft-card rounded-xl p-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-neon-purple to-neon-pink flex items-center justify-center mx-auto mb-2">
+              <span className="text-xl font-bold text-white">3</span>
+            </div>
+            <h3 className="text-white font-orbitron text-base font-bold mb-2">Recompensas</h3>
+            <p className="text-white/70 text-xs">
+              Ganhe recompensas exclusivas completando álbuns e coleções
+            </p>
+          </div>
+        </div>
         
         <div className="flex flex-col md:flex-row gap-2 w-full max-w-md">
           <WalletButton
@@ -36,7 +71,9 @@ const Welcome = () => {
           </WalletButton>
         </div>
         
-        <WelcomeFooter />
+        <p className="text-white/50 text-xs mt-4 max-w-md text-center">
+          Desenvolvido com Chiliz Chain. Seus colecionáveis digitais são armazenados com segurança na blockchain.
+        </p>
       </main>
       
       <WalletConnectModal
