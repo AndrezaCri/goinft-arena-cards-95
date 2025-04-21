@@ -71,19 +71,19 @@ const marketplaceCards = [
   },
   {
     id: "m7",
-    name: "Barcelona Shield",
-    image: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
-    playerImage: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
+    name: "Fiatu",
+    image: "/lovable-uploads/83efb069-d2ec-496b-81f2-330f7015674f.png",
+    playerImage: "/lovable-uploads/83efb069-d2ec-496b-81f2-330f7015674f.png",
     rarity: "epic" as const,
     team: "Barcelona",
-    position: "Defensor",
+    position: "Atacante",
     price: 65,
   },
   {
     id: "m8",
-    name: "Barcelona Talent",
-    image: "/lovable-uploads/952c13c2-b282-4ace-9f4b-e62b51852e54.png",
-    playerImage: "/lovable-uploads/952c13c2-b282-4ace-9f4b-e62b51852e54.png",
+    name: "Rotte",
+    image: "/lovable-uploads/c0d8c9e1-73d1-408e-8931-a00e77136d8d.png",
+    playerImage: "/lovable-uploads/c0d8c9e1-73d1-408e-8931-a00e77136d8d.png",
     rarity: "rare" as const,
     team: "Barcelona",
     position: "Meio-Campo",
@@ -459,7 +459,7 @@ const Marketplace = () => {
             <div className="space-y-4">
               <div className="bg-goinft-card rounded-xl p-4">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-white font-orbitron">Troca #28754</span>
+                  <span className="text-white/70 mr-2">Troca #28754</span>
                   <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">
                     Aberta
                   </span>
