@@ -51,12 +51,12 @@ const marketplaceCards = [
   },
   {
     id: "m5",
-    name: "Barcelona Defender",
-    image: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
-    playerImage: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
+    name: "Ioota BB Lorio",
+    image: "/lovable-uploads/9832dfdf-6d17-4325-8a48-c213e974b590.png",
+    playerImage: "/lovable-uploads/9832dfdf-6d17-4325-8a48-c213e974b590.png",
     rarity: "epic" as const,
     team: "Barcelona",
-    position: "Defensor",
+    position: "Meio-Campo",
     price: 70,
   },
   {
