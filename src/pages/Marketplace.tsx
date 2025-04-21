@@ -41,9 +41,9 @@ const marketplaceCards = [
   },
   {
     id: "m4",
-    name: "Barcelona Captain",
-    image: "/lovable-uploads/880aa3ab-ecec-4848-808a-018afa7bb652.png",
-    playerImage: "/lovable-uploads/880aa3ab-ecec-4848-808a-018afa7bb652.png",
+    name: "Barsena",
+    image: "/lovable-uploads/4263efde-699d-4758-a229-b5e15b0b60dd.png",
+    playerImage: "/lovable-uploads/4263efde-699d-4758-a229-b5e15b0b60dd.png",
     rarity: "epic" as const,
     team: "Barcelona",
     position: "Meio-Campo",
