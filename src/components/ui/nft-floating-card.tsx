@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -38,9 +37,9 @@ export function NFTFloatingCard({
   }, []);
 
   const sizeClasses = {
-    sm: "w-24 h-32", // Smaller card
-    md: "w-32 h-44", // Default medium card
-    lg: "w-40 h-56"  // Larger card
+    sm: "w-32 h-44", // Smaller card
+    md: "w-40 h-56", // Increased medium card size
+    lg: "w-48 h-64"  // Larger card
   };
   
   return (
