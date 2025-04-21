@@ -1,23 +1,30 @@
+
 import { useNavigate } from "react-router-dom";
 import { Trophy, Award } from "lucide-react";
 
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
+// Novas imagens para os cards
 const STICKERS = [
   {
     name: "Lionel Messi",
     club: "Inter Miami",
-    img: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=facearea&w=256&q=80&facepad=3",
+    img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png", // 1ª imagem enviada
   },
   {
     name: "Cristiano Ronaldo",
     club: "Al Nassr",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=256&q=80&facepad=3",
+    img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png", // 2ª imagem enviada
   },
   {
     name: "Neymar Jr.",
     club: "Al Hilal",
-    img: "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?auto=format&fit=facearea&w=256&q=80&facepad=3",
+    img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png", // 3ª imagem enviada
+  },
+  {
+    name: "Aitana Bonmatí",
+    club: "FC Barcelona",
+    img: "/lovable-uploads/62f4d74d-4c24-48dc-adde-79bd62afb676.png", // 4ª imagem enviada
   },
 ];
 
