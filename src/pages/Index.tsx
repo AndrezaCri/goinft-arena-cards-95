@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { Trophy, Zap } from "lucide-react";
@@ -24,32 +25,7 @@ const Index = () => {
             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
             
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
-              {STICKERS.map((sticker, i) => (
-                <div key={i} className="flex justify-center">
-                  <NFTFloatingCard
-                    isHolographic
-                    size="md"
-                    delay={`${i * 0.2}s`}
-                    glowColor={
-                      sticker.rarity === "legendary"
-                        ? "rgba(234,179,8,0.6)"
-                        : sticker.rarity === "epic"
-                        ? "rgba(168,85,247,0.6)"
-                        : "rgba(59,130,246,0.5)"
-                    }
-                  >
-                    <img
-                      src={sticker.img}
-                      alt={sticker.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </NFTFloatingCard>
-                </div>
-              ))}
-            </div>
-            
-            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 text-center">
+            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 text-center mb-6">
               <p className="text-white text-lg sm:text-xl max-w-2xl mx-auto font-montserrat">
                 Colecione cards NFT de futebol e complete álbuns digitais na Chiliz Chain
               </p>
