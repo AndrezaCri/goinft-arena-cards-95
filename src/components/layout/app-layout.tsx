@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import { AppHeader } from "@/components/navigation/app-header";
 import { useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils"; // Adicionando a importação necessária
 
 interface AppLayoutProps {
   children: ReactNode;
