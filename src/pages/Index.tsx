@@ -1,7 +1,7 @@
+
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
 import { Trophy, Zap } from "lucide-react";
 
 const STICKERS = [
@@ -70,12 +70,6 @@ const Index = () => {
                   </NFTFloatingCard>
                 </div>
               ))}
-            </div>
-            
-            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 text-center">
-              <p className="text-white text-lg sm:text-xl max-w-2xl mx-auto font-montserrat">
-                Colecione cards NFT de futebol e complete álbuns digitais na Chiliz Chain
-              </p>
             </div>
             
             <div className="flex justify-center mt-6 sm:mt-8">
