@@ -12,24 +12,27 @@ const Marketplace = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <NFTCard
+          id="arsenal"
           name="Arsenal"
           image="/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png"
           rarity="rare"
-          price="0.1 CHZ"
+          price={0.1}
         />
         
         <NFTCard
+          id="barcelona"
           name="Barcelona"
           image="/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png"
           rarity="legendary"
-          price="0.5 CHZ"
+          price={0.5}
         />
         
         <NFTCard
+          id="atletico-madrid"
           name="Atlético Madrid"
           image="/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png"
           rarity="epic"
-          price="0.25 CHZ"
+          price={0.25}
         />
       </div>
     </div>
