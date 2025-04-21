@@ -92,8 +92,8 @@ const marketplaceCards = [
   {
     id: "m9",
     name: "Barcelona Goalkeeper",
-    image: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
-    playerImage: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
+    image: "/lovable-uploads/920baa56-b00d-43ea-8372-f544a6ca420e.png",
+    playerImage: "/lovable-uploads/920baa56-b00d-43ea-8372-f544a6ca420e.png",
     rarity: "legendary" as const,
     team: "Barcelona",
     position: "Goleiro",
