@@ -9,6 +9,7 @@ interface AppLayoutProps {
   walletAddress?: string;
   onConnectWallet?: () => void;
   onDisconnectWallet?: () => void;
+  showNavbar?: boolean;
 }
 
 export function AppLayout({
@@ -16,14 +17,15 @@ export function AppLayout({
   isConnected = false,
   walletAddress = "",
   onConnectWallet,
-  onDisconnectWallet
+  onDisconnectWallet,
+  showNavbar = true
 }: AppLayoutProps) {
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
 
   return (
     <div className="min-h-screen bg-goinft-dark flex flex-col font-montserrat">
-      {!isLandingPage && (
+      {!isLandingPage && showNavbar && (
         <AppHeader
           isConnected={isConnected}
           walletAddress={walletAddress}

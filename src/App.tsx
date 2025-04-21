@@ -46,6 +46,7 @@ const App = () => {
             walletAddress={walletAddress}
             onConnectWallet={handleConnectWallet}
             onDisconnectWallet={handleDisconnectWallet}
+            showNavbar={false} /* Desativamos o AppHeader navbar aqui */
           >
             <NavbarMain />
             <Routes>
