@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Trophy } from "lucide-react";
@@ -48,9 +47,8 @@ export function AlbumStickerGrid({
             <div
               key={index}
               className={cn(
-                "relative aspect-[3/4] rounded-sm transition-all duration-300 overflow-hidden",
-                isEmpty ? "cursor-pointer" : "cursor-default",
-                isEmpty ? "border border-dashed border-neon-purple/20" : "border border-neon-purple/30",
+                "relative aspect-[3/4] transition-all duration-300 overflow-hidden",
+                isEmpty ? "cursor-pointer border border-dashed border-neon-purple/20" : "border border-neon-purple/30",
                 isEmpty ? "bg-goinft-card/20" : "bg-goinft-card",
                 isHovered && isEmpty && "border-neon-purple/50 bg-goinft-card/40 scale-105"
               )}
