@@ -9,6 +9,7 @@ interface NFTFloatingCardProps {
   duration?: string;
   glowColor?: string;
   size?: "sm" | "md" | "lg";
+  isHolographic?: boolean; // Added the missing property
 }
 
 export function NFTFloatingCard({
@@ -18,6 +19,7 @@ export function NFTFloatingCard({
   duration = "5s",
   glowColor = "rgba(155, 135, 245, 0.6)",
   size = "md",
+  isHolographic = false, // Added default value
 }: NFTFloatingCardProps) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
