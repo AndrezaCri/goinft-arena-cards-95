@@ -45,7 +45,7 @@ const Index = () => {
               <NFTFloatingCard
                 key={i}
                 isHolographic
-                size={i === 0 ? "lg" : "md"}
+                size="lg"
                 delay={`${i * 0.2}s`}
                 className="flex-shrink-0"
                 glowColor={
