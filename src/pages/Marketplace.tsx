@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NFTCard } from "@/components/ui/nft-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -181,33 +183,39 @@ const Marketplace = () => {
   });
 
   return (
-    <div className="min-h-screen bg-goinft-dark pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-goinft-darker to-goinft-dark pb-16">
       <div className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="buy">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <Tabs defaultValue="buy" className="space-y-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-goinft-card/30 p-6 rounded-xl backdrop-blur-sm border border-neon-purple/20">
             <div>
-              <h1 className="text-white font-orbitron text-3xl font-bold">
-                Mercado
+              <h1 className="text-white font-orbitron text-3xl font-bold bg-gradient-to-r from-neon-purple to-neon-pink bg-clip-text text-transparent">
+                Mercado NFT
               </h1>
               <p className="text-white/70 mt-1">
                 Compre, venda e troque cards com outros colecionadores
               </p>
             </div>
             
-            <TabsList className="bg-goinft-card">
-              <TabsTrigger value="buy">Comprar</TabsTrigger>
-              <TabsTrigger value="sell">Vender</TabsTrigger>
-              <TabsTrigger value="trade">Trocar</TabsTrigger>
+            <TabsList className="bg-goinft-card border border-neon-purple/30">
+              <TabsTrigger value="buy" className="data-[state=active]:bg-gradient-to-r from-neon-purple to-neon-pink data-[state=active]:text-white">
+                Comprar
+              </TabsTrigger>
+              <TabsTrigger value="sell" className="data-[state=active]:bg-gradient-to-r from-neon-purple to-neon-pink data-[state=active]:text-white">
+                Vender
+              </TabsTrigger>
+              <TabsTrigger value="trade" className="data-[state=active]:bg-gradient-to-r from-neon-purple to-neon-pink data-[state=active]:text-white">
+                Trocar
+              </TabsTrigger>
             </TabsList>
           </div>
           
-          <div className="mb-6">
+          <div className="mb-6 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" />
                 <Input 
                   placeholder="Buscar cards..." 
-                  className="bg-goinft-card border-none pl-10 text-white" 
+                  className="bg-goinft-card/50 border-neon-purple/30 pl-10 text-white backdrop-blur-sm" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -215,7 +223,7 @@ const Marketplace = () => {
               
               <Button
                 variant="outline"
-                className="bg-goinft-card border-none text-white"
+                className="bg-goinft-card/50 border-neon-purple/30 text-white backdrop-blur-sm hover:bg-neon-purple/20"
                 onClick={() => setShowFilters(!showFilters)}
               >
                 <Filter className="mr-2 h-4 w-4" />
@@ -224,7 +232,7 @@ const Marketplace = () => {
             </div>
             
             {showFilters && (
-              <div className="mt-4 p-4 bg-goinft-card rounded-lg">
+              <div className="p-6 bg-goinft-card/30 rounded-xl backdrop-blur-sm border border-neon-purple/20 animate-fade-in">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <Label className="text-white mb-2 block">Posição</Label>
@@ -236,9 +244,9 @@ const Marketplace = () => {
                             id={`position-${position}`}
                             checked={selectedPositions.includes(position)}
                             onChange={() => togglePosition(position)}
-                            className="mr-2"
+                            className="mr-2 accent-neon-purple"
                           />
-                          <label htmlFor={`position-${position}`} className="text-white/70">
+                          <label htmlFor={`position-${position}`} className="text-white/70 hover:text-white transition-colors">
                             {position}
                           </label>
                         </div>
@@ -256,9 +264,9 @@ const Marketplace = () => {
                             id={`rarity-${rarity}`}
                             checked={selectedRarities.includes(rarity)}
                             onChange={() => toggleRarity(rarity)}
-                            className="mr-2"
+                            className="mr-2 accent-neon-purple"
                           />
-                          <label htmlFor={`rarity-${rarity}`} className="text-white/70 capitalize">
+                          <label htmlFor={`rarity-${rarity}`} className="text-white/70 hover:text-white transition-colors capitalize">
                             {rarity}
                           </label>
                         </div>
@@ -272,7 +280,7 @@ const Marketplace = () => {
                       <Input
                         type="number"
                         placeholder="Mín"
-                        className="bg-goinft-light border-none text-white"
+                        className="bg-goinft-card/50 border-neon-purple/30 text-white"
                         value={priceRange.min}
                         onChange={(e) => setPriceRange({ ...priceRange, min: Number(e.target.value) })}
                       />
@@ -280,7 +288,7 @@ const Marketplace = () => {
                       <Input
                         type="number"
                         placeholder="Máx"
-                        className="bg-goinft-light border-none text-white"
+                        className="bg-goinft-card/50 border-neon-purple/30 text-white"
                         value={priceRange.max}
                         onChange={(e) => setPriceRange({ ...priceRange, max: Number(e.target.value) })}
                       />
@@ -288,10 +296,10 @@ const Marketplace = () => {
                   </div>
                 </div>
                 
-                <div className="mt-4 flex justify-end">
+                <div className="mt-6 flex justify-end gap-3">
                   <Button 
                     variant="outline" 
-                    className="mr-2 text-white"
+                    className="border-neon-purple text-white hover:bg-neon-purple/20"
                     onClick={() => {
                       setSearchQuery("");
                       setSelectedPositions([]);
@@ -302,7 +310,7 @@ const Marketplace = () => {
                     Limpar
                   </Button>
                   <Button 
-                    className="bg-gradient-to-r from-neon-purple to-neon-pink text-white"
+                    className="bg-gradient-to-r from-neon-purple to-neon-pink text-white hover:opacity-90"
                     onClick={() => setShowFilters(false)}
                   >
                     Aplicar Filtros
@@ -312,22 +320,23 @@ const Marketplace = () => {
             )}
           </div>
           
-          <TabsContent value="buy" className="mt-0">
+          <TabsContent value="buy" className="mt-0 space-y-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {filteredCards.map((card) => (
                 <NFTCard 
                   key={card.id} 
                   {...card} 
-                  onClick={() => handleOpenCardDetails(card)} 
+                  onClick={() => handleOpenCardDetails(card)}
+                  className="transform hover:scale-105 transition-transform duration-300" 
                 />
               ))}
             </div>
             
             {filteredCards.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-white/70 text-lg">Nenhum card encontrado com os filtros selecionados.</p>
+              <div className="text-center py-12 bg-goinft-card/30 rounded-xl backdrop-blur-sm border border-neon-purple/20">
+                <p className="text-white/70 text-lg mb-4">Nenhum card encontrado com os filtros selecionados.</p>
                 <Button 
-                  className="mt-4 bg-goinft-light text-white"
+                  className="bg-gradient-to-r from-neon-purple to-neon-pink text-white hover:opacity-90"
                   onClick={() => {
                     setSearchQuery("");
                     setSelectedPositions([]);
