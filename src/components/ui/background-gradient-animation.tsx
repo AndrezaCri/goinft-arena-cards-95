@@ -2,7 +2,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
 
 interface AnimatedGradientBackgroundProps {
   className?: string;
@@ -10,29 +9,10 @@ interface AnimatedGradientBackgroundProps {
   intensity?: "subtle" | "medium" | "strong";
 }
 
-/**
- * Este componente exibe um cenário de cidade cyberpunk com arranha-céus iluminados por neon,
- * com o chão molhado refletindo as luzes e efeito de chuva leve.
- */
 export function BackgroundGradientAnimation({
   className,
   children,
 }: AnimatedGradientBackgroundProps) {
-  const [raindrops, setRaindrops] = useState<Array<{ id: number; left: number; size: number; delay: number; opacity: number }>>([]);
-
-  useEffect(() => {
-    // Criar gotas de chuva aleatórias
-    const drops = Array(100).fill(null).map((_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      size: Math.random() * 2 + 1,
-      delay: Math.random() * 5,
-      opacity: Math.random() * 0.7 + 0.3
-    }));
-    
-    setRaindrops(drops);
-  }, []);
-
   return (
     <div
       className={cn(
@@ -58,24 +38,6 @@ export function BackgroundGradientAnimation({
           <div className="absolute top-1/6 right-1/3 w-1 h-14 bg-neon-purple animate-pulse-glow opacity-80"></div>
         </div>
         
-        {/* Chuva */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {raindrops.map(drop => (
-            <div 
-              key={drop.id}
-              className="absolute bg-white/30 rounded-full"
-              style={{
-                left: `${drop.left}%`,
-                width: `${drop.size}px`,
-                height: `${drop.size * 15}px`,
-                opacity: drop.opacity,
-                top: `-50px`,
-                animation: `raindrop 1.5s linear ${drop.delay}s infinite`
-              }}
-            ></div>
-          ))}
-        </div>
-        
         {/* Reflexo no chão molhado */}
         <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black via-black/80 to-transparent backdrop-blur-sm opacity-70"></div>
       </div>
@@ -88,3 +50,4 @@ export function BackgroundGradientAnimation({
     </div>
   );
 }
+
