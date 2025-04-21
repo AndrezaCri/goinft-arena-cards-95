@@ -1,23 +1,28 @@
-import { useNavigate } from "react-router-dom";
-import { Trophy, Award } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
+import { Trophy } from "lucide-react";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
+import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
 
 const STICKERS = [
   {
-    name: "Real Madrid",
+    name: "Barcelona",
     club: "La Liga",
     img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
+    rarity: "legendary" as const,
   },
   {
-    name: "Manchester United",
-    club: "Premier League",
+    name: "Atlético Madrid",
+    club: "La Liga",
     img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
+    rarity: "epic" as const,
   },
   {
-    name: "Barcelona FC",
-    club: "Liga F",
+    name: "Arsenal",
+    club: "Premier League",
     img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
+    rarity: "rare" as const,
   },
 ];
 
@@ -36,51 +41,53 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Futuristic Phone Card Album */}
-        <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg">
-          {/* Sticker Cards */}
-          <div className="flex flex-col items-center gap-8 py-4 px-2">
-            <div className="flex gap-6">
-              {STICKERS.map((sticker, i) => (
-                <div key={i} className="group">
-                  <div className="cyberpunk-card hologram-effect w-32 h-44 rounded-xl overflow-hidden flex items-center justify-center shadow-lg border-2 border-neon-blue/40 bg-goinft-dark relative animate-float">
-                    <img
-                      src={sticker.img}
-                      alt={sticker.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="mt-2 text-center">
-                    <span className="font-orbitron text-sm text-neon-blue">
-                      {sticker.name}
-                    </span>
-                    <span className="block font-montserrat text-xs text-white/80">
-                      {sticker.club}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button className="btn-neon text-lg font-orbitron px-12 py-4 mt-6" onClick={() => navigate("/welcome")}>
-              Entrar na Arena
-            </button>
+        {/* NFT Cards Display and Album Grid */}
+        <div className="relative max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg">
+          {/* NFT Cards */}
+          <div className="flex flex-wrap justify-center gap-6 md:w-1/2">
+            {STICKERS.map((sticker, i) => (
+              <NFTFloatingCard
+                key={i}
+                isHolographic
+                delay={`${i * 0.2}s`}
+                className="w-32 md:w-40"
+                glowColor={
+                  sticker.rarity === "legendary"
+                    ? "rgba(234,179,8,0.6)"
+                    : sticker.rarity === "epic"
+                    ? "rgba(168,85,247,0.6)"
+                    : "rgba(59,130,246,0.5)"
+                }
+              >
+                <img
+                  src={sticker.img}
+                  alt={sticker.name}
+                  className="w-full h-full object-cover"
+                />
+              </NFTFloatingCard>
+            ))}
           </div>
-          {/* Description */}
-          <div className="text-left max-w-md">
-            <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-white mb-4">
-              O futuro do <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-blue">colecionismo</span> esportivo
+
+          {/* Album Grid */}
+          <div className="md:w-1/2">
+            <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-white mb-6">
+              Seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-blue">Álbum Digital</span>
             </h2>
-            <ul className="space-y-4">
-              <li className="text-lg text-white/80">
-                • Cards NFT autênticos dos maiores jogadores do mundo
-              </li>
-              <li className="text-lg text-white/80">
-                • Complete álbuns digitais e conquiste recompensas exclusivas
-              </li>
-              <li className="text-lg text-white/80">
-                • Blockchain segura na Chiliz Chain
-              </li>
-            </ul>
+            
+            <AlbumStickerGrid
+              rows={2}
+              cols={3}
+              emptySlots={[0, 1, 2, 3, 4, 5]}
+              onSlotClick={(index) => console.log(`Clicked slot ${index}`)}
+              className="mb-6"
+            />
+
+            <button 
+              className="btn-neon text-lg font-orbitron px-12 py-4 w-full" 
+              onClick={() => navigate("/welcome")}
+            >
+              Começar Coleção
+            </button>
           </div>
         </div>
       </div>
