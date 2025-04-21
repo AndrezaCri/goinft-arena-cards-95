@@ -65,7 +65,7 @@ const Index = () => {
                     <img
                       src={sticker.img}
                       alt={sticker.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out"
                     />
                   </NFTFloatingCard>
                 </div>
