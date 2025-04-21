@@ -50,7 +50,7 @@ export function FootballNFTCard({
         "relative aspect-[3/4] w-full max-w-[280px] transition-all duration-300 cursor-pointer",
         isHovered && "scale-105 z-10",
         isHolographic && "transition-all duration-200",
-        getRarityGlow(isHovered, isHolographic),
+        getRarityGlow(rarity, isHovered, isHolographic),
         className
       )}
       onMouseEnter={handleMouseEnter}

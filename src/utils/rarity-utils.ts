@@ -14,7 +14,7 @@ export const getRarityColor = (rarity: CardRarity) => {
   }
 };
 
-export const getRarityGlow = (isHovered: boolean, isHolographic: boolean) => {
+export const getRarityGlow = (rarity: CardRarity, isHovered: boolean, isHolographic: boolean) => {
   if (!isHovered && !isHolographic) return "";
   
   switch (rarity) {
