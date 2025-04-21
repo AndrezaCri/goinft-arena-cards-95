@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +15,8 @@ import Packs from "@/pages/Packs";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/NotFound";
 import { NavbarMain } from "@/components/ui/navbar-main";
+import About from "@/pages/About";
+import NFTs from "@/pages/NFTs";
 
 const queryClient = new QueryClient();
 
