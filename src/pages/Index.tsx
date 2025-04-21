@@ -1,27 +1,24 @@
-
 import { useNavigate } from "react-router-dom";
 import { Trophy, Award } from "lucide-react";
 
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
-// Updated sticker list with one card removed
 const STICKERS = [
   {
-    name: "Lionel Messi",
-    club: "Inter Miami",
-    img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png", // 1ª imagem enviada
+    name: "Real Madrid",
+    club: "La Liga",
+    img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
   },
   {
-    name: "Cristiano Ronaldo",
-    club: "Al Nassr",
-    img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png", // 2ª imagem enviada
+    name: "Manchester United",
+    club: "Premier League",
+    img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
   },
   {
-    name: "Neymar Jr.",
-    club: "Al Hilal",
-    img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png", // 3ª imagem enviada
+    name: "Barcelona Women",
+    club: "Liga F",
+    img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
   },
-  // Removed the fourth card (Aitana Bonmatí)
 ];
 
 const Index = () => {
