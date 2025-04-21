@@ -1,29 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
-import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
 import { Trophy, Zap } from "lucide-react";
-
-const STICKERS = [
-  {
-    name: "Barcelona",
-    club: "La Liga",
-    img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
-    rarity: "legendary" as const,
-  },
-  {
-    name: "Atlético Madrid",
-    club: "La Liga",
-    img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
-    rarity: "epic" as const,
-  },
-  {
-    name: "Arsenal",
-    club: "Premier League",
-    img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
-    rarity: "rare" as const,
-  },
-];
 
 const Index = () => {
   const navigate = useNavigate();
@@ -83,7 +60,7 @@ const Index = () => {
                 className="group relative btn-neon text-base sm:text-lg font-orbitron px-8 sm:px-16 py-4 sm:py-5 overflow-hidden"
                 onClick={() => navigate("/welcome")}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-neon-green/30 to-neon-green/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 animate-[shine_3s_ease-in-out_infinite]"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-neon-purple/0 via-neon-purple/30 to-neon-purple/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 animate-[shine_3s_ease-in-out_infinite]"></span>
                 <span className="relative z-10 flex items-center gap-2">
                   <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                   COLLECT
