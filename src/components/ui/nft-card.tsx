@@ -95,12 +95,12 @@ export function NFTCard({
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-goinft-card/50 to-goinft-card" />
           </div>
           
-          {/* Player image - Enhanced size and positioning */}
+          {/* Player image */}
           <div className="absolute inset-0 flex items-center justify-center">
             <img 
               src={playerImage || image} 
               alt={name} 
-              className="w-full h-full object-contain"
+              className="w-[90%] h-[90%] object-contain rounded-lg"
             />
           </div>
           
@@ -147,3 +147,4 @@ export function NFTCard({
     </Card>
   );
 }
+
