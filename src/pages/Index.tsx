@@ -4,7 +4,7 @@ import { Trophy, Award } from "lucide-react";
 
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
-// Novas imagens para os cards
+// Updated sticker list with one card removed
 const STICKERS = [
   {
     name: "Lionel Messi",
@@ -21,11 +21,7 @@ const STICKERS = [
     club: "Al Hilal",
     img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png", // 3ª imagem enviada
   },
-  {
-    name: "Aitana Bonmatí",
-    club: "FC Barcelona",
-    img: "/lovable-uploads/62f4d74d-4c24-48dc-adde-79bd62afb676.png", // 4ª imagem enviada
-  },
+  // Removed the fourth card (Aitana Bonmatí)
 ];
 
 const Index = () => {
