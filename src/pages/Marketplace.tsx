@@ -108,6 +108,26 @@ const marketplaceCards = [
     team: "Barcelona",
     position: "Goleiro",
     price: 85,
+  },
+  {
+    id: "m11",
+    name: "Barcelona Legend",
+    image: "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png",
+    playerImage: "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png",
+    rarity: "legendary" as const,
+    team: "Barcelona",
+    position: "Atacante",
+    price: 120,
+  },
+  {
+    id: "m12",
+    name: "Barcelona Striker",
+    image: "/lovable-uploads/b709815b-18b5-4688-aaaf-2fbfba8a575c.png",
+    playerImage: "/lovable-uploads/b709815b-18b5-4688-aaaf-2fbfba8a575c.png",
+    rarity: "epic" as const,
+    team: "Barcelona",
+    position: "Atacante",
+    price: 80,
   }
 ];
 
