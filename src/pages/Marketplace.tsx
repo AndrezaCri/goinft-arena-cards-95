@@ -101,13 +101,13 @@ const marketplaceCards = [
   },
   {
     id: "m10",
-    name: "Barcelona Legend",
-    image: "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png",
-    playerImage: "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png",
+    name: "Barador",
+    image: "/lovable-uploads/e8cc150f-670e-4639-8235-bfd8df7e7551.png",
+    playerImage: "/lovable-uploads/e8cc150f-670e-4639-8235-bfd8df7e7551.png",
     rarity: "legendary" as const,
     team: "Barcelona",
-    position: "Atacante",
-    price: 120,
+    position: "Meio-Campo",
+    price: 130,
   },
   {
     id: "m11",
