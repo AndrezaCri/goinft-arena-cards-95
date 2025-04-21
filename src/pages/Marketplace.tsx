@@ -61,9 +61,9 @@ const marketplaceCards = [
   },
   {
     id: "m6",
-    name: "Barcelona Wings",
-    image: "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
-    playerImage: "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
+    name: "Catibal",
+    image: "/lovable-uploads/e29f7503-47fa-4f39-a6e6-d80e60975d62.png",
+    playerImage: "/lovable-uploads/e29f7503-47fa-4f39-a6e6-d80e60975d62.png",
     rarity: "rare" as const,
     team: "Barcelona",
     position: "Atacante",
