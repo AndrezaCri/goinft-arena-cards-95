@@ -32,35 +32,33 @@ export function NFTCard({
 }: NFTCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Ajuste de cores de raridade para neon mais vibrante
   const getRarityColor = () => {
     switch (rarity) {
       case "common":
-        return "from-neon-purple to-neon-blue";
+        return "from-gray-400 to-gray-300";
       case "rare":
-        return "from-neon-blue to-neon-purple";
+        return "from-blue-500 to-blue-400";
       case "epic":
-        return "from-neon-purple to-neon-pink";
+        return "from-purple-500 to-pink-500";
       case "legendary":
-        return "from-neon-orange to-neon-yellow";
+        return "from-yellow-400 to-orange-500";
       default:
-        return "from-neon-purple to-neon-blue";
+        return "from-gray-400 to-gray-300";
     }
   };
 
-  // Efeito de glow mais intenso
   const getRarityGlow = () => {
     switch (rarity) {
       case "common":
-        return "shadow-[0_0_15px_rgba(155,135,245,0.6)]";
+        return "";
       case "rare":
-        return "shadow-[0_0_25px_rgba(14,165,233,0.8)]";
+        return "shadow-[0_0_15px_rgba(59,130,246,0.5)]";
       case "epic":
-        return "shadow-[0_0_35px_rgba(168,85,247,0.9)]";
+        return "shadow-[0_0_20px_rgba(168,85,247,0.5)]";
       case "legendary":
-        return "shadow-[0_0_45px_rgba(255,165,0,1)]";
+        return "shadow-[0_0_25px_rgba(234,179,8,0.6)]";
       default:
-        return "shadow-[0_0_15px_rgba(155,135,245,0.6)]";
+        return "";
     }
   };
 
@@ -68,12 +66,11 @@ export function NFTCard({
     <Card
       className={cn(
         "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform",
-        "bg-goinft-card border-2 border-transparent",
+        "bg-goinft-card border-none",
         getRarityGlow(),
         isHovered ? "scale-105" : "scale-100",
         isNew && "animate-pulse-glow",
-        // Adiciona borda neon
-        `neon-border after:opacity-70 hover:after:opacity-100`
+        className
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
