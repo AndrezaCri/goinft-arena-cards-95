@@ -67,7 +67,7 @@ const Welcome = () => {
         
         <div className="flex flex-col md:flex-row gap-4 w-full max-w-md">
           <WalletButton
-            className="flex-1 py-6 text-lg"
+            className="flex-1 py-6 text-lg font-orbitron bg-gradient-to-r from-neon-purple via-neon-blue to-neon-pink hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_rgba(155,135,245,0.5)] hover:shadow-[0_0_25px_rgba(155,135,245,0.8)]"
             onClick={() => setWalletModalOpen(true)}
           >
             Conectar Carteira
@@ -89,3 +89,4 @@ const Welcome = () => {
 };
 
 export default Welcome;
+
