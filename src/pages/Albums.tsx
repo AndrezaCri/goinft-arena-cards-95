@@ -20,7 +20,7 @@ const albums = [
   {
     id: "2",
     name: "Copa do Brasil 2000",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=CopaDoBrasil",
+    coverImage: "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
     progress: 20,
     totalCards: 40,
     collectedCards: 8,
