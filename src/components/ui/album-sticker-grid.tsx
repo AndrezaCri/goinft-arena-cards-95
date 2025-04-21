@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Trophy } from "lucide-react";
@@ -30,7 +31,7 @@ export function AlbumStickerGrid({
   return (
     <div 
       className={cn(
-        "w-full max-w-2xl grid gap-1 p-3 bg-cyber-dark/80 rounded-xl border border-neon-purple/20",
+        "w-full max-w-2xl grid gap-1 p-2 bg-cyber-dark/80 rounded-xl border border-neon-purple/20",
         className
       )}
       style={{ 
@@ -59,17 +60,17 @@ export function AlbumStickerGrid({
             {isEmpty ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-1">
                 <div className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center mb-1",
+                  "w-6 h-6 rounded-full flex items-center justify-center mb-1",
                   "bg-neon-purple/10 border border-neon-purple/30",
                   isHovered && "bg-neon-purple/20 border-neon-purple/50 animate-pulse-glow"
                 )}>
                   <Trophy className={cn(
-                    "w-4 h-4",
+                    "w-3 h-3",
                     isHovered ? "text-neon-purple" : "text-neon-purple/50"
                   )} />
                 </div>
                 <span className={cn(
-                  "text-center text-[10px] font-orbitron",
+                  "text-center text-[8px] font-orbitron",
                   isHovered ? "text-white" : "text-white/50"
                 )}>
                   Slot {index + 1}
@@ -81,12 +82,12 @@ export function AlbumStickerGrid({
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-cyber-dark/80"></div>
                 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-full bg-neon-purple/20 flex items-center justify-center border border-neon-purple/50 animate-pulse-glow">
-                    <Trophy className="w-4 h-4 text-neon-purple" />
+                  <div className="w-6 h-6 rounded-full bg-neon-purple/20 flex items-center justify-center border border-neon-purple/50 animate-pulse-glow">
+                    <Trophy className="w-3 h-3 text-neon-purple" />
                   </div>
                 </div>
                 
-                <div className="absolute bottom-1 right-1 bg-cyber-darkBlue/80 text-neon-purple text-[10px] font-bold px-1.5 py-0.5 rounded font-orbitron">
+                <div className="absolute bottom-0.5 right-0.5 bg-cyber-darkBlue/80 text-neon-purple text-[8px] font-bold px-1 py-0.5 rounded font-orbitron">
                   #{index + 1}
                 </div>
               </div>
