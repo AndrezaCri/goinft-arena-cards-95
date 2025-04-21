@@ -77,7 +77,7 @@ const Index = () => {
             </div>
             <AlbumStickerGrid 
               rows={2} 
-              cols={4} 
+              cols={3} 
               emptySlots={[]} 
               filledSlots={[]} 
             />
