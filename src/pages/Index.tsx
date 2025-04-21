@@ -79,7 +79,7 @@ const Index = () => {
                 <Trophy className="text-neon-purple/50 h-5 w-5 sm:h-6 sm:w-6" />
               </div>
               <AlbumStickerGrid 
-                rows={2} 
+                rows={1} 
                 cols={3} 
                 emptySlots={[]} 
                 filledSlots={[]} 
