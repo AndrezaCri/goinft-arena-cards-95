@@ -11,7 +11,7 @@ const albums = [
   {
     id: "1",
     name: "Paulista Feminino 2025",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=PaulistaFeminino",
+    coverImage: "/lovable-uploads/3ed65cb1-f49f-4076-be44-44a53cff5153.png",
     progress: 35,
     totalCards: 32,
     collectedCards: 11,
