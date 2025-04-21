@@ -73,10 +73,10 @@ const Index = () => {
             </div>
             
             <div className="w-full max-w-4xl mx-auto px-2 sm:px-4">
-              <div className="flex items-center justify-center mb-4 gap-2">
-                <Trophy className="text-neon-purple h-5 w-5 sm:h-6 sm:w-6" />
-                <h2 className="text-xl sm:text-2xl font-orbitron text-white">SEU ÁLBUM DIGITAL</h2>
-                <Trophy className="text-neon-purple/50 h-5 w-5 sm:h-6 sm:w-6" />
+              <div className="flex items-center justify-center mb-2 gap-2">
+                <Trophy className="text-neon-purple h-4 w-4 sm:h-5 sm:w-5" />
+                <h2 className="text-lg sm:text-xl font-orbitron text-white">SEU ÁLBUM DIGITAL</h2>
+                <Trophy className="text-neon-purple/50 h-4 w-4 sm:h-5 sm:w-5" />
               </div>
               <AlbumStickerGrid 
                 rows={1} 
