@@ -1,6 +1,5 @@
-
 import { PageHeader } from "@/components/ui/page-header";
-import { FootballNFTCard } from "@/components/ui/football-nft-card";
+import { FootballNFTCard } from "@/components/ui/football-card/football-nft-card";
 
 const Marketplace = () => {
   return (
