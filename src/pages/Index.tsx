@@ -72,18 +72,10 @@ const Index = () => {
               ))}
             </div>
             
-            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4">
-              <div className="flex items-center justify-center mb-2 gap-2">
-                <Trophy className="text-neon-purple h-4 w-4 sm:h-5 sm:w-5" />
-                <h2 className="text-lg sm:text-xl font-orbitron text-white">SEU ÁLBUM DIGITAL</h2>
-                <Trophy className="text-neon-purple/50 h-4 w-4 sm:h-5 sm:w-5" />
-              </div>
-              <AlbumStickerGrid 
-                rows={1} 
-                cols={3} 
-                emptySlots={[]} 
-                filledSlots={[]} 
-              />
+            <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 text-center">
+              <p className="text-white text-lg sm:text-xl max-w-2xl mx-auto font-montserrat">
+                Colecione cards NFT de futebol e complete álbuns digitais na Chiliz Chain
+              </p>
             </div>
             
             <div className="flex justify-center mt-6 sm:mt-8">
