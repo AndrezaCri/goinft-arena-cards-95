@@ -7,6 +7,7 @@ interface NFTCardProps {
   id: string;
   name: string;
   image: string;
+  playerImage?: string;
   rarity: "common" | "rare" | "epic" | "legendary";
   team?: string;
   position?: string;
@@ -21,6 +22,7 @@ export function NFTCard({
   id,
   name,
   image,
+  playerImage,
   rarity,
   team,
   position,
@@ -83,11 +85,24 @@ export function NFTCard({
       
       <div className="p-3">
         <div className="relative pb-[140%]">
-          <img 
-            src={image} 
-            alt={name} 
-            className="absolute inset-0 w-full h-full object-cover rounded-lg"
-          />
+          {/* Background frame */}
+          <div className="absolute inset-0 rounded-lg overflow-hidden">
+            <img 
+              src={image} 
+              alt={name} 
+              className="absolute inset-0 w-full h-full object-cover blur-sm opacity-50"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-goinft-card/50 to-goinft-card" />
+          </div>
+          
+          {/* Player image */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img 
+              src={playerImage || image} 
+              alt={name} 
+              className="w-[90%] h-[90%] object-contain rounded-lg"
+            />
+          </div>
           
           {isNew && (
             <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full font-orbitron">
@@ -132,3 +147,4 @@ export function NFTCard({
     </Card>
   );
 }
+

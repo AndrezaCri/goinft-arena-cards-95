@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NFTCard } from "@/components/ui/nft-card";
@@ -17,6 +16,7 @@ const marketplaceCards = [
     rarity: "legendary" as const,
     team: "São Paulo FC",
     position: "Atacante",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=AnaSilva",
     price: 100,
   },
   {
@@ -26,6 +26,7 @@ const marketplaceCards = [
     rarity: "epic" as const,
     team: "Palmeiras",
     position: "Atacante",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=CarlosSantos",
     price: 75,
   },
   {
@@ -35,6 +36,7 @@ const marketplaceCards = [
     rarity: "rare" as const,
     team: "Corinthians",
     position: "Atacante",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=BeatrizOliveira",
     price: 50,
   },
   {
@@ -44,6 +46,7 @@ const marketplaceCards = [
     rarity: "epic" as const,
     team: "Santos FC",
     position: "Atacante",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=PedroCosta",
     price: 60,
   },
   {
@@ -53,6 +56,7 @@ const marketplaceCards = [
     rarity: "rare" as const,
     team: "Ferroviária",
     position: "Meio-Campo",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=MarinaLima",
     price: 45,
   },
   {
@@ -62,6 +66,7 @@ const marketplaceCards = [
     rarity: "rare" as const,
     team: "Internacional",
     position: "Defensor",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=LucasPereira",
     price: 40,
   },
   {
@@ -71,6 +76,7 @@ const marketplaceCards = [
     rarity: "rare" as const,
     team: "Cruzeiro",
     position: "Atacante",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=CarolinaSouza",
     price: 35,
   },
   {
@@ -80,6 +86,7 @@ const marketplaceCards = [
     rarity: "epic" as const,
     team: "Flamengo",
     position: "Meio-Campo",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=RobertoAlmeida",
     price: 55,
   },
 ];
@@ -92,6 +99,7 @@ const ownedCards = [
     rarity: "rare" as const,
     team: "Palmeiras",
     position: "Atacante",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=JuliaSantos",
     isOwned: true,
   },
   {
@@ -101,6 +109,7 @@ const ownedCards = [
     rarity: "rare" as const,
     team: "São Paulo FC",
     position: "Defensor",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=MarcosSilva",
     isOwned: true,
   },
   {
@@ -110,6 +119,7 @@ const ownedCards = [
     rarity: "rare" as const,
     team: "Santos FC",
     position: "Meio-Campo",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=FernandaLima",
     isOwned: true,
   },
   {
@@ -119,6 +129,7 @@ const ownedCards = [
     rarity: "epic" as const,
     team: "Corinthians",
     position: "Meio-Campo",
+    playerImage: "https://placehold.co/600x800/1a1f2c/ffffff?text=GabrielCosta",
     isOwned: true,
   },
 ];
