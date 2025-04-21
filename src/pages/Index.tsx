@@ -33,7 +33,7 @@ const Index = () => {
       <div className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 px-3 sm:px-4 gap-4 sm:gap-8">
         <div className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto">
           <div className="text-center px-4">
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold font-orbitron neon-text mb-4">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-orbitron neon-text mb-4">
               GoINFT
             </h1>
             <p className="text-white text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto font-montserrat">
