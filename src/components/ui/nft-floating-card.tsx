@@ -8,8 +8,8 @@ interface NFTFloatingCardProps {
   delay?: string;
   duration?: string;
   glowColor?: string;
-  size?: "sm" | "md" | "lg";
-  isHolographic?: boolean; // Added the missing property
+  size?: "sm" | "md" | "lg"; // Keep existing size prop
+  isHolographic?: boolean;
 }
 
 export function NFTFloatingCard({
@@ -18,8 +18,8 @@ export function NFTFloatingCard({
   delay = "0s",
   duration = "5s",
   glowColor = "rgba(155, 135, 245, 0.6)",
-  size = "md",
-  isHolographic = false, // Added default value
+  size = "md", // Default to medium size
+  isHolographic = false,
 }: NFTFloatingCardProps) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -38,16 +38,16 @@ export function NFTFloatingCard({
   }, []);
 
   const sizeClasses = {
-    sm: "w-24 h-32",
-    md: "w-32 h-44",
-    lg: "w-40 h-56"
+    sm: "w-24 h-32", // Smaller card
+    md: "w-32 h-44", // Default medium card
+    lg: "w-40 h-56"  // Larger card
   };
   
   return (
     <div 
       className={cn(
         "relative cyberpunk-card hologram-effect",
-        sizeClasses[size],
+        sizeClasses[size], // Use size-based class
         className
       )}
       style={{
