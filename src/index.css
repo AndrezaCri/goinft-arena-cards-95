@@ -9,9 +9,9 @@
     content: '';
     @apply absolute inset-0 -z-20 rounded-lg opacity-0 transition-opacity duration-300;
     box-shadow: 
-      0 0 15px rgba(155,135,245,0.5),  // Purple
-      0 0 25px rgba(0,217,255,0.5),    // Blue
-      0 0 35px rgba(255,113,225,0.5);  // Pink
+      0 0 15px rgba(155,135,245,0.5),  /* Purple */
+      0 0 25px rgba(0,217,255,0.5),    /* Blue */
+      0 0 35px rgba(255,113,225,0.5);  /* Pink */
   }
 
   .neon-border:hover::after {
