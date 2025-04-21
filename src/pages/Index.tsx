@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Trophy } from "lucide-react";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
 
 const STICKERS = [
   {
@@ -41,10 +40,9 @@ const Index = () => {
           </p>
         </div>
 
-        {/* NFT Cards Display and Album Grid */}
-        <div className="relative max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg">
-          {/* NFT Cards */}
-          <div className="flex flex-wrap justify-center gap-6 md:w-1/2">
+        {/* NFT Cards Display */}
+        <div className="relative max-w-6xl mx-auto flex flex-col items-center justify-center gap-10 bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg">
+          <div className="flex flex-wrap justify-center gap-6">
             {STICKERS.map((sticker, i) => (
               <NFTFloatingCard
                 key={i}
@@ -67,28 +65,13 @@ const Index = () => {
               </NFTFloatingCard>
             ))}
           </div>
-
-          {/* Album Grid */}
-          <div className="md:w-1/2">
-            <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-white mb-6">
-              Seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-blue">Álbum Digital</span>
-            </h2>
-            
-            <AlbumStickerGrid
-              rows={2}
-              cols={3}
-              emptySlots={[0, 1, 2, 3, 4, 5]}
-              onSlotClick={(index) => console.log(`Clicked slot ${index}`)}
-              className="mb-6"
-            />
-
-            <button 
-              className="btn-neon text-lg font-orbitron px-12 py-4 w-full" 
-              onClick={() => navigate("/welcome")}
-            >
-              Começar Coleção
-            </button>
-          </div>
+          
+          <button 
+            className="btn-neon text-lg font-orbitron px-12 py-4" 
+            onClick={() => navigate("/welcome")}
+          >
+            Começar Coleção
+          </button>
         </div>
       </div>
     </BackgroundGradientAnimation>
