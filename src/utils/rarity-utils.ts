@@ -14,12 +14,8 @@ export const getRarityColor = (rarity: CardRarity) => {
   }
 };
 
-export const getRarityGlow = (isHovered: boolean, isHolographic: boolean, rarity?: CardRarity) => {
+export const getRarityGlow = (isHovered: boolean, isHolographic: boolean) => {
   if (!isHovered && !isHolographic) return "";
-  
-  if (!rarity) {
-    return "shadow-[0_0_15px_rgba(155,135,245,0.6)]";
-  }
   
   switch (rarity) {
     case "common":
