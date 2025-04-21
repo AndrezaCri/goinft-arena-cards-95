@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
+import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
 
 const STICKERS = [
   {
@@ -63,6 +64,15 @@ const Index = () => {
                 />
               </NFTFloatingCard>
             ))}
+          </div>
+          
+          <div className="w-full max-w-4xl">
+            <AlbumStickerGrid 
+              rows={3} 
+              cols={4} 
+              emptySlots={[]} 
+              filledSlots={[]} 
+            />
           </div>
           
           <button 
