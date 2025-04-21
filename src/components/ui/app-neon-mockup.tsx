@@ -1,24 +1,23 @@
 
 import React from "react";
 import { CircuitOverlay } from "@/components/ui/circuit-overlay";
-import { RainEffect } from "@/components/ui/rain-effect";
 import { cn } from "@/lib/utils";
 
-// Imagens das figurinhas/nfts baseadas no visual das artes
+// Imagens de jogadores reais representando as figurinhas
 const stickers = [
   {
-    club: "BARCELON",
-    img: "/lovable-uploads/4bc79dc8-db3d-44a1-86ce-a007db471702.png",
+    club: "MESSI",
+    img: "https://images.unsplash.com/photo-1501286353178-1ec881214838?auto=format&fit=facearea&w=400&h=600&facepad=2",
     neon: "shadow-[0_0_20px_6px_#00fff7aa] border-[3px] border-neon-green/90",
   },
   {
-    club: "ATLETICO",
-    img: "/lovable-uploads/725ebcdd-f459-45fc-a839-0fbc08a8e59d.png",
+    club: "NEYMAR",
+    img: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?auto=format&fit=facearea&w=400&h=600&facepad=2",
     neon: "shadow-[0_0_30px_10px_#00d9ffaa] border-[3px] border-neon-blue/80",
   },
   {
-    club: "ARSENAL",
-    img: "https://placehold.co/120x170/dc143c/fff?text=Arsenal+NFT", // Imagem fictícia
+    club: "CR7",
+    img: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?auto=format&fit=facearea&w=400&h=600&facepad=2",
     neon: "shadow-[0_0_18px_8px_#ff71e1aa] border-[3px] border-neon-pink/90",
   }
 ];
@@ -39,9 +38,6 @@ export function AppNeonMockup({ className = "" }: { className?: string }) {
         <div className="absolute inset-0 z-20 pointer-events-none">
           <CircuitOverlay className="opacity-95"/>
         </div>
-        {/* Gotas de chuva sobre tela */}
-        <RainEffect dropColor="#9b87f5" rainCount={48} className="opacity-70 mix-blend-lighten z-30" />
-
         {/* App (tela) */}
         <div className="relative min-w-[340px] max-w-[368px] w-[92vw] aspect-[9/19] flex flex-col items-center justify-between px-6 py-7 gap-2 z-10">
           {/* Título GoINft */}
