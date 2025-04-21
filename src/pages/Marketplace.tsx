@@ -51,16 +51,6 @@ const marketplaceCards = [
   },
   {
     id: "m5",
-    name: "Barcelona Maestro",
-    image: "/lovable-uploads/62f4d74d-4c24-48dc-adde-79bd62afb676.png",
-    playerImage: "/lovable-uploads/62f4d74d-4c24-48dc-adde-79bd62afb676.png",
-    rarity: "legendary" as const,
-    team: "Barcelona",
-    position: "Meio-Campo",
-    price: 95,
-  },
-  {
-    id: "m6",
     name: "Barcelona Defender",
     image: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
     playerImage: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
@@ -70,7 +60,7 @@ const marketplaceCards = [
     price: 70,
   },
   {
-    id: "m7",
+    id: "m6",
     name: "Barcelona Wings",
     image: "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
     playerImage: "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
@@ -80,7 +70,7 @@ const marketplaceCards = [
     price: 45,
   },
   {
-    id: "m8",
+    id: "m7",
     name: "Barcelona Shield",
     image: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
     playerImage: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
@@ -90,7 +80,7 @@ const marketplaceCards = [
     price: 65,
   },
   {
-    id: "m9",
+    id: "m8",
     name: "Barcelona Talent",
     image: "/lovable-uploads/952c13c2-b282-4ace-9f4b-e62b51852e54.png",
     playerImage: "/lovable-uploads/952c13c2-b282-4ace-9f4b-e62b51852e54.png",
@@ -100,7 +90,7 @@ const marketplaceCards = [
     price: 40,
   },
   {
-    id: "m10",
+    id: "m9",
     name: "Barcelona Goalkeeper",
     image: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
     playerImage: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
@@ -110,7 +100,7 @@ const marketplaceCards = [
     price: 85,
   },
   {
-    id: "m11",
+    id: "m10",
     name: "Barcelona Legend",
     image: "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png",
     playerImage: "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png",
@@ -120,14 +110,24 @@ const marketplaceCards = [
     price: 120,
   },
   {
+    id: "m11",
+    name: "Barcelona Star",
+    image: "/lovable-uploads/326d120a-eaaa-4ae7-b92f-5881811345ab.png",
+    playerImage: "/lovable-uploads/326d120a-eaaa-4ae7-b92f-5881811345ab.png",
+    rarity: "legendary" as const,
+    team: "Barcelona",
+    position: "Atacante",
+    price: 100,
+  },
+  {
     id: "m12",
-    name: "Barcelona Striker",
-    image: "/lovable-uploads/b709815b-18b5-4688-aaaf-2fbfba8a575c.png",
-    playerImage: "/lovable-uploads/b709815b-18b5-4688-aaaf-2fbfba8a575c.png",
+    name: "Barcelona Forward",
+    image: "/lovable-uploads/d9140fa2-0a1d-43c3-b0a7-58d2465593b5.png",
+    playerImage: "/lovable-uploads/d9140fa2-0a1d-43c3-b0a7-58d2465593b5.png",
     rarity: "epic" as const,
     team: "Barcelona",
     position: "Atacante",
-    price: 80,
+    price: 75,
   }
 ];
 
