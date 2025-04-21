@@ -31,7 +31,7 @@ const Index = () => {
 
   return (
     <BackgroundGradientAnimation>
-      <div className="flex min-h-screen flex-col items-center justify-between py-8 px-4 gap-4">
+      <div className="flex min-h-screen flex-col items-center justify-between py-8 px-4 gap-8">
         {/* Hero Section */}
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center animate-float">
@@ -46,17 +46,17 @@ const Index = () => {
 
         {/* Cards Section */}
         <div className="flex-1 w-full max-w-6xl mx-auto">
-          <div className="bg-goinft-card/80 rounded-3xl p-4 shadow-2xl backdrop-blur-lg border border-neon-purple/20 relative">
+          <div className="bg-goinft-card/80 rounded-3xl p-6 shadow-2xl backdrop-blur-lg border border-neon-purple/20 relative">
             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent"></div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
             
             {/* NFT Cards Container */}
-            <div className="flex flex-wrap justify-center gap-4 mb-6">
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
               {STICKERS.map((sticker, i) => (
                 <NFTFloatingCard
                   key={i}
                   isHolographic
-                  size="sm"  // Alterado de 'lg' para 'sm'
+                  size="lg"
                   delay={`${i * 0.2}s`}
                   glowColor={
                     sticker.rarity === "legendary"
@@ -91,7 +91,7 @@ const Index = () => {
             </div>
             
             {/* CTA Button */}
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-8">
               <button 
                 className="group relative btn-neon text-lg font-orbitron px-16 py-5 overflow-hidden"
                 onClick={() => navigate("/welcome")}
