@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WalletButton } from "@/components/ui/wallet-button";
@@ -18,7 +17,6 @@ const Welcome = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col bg-goinft-darker">
-      {/* Background gradient effects */}
       <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full bg-neon-purple/20 filter blur-3xl"></div>
       <div className="absolute top-1/3 -right-32 w-64 h-64 rounded-full bg-neon-blue/20 filter blur-3xl"></div>
       <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-neon-pink/20 filter blur-3xl"></div>
@@ -67,7 +65,7 @@ const Welcome = () => {
         
         <div className="flex flex-col md:flex-row gap-4 w-full max-w-md">
           <WalletButton
-            className="flex-1 py-6 text-lg font-orbitron bg-gradient-to-r from-neon-purple via-neon-blue to-neon-pink hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_rgba(155,135,245,0.5)] hover:shadow-[0_0_25px_rgba(155,135,245,0.8)]"
+            className="flex-1 py-6 text-lg font-orbitron bg-gradient-to-r from-neon-purple via-neon-purple to-neon-blue hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_rgba(155,135,245,0.5)] hover:shadow-[0_0_25px_rgba(155,135,245,0.8)]"
             onClick={() => setWalletModalOpen(true)}
           >
             Conectar Carteira
@@ -89,4 +87,3 @@ const Welcome = () => {
 };
 
 export default Welcome;
-
