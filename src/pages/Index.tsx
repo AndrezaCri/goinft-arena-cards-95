@@ -15,7 +15,7 @@ const STICKERS = [
     img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
   },
   {
-    name: "Barcelona Women",
+    name: "Barcelona FC",
     club: "Liga F",
     img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
   },
