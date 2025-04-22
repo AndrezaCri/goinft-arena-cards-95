@@ -46,14 +46,16 @@ export function DailyRewards({ visibleRewards, loginStreak, onDailyAction }: Dai
       imageSrc: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
       reward: "NFT Raro",
       isFloating: true,
-      glowColor: "rgba(155, 135, 245, 0.6)"
+      glowColor: "rgba(155, 135, 245, 0.6)",
+      imageClassName: "h-12 w-12 md:h-16 md:w-16" // Reduced size for day 6
     },
     { 
       day: 7, 
       imageSrc: "/lovable-uploads/506f8852-1303-4875-ae3d-6068e947cb1d.png",
       reward: "NFT Lendário",
       isFloating: true,
-      glowColor: "rgba(255, 113, 225, 0.8)"
+      glowColor: "rgba(255, 113, 225, 0.8)",
+      imageClassName: "h-12 w-12 md:h-16 md:w-16" // Reduced size for day 7
     }
   ];
 
@@ -67,6 +69,7 @@ export function DailyRewards({ visibleRewards, loginStreak, onDailyAction }: Dai
           isActive={visibleRewards.includes(index)}
           isFloating={reward.isFloating}
           glowColor={reward.glowColor}
+          imageClassName={reward.imageClassName} // Pass the custom image class for days 6 and 7
         >
           <div className="mt-2 text-center">
             <span className="text-xs text-white/70">{reward.reward}</span>
@@ -85,3 +88,4 @@ export function DailyRewards({ visibleRewards, loginStreak, onDailyAction }: Dai
     </div>
   );
 }
+

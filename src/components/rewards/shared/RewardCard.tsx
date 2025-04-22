@@ -11,6 +11,7 @@ export interface RewardCardProps {
   isActive: boolean;
   isFloating?: boolean;
   className?: string;
+  imageClassName?: string; // New prop for custom image styling
   children?: ReactNode;
 }
 
@@ -22,6 +23,7 @@ export function RewardCard({
   isActive = true,
   isFloating = true,
   className,
+  imageClassName, // Add this to the destructuring
   children
 }: RewardCardProps) {
   return (
@@ -44,7 +46,10 @@ export function RewardCard({
             <img 
               src={imageSrc}
               alt={title}
-              className="h-16 w-16 md:h-20 md:w-20 object-contain"
+              className={cn(
+                "h-16 w-16 md:h-20 md:w-20 object-contain", 
+                imageClassName // Allow overriding of default image classes
+              )}
             />
           </div>
         </NFTFloatingCard>
@@ -53,7 +58,10 @@ export function RewardCard({
           <img 
             src={imageSrc}
             alt={title}
-            className="h-16 w-16 md:h-20 md:w-20 object-contain"
+            className={cn(
+              "h-16 w-16 md:h-20 md:w-20 object-contain", 
+              imageClassName // Allow overriding of default image classes
+            )}
           />
         </div>
       )}
@@ -75,3 +83,4 @@ export function RewardCard({
     </div>
   );
 }
+
