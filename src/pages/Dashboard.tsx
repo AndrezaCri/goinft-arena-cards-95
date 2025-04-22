@@ -11,20 +11,20 @@ import { PackCard } from "@/components/ui/pack-card";
 const recentNFTs = [
   {
     id: "1",
-    name: "Ana Silva",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Ana",
+    name: "Julia Santos",
+    image: "/lovable-uploads/687d40f8-9816-4f77-989c-1129fd953a1e.png",
     rarity: "legendary" as const,
-    team: "Corinthians",
-    position: "Atacante",
+    team: "Arsenal Women",
+    position: "Forward",
     isNew: true,
   },
   {
     id: "2",
-    name: "Pedro Santos",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Pedro",
+    name: "Maria Silva",
+    image: "/lovable-uploads/4a6557ee-f96a-4b74-9c95-826470fd2d47.png",
     rarity: "epic" as const,
-    team: "São Paulo",
-    position: "Atacante",
+    team: "Arsenal Women",
+    position: "Midfielder",
     isNew: true,
   },
   {
