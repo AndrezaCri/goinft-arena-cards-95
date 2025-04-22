@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { PackCard } from "@/components/ui/pack-card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { NFTCard } from "@/components/ui/nft-card";
+import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 
-// Updated pack data with Portuguese translations
 const packData = [
   {
     id: "1",
@@ -45,7 +44,6 @@ const packData = [
   }
 ];
 
-// Mock data for cards in a pack
 const packCards = [
   {
     id: "wc1",
@@ -106,7 +104,6 @@ const Packs = () => {
     setOpeningPack(true);
     setRevealedCards([]);
     
-    // Simulate pack opening animation
     setTimeout(() => {
       setOpeningPack(false);
     }, 2000);
@@ -124,23 +121,32 @@ const Packs = () => {
 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-white font-orbitron text-3xl font-bold">
+      <div className="container mx-auto px-4 py-12">
+        <div className="space-y-6 mb-12">
+          <CyberpunkHeading 
+            size="xl" 
+            variant="gradient" 
+            className="text-center"
+            withLinesDecoration
+          >
             Pacotes de Cartas
-          </h1>
-          <div className="bg-goinft-card px-4 py-2 rounded-lg text-white">
-            <span className="font-orbitron">Saldo:</span>
-            <span className="font-bold ml-2">100 CHZ</span>
+          </CyberpunkHeading>
+          
+          <div className="flex justify-center">
+            <div className="bg-goinft-card px-6 py-3 rounded-xl border border-neon-purple/30 shadow-lg backdrop-blur-sm">
+              <span className="font-orbitron text-white/80">Saldo:</span>
+              <span className="font-orbitron text-neon-purple font-bold ml-3">100 CHZ</span>
+            </div>
           </div>
+          
+          <p className="text-white/70 max-w-3xl mx-auto text-center text-lg">
+            Compre pacotes para expandir sua coleção. Cada pacote contém uma seleção aleatória 
+            de cartas de jogadores com raridades variadas. Abra pacotes para revelar suas novas 
+            cartas e adicioná-las à sua coleção.
+          </p>
         </div>
         
-        <p className="text-white/70 max-w-3xl mb-8">
-          Compre pacotes para expandir sua coleção. Cada pacote contém uma seleção aleatória de cartas de jogadores com raridades variadas. 
-          Abra pacotes para revelar suas novas cartas e adicioná-las à sua coleção.
-        </p>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {packData.map((pack) => (
             <PackCard 
               key={pack.id} 
@@ -151,18 +157,17 @@ const Packs = () => {
         </div>
       </div>
       
-      {/* Pack Opening Dialog */}
       <Dialog open={dialogOpen} onOpenChange={handleCloseDialog}>
-        <DialogContent className="bg-goinft-dark border-goinft-light sm:max-w-3xl">
+        <DialogContent className="bg-goinft-dark border-neon-purple/50 sm:max-w-4xl">
           <DialogHeader>
-            <DialogTitle className="text-center text-xl font-orbitron text-white">
+            <DialogTitle className="text-center text-2xl font-orbitron bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
               {openingPack ? "Abrindo Pacote..." : "Suas Novas Cartas!"}
             </DialogTitle>
           </DialogHeader>
           
-          <div className="py-4">
+          <div className="py-6">
             {openingPack ? (
-              <div className="flex flex-col items-center justify-center py-12">
+              <div className="flex flex-col items-center justify-center py-16">
                 <div className="w-48 h-64 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl animate-pulse-glow flex items-center justify-center">
                   <img 
                     src={selectedPack?.image} 
@@ -170,8 +175,8 @@ const Packs = () => {
                     className="w-32 h-32 animate-float"
                   />
                 </div>
-                <p className="mt-6 text-white font-orbitron">
-                  Revealing your cards...
+                <p className="mt-8 text-white font-orbitron animate-pulse">
+                  Revelando suas cartas...
                 </p>
               </div>
             ) : (
@@ -183,11 +188,13 @@ const Packs = () => {
                         <NFTCard {...card} className="animate-card-reveal" />
                       ) : (
                         <div 
-                          className="aspect-[3/4] rounded-xl bg-gradient-to-r from-neon-purple to-neon-pink cursor-pointer"
                           onClick={() => handleRevealCard(index)}
+                          className="aspect-[3/4] rounded-xl bg-gradient-to-r from-neon-purple to-neon-pink cursor-pointer transform hover:scale-105 transition-all duration-300"
                         >
-                          <div className="w-full h-full bg-goinft-card m-0.5 rounded-lg flex items-center justify-center">
-                            <span className="text-white font-orbitron">Tap to Reveal</span>
+                          <div className="w-full h-full bg-goinft-card m-0.5 rounded-lg flex items-center justify-center p-4">
+                            <span className="text-white/90 font-orbitron text-center">
+                              Clique para Revelar
+                            </span>
                           </div>
                         </div>
                       )}
@@ -197,10 +204,10 @@ const Packs = () => {
                 
                 <div className="flex justify-center">
                   <Button 
-                    className="bg-gradient-to-r from-neon-purple to-neon-pink hover:opacity-90 font-orbitron px-8"
+                    className="bg-gradient-to-r from-neon-purple to-neon-pink hover:opacity-90 font-orbitron px-8 py-6"
                     onClick={handleCloseDialog}
                   >
-                    Done
+                    Concluído
                   </Button>
                 </div>
               </div>
@@ -213,4 +220,3 @@ const Packs = () => {
 };
 
 export default Packs;
-
