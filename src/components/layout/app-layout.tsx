@@ -1,7 +1,10 @@
+
 import { ReactNode } from "react";
 import { AppHeader } from "@/components/navigation/app-header";
 import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { NavBar } from "@/components/ui/tubelight-navbar";
+import { navigationItems } from "@/config/navigation";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -40,6 +43,9 @@ export function AppLayout({
           {children}
         </div>
       </main>
+      {!isLandingPage && (
+        <NavBar items={navigationItems} />
+      )}
     </div>
   );
 }
