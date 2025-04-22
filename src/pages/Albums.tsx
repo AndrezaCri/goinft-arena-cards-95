@@ -51,7 +51,7 @@ const albums = [
   },
 ];
 
-// Updated World Cup cards with Brazilian male football players
+// Updated cards with appropriate gender-based players
 const worldCupCards = [
   {
     id: "wc1",
@@ -73,38 +73,38 @@ const worldCupCards = [
   },
   {
     id: "wc3",
-    name: "Rodrygo",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Rodrygo",
-    rarity: "rare" as const,
-    team: "Real Madrid",
+    name: "Marta",
+    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Marta",
+    rarity: "legendary" as const,
+    team: "Orlando Pride",
     position: "Forward",
     isOwned: true,
   },
   {
     id: "wc4",
-    name: "Raphinha",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Raphinha",
+    name: "Debinha",
+    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Debinha",
     rarity: "epic" as const,
-    team: "Barcelona",
+    team: "Kansas City Current",
     position: "Forward",
     isOwned: true,
   },
   {
     id: "wc5",
-    name: "Casemiro",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Casemiro",
+    name: "Bia Zaneratto",
+    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Bia",
     rarity: "rare" as const,
-    team: "Manchester United",
-    position: "Midfielder",
+    team: "Palmeiras",
+    position: "Forward",
     isOwned: false,
   },
   {
     id: "wc6",
-    name: "Bruno Guimarães",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Bruno",
+    name: "Endrick",
+    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Endrick",
     rarity: "rare" as const,
-    team: "Newcastle",
-    position: "Midfielder",
+    team: "Palmeiras",
+    position: "Forward",
     isOwned: true,
   },
   {
@@ -118,11 +118,11 @@ const worldCupCards = [
   },
   {
     id: "wc8",
-    name: "Gabriel Jesus",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Jesus",
+    name: "Tamires",
+    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Tamires",
     rarity: "epic" as const,
-    team: "Arsenal",
-    position: "Forward",
+    team: "Corinthians",
+    position: "Defender",
     isOwned: true,
   },
 ];
