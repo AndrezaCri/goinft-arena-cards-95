@@ -107,8 +107,8 @@ const Dashboard = () => {
 
           <div className="relative w-full md:w-[500px] h-[300px]">
             <img
-              src="/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png"
-              alt="NFT Cards Collection"
+              src="/lovable-uploads/e7bd521b-75c6-4c78-817b-74fff9947c90.png"
+              alt="Soccer Player NFT Card"
               className="w-full h-full object-contain animate-float"
             />
           </div>
