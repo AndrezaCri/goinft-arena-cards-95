@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -36,7 +37,7 @@ const albums = [
   {
     id: "4",
     name: "Lendas do Futebol Feminino",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=LendasFeminino",
+    coverImage: "/lovable-uploads/12836567-9d3c-4ffd-bcb7-2522e93a89c9.png", // Updated cover image
     progress: 10,
     totalCards: 25,
     collectedCards: 2,
