@@ -1,6 +1,6 @@
-
 import { Trophy, Calendar, Star, Award } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { ShareProgressButton } from "./ShareProgressButton";
 
 interface RewardsStatsProps {
   currentTab: "daily" | "weekly" | "albums" | "rank";
@@ -94,9 +94,12 @@ export function RewardsStats({ currentTab }: RewardsStatsProps) {
   
   return (
     <div className="cyberpunk-card p-5">
-      <div className="flex items-center gap-3 mb-4">
-        {getIcon()}
-        <h3 className="font-orbitron text-white text-lg">{currentStats.label}</h3>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          {getIcon()}
+          <h3 className="font-orbitron text-white text-lg">{currentStats.label}</h3>
+        </div>
+        <ShareProgressButton />
       </div>
       
       <div className="space-y-4">
