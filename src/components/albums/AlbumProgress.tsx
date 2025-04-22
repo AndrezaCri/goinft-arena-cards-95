@@ -1,4 +1,8 @@
 
+import React from 'react';
+import { Trophy, Star, Gift } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+
 interface AlbumProgressProps {
   album: {
     id: string;
@@ -56,27 +60,45 @@ export function AlbumProgress({ album }: AlbumProgressProps) {
       </div>
       
       <div className="mt-8 p-4 bg-goinft-light/20 rounded-lg border border-neon-purple/30">
-        <h4 className="text-white font-orbitron font-bold mb-4">Recompensas do Álbum</h4>
+        <h4 className="text-white font-orbitron font-bold mb-4 flex items-center">
+          <Trophy className="mr-2 text-neon-yellow" /> Recompensas do Álbum
+        </h4>
         <ul className="space-y-3">
           <li className="flex items-center justify-between p-2 bg-goinft-card/50 rounded-lg">
-            <span className="text-white/70">50% Completo</span>
-            <span className="px-3 py-1 rounded-full bg-neon-purple/20 text-neon-purple text-xs font-medium">
+            <div className="flex items-center space-x-3">
+              <Star className="text-neon-purple" />
+              <span className="text-white/70">50% Completo</span>
+            </div>
+            <Badge variant="secondary" className="bg-neon-purple/20 text-neon-purple">
               Card Especial
-            </span>
+            </Badge>
           </li>
           <li className="flex items-center justify-between p-2 bg-goinft-card/50 rounded-lg">
-            <span className="text-white/70">75% Completo</span>
-            <span className="px-3 py-1 rounded-full bg-neon-blue/20 text-neon-blue text-xs font-medium">
+            <div className="flex items-center space-x-3">
+              <Gift className="text-neon-blue" />
+              <span className="text-white/70">75% Completo</span>
+            </div>
+            <Badge variant="secondary" className="bg-neon-blue/20 text-neon-blue">
               10 CHZ Tokens
-            </span>
+            </Badge>
           </li>
           <li className="flex items-center justify-between p-2 bg-goinft-card/50 rounded-lg">
-            <span className="text-white/70">100% Completo</span>
-            <span className="px-3 py-1 rounded-full bg-neon-pink/20 text-neon-pink text-xs font-medium">
+            <div className="flex items-center space-x-3">
+              <Trophy className="text-neon-pink" />
+              <span className="text-white/70">100% Completo</span>
+            </div>
+            <Badge variant="secondary" className="bg-neon-pink/20 text-neon-pink">
               NFT Exclusivo
-            </span>
+            </Badge>
           </li>
         </ul>
+        
+        <div className="mt-4 bg-goinft-darker/50 p-3 rounded-lg">
+          <p className="text-white/70 text-sm">
+            Complete este álbum para desbloquear recompensas especiais e mostrar 
+            sua habilidade de colecionador!
+          </p>
+        </div>
       </div>
     </div>
   );
