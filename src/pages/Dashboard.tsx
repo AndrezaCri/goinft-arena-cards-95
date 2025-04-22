@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -90,15 +91,17 @@ const Dashboard = () => {
         </div>
         
         <div className="container mx-auto px-4 h-full flex flex-col md:flex-row items-center justify-between gap-8 py-12">
-          <div className="flex-1">
-            <h1 className="text-white font-orbitron text-4xl font-bold mb-4">Bem-vindo ao GoINFT</h1>
-            <p className="text-white/70 text-lg max-w-xl mb-6">
-              Comece a colecionar cartões digitais de futebol e complete seus álbuns!
+          <div className="flex-1 text-left">
+            <h1 className="text-white font-orbitron text-5xl font-bold mb-4 bg-gradient-to-r from-neon-purple to-neon-pink bg-clip-text text-transparent">
+              Bem-vindo ao GoINFT
+            </h1>
+            <p className="text-white/70 text-lg max-w-xl mb-8 leading-relaxed">
+              Colecione cartões únicos dos seus jogadores favoritos e complete álbuns digitais exclusivos!
             </p>
             
-            <div className="inline-flex items-center gap-4 bg-goinft-card/50 backdrop-blur-sm rounded-lg py-2 px-4 border border-goinft-light/30 text-white">
-              <span className="font-orbitron">Saldo da Carteira:</span>
-              <span className="font-bold">{walletBalance} CHZ</span>
+            <div className="inline-flex items-center gap-4 bg-goinft-card/50 backdrop-blur-sm rounded-lg py-3 px-6 border border-neon-purple/20">
+              <span className="font-orbitron text-white/90">Saldo da Carteira:</span>
+              <span className="font-bold text-neon-purple">{walletBalance} CHZ</span>
             </div>
           </div>
 
@@ -114,43 +117,43 @@ const Dashboard = () => {
       
       {/* Dashboard Content */}
       <div className="container mx-auto px-4 -mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <Link to="/albums" className="bg-goinft-card rounded-xl p-6 text-center hover:bg-goinft-light/20 transition-colors">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <Link to="/albums" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Meus Álbuns</h3>
             <p className="text-white/70 text-sm mb-4">
               Visualize e complete suas coleções de álbuns
             </p>
-            <Button variant="outline" className="border-neon-purple text-white">
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Ver Álbuns
             </Button>
           </Link>
           
-          <Link to="/marketplace" className="bg-goinft-card rounded-xl p-6 text-center hover:bg-goinft-light/20 transition-colors">
+          <Link to="/marketplace" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Mercado</h3>
             <p className="text-white/70 text-sm mb-4">
               Compre, venda e troque cartas com outros
             </p>
-            <Button variant="outline" className="border-neon-purple text-white">
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Ir para o Mercado
             </Button>
           </Link>
           
-          <Link to="/packs" className="bg-goinft-card rounded-xl p-6 text-center hover:bg-goinft-light/20 transition-colors">
+          <Link to="/packs" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Comprar Pacotes</h3>
             <p className="text-white/70 text-sm mb-4">
               Obtenha novas cartas para expandir sua coleção
             </p>
-            <Button variant="outline" className="border-neon-purple text-white">
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Comprar Pacotes
             </Button>
           </Link>
           
-          <Link to="/profile" className="bg-goinft-card rounded-xl p-6 text-center hover:bg-goinft-light/20 transition-colors">
+          <Link to="/profile" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Meu Perfil</h3>
             <p className="text-white/70 text-sm mb-4">
               Visualize suas estatísticas e progresso da coleção
             </p>
-            <Button variant="outline" className="border-neon-purple text-white">
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Ver Perfil
             </Button>
           </Link>
@@ -160,12 +163,12 @@ const Dashboard = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Adições Recentes</h2>
-            <Link to="/collection" className="text-neon-purple flex items-center font-orbitron text-sm">
+            <Link to="/collection" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {recentNFTs.map((nft) => (
               <NFTCard key={nft.id} {...nft} />
             ))}
@@ -176,12 +179,12 @@ const Dashboard = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Álbuns em Destaque</h2>
-            <Link to="/albums" className="text-neon-purple flex items-center font-orbitron text-sm">
+            <Link to="/albums" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredAlbums.map((album) => (
               <AlbumCard key={album.id} {...album} />
             ))}
@@ -192,12 +195,12 @@ const Dashboard = () => {
         <section>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Pacotes em Destaque</h2>
-            <Link to="/packs" className="text-neon-purple flex items-center font-orbitron text-sm">
+            <Link to="/packs" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {featuredPacks.map((pack) => (
               <PackCard key={pack.id} {...pack} />
             ))}
