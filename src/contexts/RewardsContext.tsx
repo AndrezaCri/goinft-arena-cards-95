@@ -35,27 +35,27 @@ export function RewardsProvider({ children }: { children: React.ReactNode }) {
   const handleCompleteMission = (missionId: string) => {
     if (!completedMissions.includes(missionId)) {
       setCompletedMissions(prev => [...prev, missionId]);
-      const missionRewards = {
+      const missionRewards: Record<string, string> = {
         mission1: '30 XP',
         mission2: '50 XP',
         mission3: 'Pacote Premium',
         mission4: '100 XP',
         mission5: 'Card Lendário'
       };
-      toast.success(`Missão concluída! Você ganhou ${missionRewards[missionId as keyof typeof missionRewards]}`);
+      toast.success(`Missão concluída! Você ganhou ${missionRewards[missionId] || 'uma recompensa'}`);
     }
   };
 
   const handleCompleteAlbum = (albumId: string) => {
     if (!completedAlbums.includes(albumId)) {
       setCompletedAlbums(prev => [...prev, albumId]);
-      const albumRewards = {
+      const albumRewards: Record<string, string> = {
         album1: '10 CHZ + NFT Copa SP',
         album2: '10 CHZ + NFT Brasileirão',
         album3: '10 CHZ + NFT Libertadores',
         album4: '50 CHZ + NFT Legends'
       };
-      toast.success(`Álbum completo! Você ganhou ${albumRewards[albumId as keyof typeof albumRewards]}`);
+      toast.success(`Álbum completo! Você ganhou ${albumRewards[albumId] || 'uma recompensa'}`);
     }
   };
 

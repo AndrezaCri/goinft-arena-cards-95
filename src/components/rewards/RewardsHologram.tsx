@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
@@ -143,7 +142,7 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
                       <div className="mt-3">
                         <CyberpunkButton 
                           size="sm" 
-                          variant="accent" 
+                          variant={completedMissions.includes(`mission${index + 1}`) ? "accent" : "accent"}
                           className="text-xs"
                           onClick={() => handleAction("mission", `mission${index + 1}`)}
                           disabled={completedMissions.includes(`mission${index + 1}`)}
