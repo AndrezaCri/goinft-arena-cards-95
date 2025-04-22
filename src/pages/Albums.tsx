@@ -1,131 +1,12 @@
+
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Trophy } from "lucide-react";
-import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AlbumGrid } from "@/components/albums/AlbumGrid";
 import { AlbumDetails } from "@/components/albums/AlbumDetails";
 import { AlbumProgress } from "@/components/albums/AlbumProgress";
-
-// Mock data for albums
-const albums = [
-  {
-    id: "1",
-    name: "Paulista Feminino 2025",
-    coverImage: "/lovable-uploads/3ed65cb1-f49f-4076-be44-44a53cff5153.png",
-    progress: 35,
-    totalCards: 32,
-    collectedCards: 11,
-  },
-  {
-    id: "2",
-    name: "Copa do Brasil 2000",
-    coverImage: "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
-    progress: 20,
-    totalCards: 40,
-    collectedCards: 8,
-  },
-  {
-    id: "3",
-    name: "Sulamericana 2025",
-    coverImage: "/lovable-uploads/8959e228-6687-4e32-bf1e-849b2c9ea30c.png",
-    progress: 45,
-    totalCards: 30,
-    collectedCards: 13,
-  },
-  {
-    id: "4",
-    name: "Lendas do Futebol Feminino",
-    coverImage: "/lovable-uploads/12836567-9d3c-4ffd-bcb7-2522e93a89c9.png",
-    progress: 10,
-    totalCards: 25,
-    collectedCards: 2,
-  },
-  {
-    id: "5",
-    name: "Copa São Paulo 2025",
-    coverImage: "/lovable-uploads/fa413546-ff6e-44d1-a74a-edfe85745477.png",
-    progress: 0,
-    totalCards: 28,
-    collectedCards: 0,
-  },
-];
-
-// Updated cards with appropriate gender-based players
-const worldCupCards = [
-  {
-    id: "wc1",
-    name: "Neymar Jr",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Neymar",
-    rarity: "legendary" as const,
-    team: "Al Hilal",
-    position: "Forward",
-    isOwned: true,
-  },
-  {
-    id: "wc2",
-    name: "Vinicius Jr",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Vini",
-    rarity: "epic" as const,
-    team: "Real Madrid",
-    position: "Forward",
-    isOwned: true,
-  },
-  {
-    id: "wc3",
-    name: "Marta",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Marta",
-    rarity: "legendary" as const,
-    team: "Orlando Pride",
-    position: "Forward",
-    isOwned: true,
-  },
-  {
-    id: "wc4",
-    name: "Debinha",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Debinha",
-    rarity: "epic" as const,
-    team: "Kansas City Current",
-    position: "Forward",
-    isOwned: true,
-  },
-  {
-    id: "wc5",
-    name: "Bia Zaneratto",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Bia",
-    rarity: "rare" as const,
-    team: "Palmeiras",
-    position: "Forward",
-    isOwned: false,
-  },
-  {
-    id: "wc6",
-    name: "Endrick",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Endrick",
-    rarity: "rare" as const,
-    team: "Palmeiras",
-    position: "Forward",
-    isOwned: true,
-  },
-  {
-    id: "wc7",
-    name: "Marquinhos",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Marquinhos",
-    rarity: "rare" as const,
-    team: "PSG",
-    position: "Defender",
-    isOwned: false,
-  },
-  {
-    id: "wc8",
-    name: "Tamires",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Tamires",
-    rarity: "epic" as const,
-    team: "Corinthians",
-    position: "Defender",
-    isOwned: true,
-  },
-];
+import { AlbumHeader } from "@/components/albums/AlbumHeader";
+import { albums, worldCupCards } from "@/data/albums-mock-data";
+import type { Album } from "@/types/album";
 
 const Albums = () => {
   const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
@@ -155,42 +36,10 @@ const Albums = () => {
           <div className="absolute inset-0 bg-circuit-bg opacity-5 z-0"></div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="relative z-10">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-              <div className="flex items-center gap-4">
-                {selectedAlbum && (
-                  <Button
-                    variant="ghost"
-                    className="text-white hover:text-neon-purple transition-colors"
-                    onClick={handleBackToAlbums}
-                  >
-                    <ArrowLeft className="w-5 h-5 mr-2" />
-                    Voltar
-                  </Button>
-                )}
-                <CyberpunkHeading 
-                  size="xl"
-                  variant="gradient"
-                >
-                  {selectedAlbum ? "Visualizar Álbum" : "Meus Álbuns"}
-                </CyberpunkHeading>
-              </div>
-              
-              <TabsList className="bg-goinft-card border border-neon-purple/20">
-                {selectedAlbum && (
-                  <TabsTrigger value="all-albums" onClick={handleBackToAlbums}>
-                    Todos os Álbuns
-                  </TabsTrigger>
-                )}
-                <TabsTrigger value="album-view">
-                  {selectedAlbum ? "Ver Cards" : "Álbuns"}
-                </TabsTrigger>
-                {selectedAlbum && (
-                  <TabsTrigger value="album-progress">
-                    Progresso
-                  </TabsTrigger>
-                )}
-              </TabsList>
-            </div>
+            <AlbumHeader 
+              selectedAlbum={selectedAlbum} 
+              onBackClick={handleBackToAlbums} 
+            />
             
             <TabsContent value="all-albums" className="mt-0">
               <AlbumGrid albums={albums} onAlbumClick={handleAlbumClick} />

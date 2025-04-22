@@ -1,31 +1,9 @@
-
 import { NFTCard } from "@/components/ui/nft-card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-
-interface NFTCard {
-  id: string;
-  name: string;
-  image: string;
-  rarity: "common" | "rare" | "epic" | "legendary";
-  team: string;
-  position: string;
-  isOwned: boolean;
-}
-
-interface Album {
-  id: string;
-  name: string;
-  coverImage: string;
-  progress: number;
-  totalCards: number;
-  collectedCards: number;
-}
+import type { Album, AlbumCard } from "@/types/album";
 
 interface AlbumDetailsProps {
   album: Album;
-  cards: NFTCard[];
+  cards: AlbumCard[];
   onBack: () => void;
 }
 

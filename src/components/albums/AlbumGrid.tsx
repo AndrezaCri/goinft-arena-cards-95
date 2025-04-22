@@ -1,5 +1,5 @@
-
 import { AlbumCard } from "@/components/ui/album-card";
+import type { Album } from "@/types/album";
 
 interface Album {
   id: string;
