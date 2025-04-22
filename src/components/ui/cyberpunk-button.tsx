@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export interface CyberpunkButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "accent" | "outline";
+  variant?: "primary" | "secondary" | "accent" | "outline" | "success";
   size?: "default" | "sm" | "lg";
   glowIntensity?: "none" | "low" | "medium" | "high";
 }
@@ -23,7 +23,8 @@ const CyberpunkButton = forwardRef<HTMLButtonElement, CyberpunkButtonProps>(
       primary: "bg-gradient-to-r from-neon-purple to-neon-blue text-white border-neon-purple/50",
       secondary: "bg-gradient-to-r from-goinft-dark to-goinft-light text-white border-neon-blue/30",
       accent: "bg-gradient-to-r from-neon-green to-neon-blue text-cyber-dark border-neon-green/50",
-      outline: "bg-transparent text-white border-neon-purple"
+      outline: "bg-transparent text-white border-neon-purple",
+      success: "bg-gradient-to-r from-green-500 to-green-400 text-white border-green-500/50"
     };
     
     // Size styles

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
@@ -194,7 +195,7 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
                 </div>
                 <CyberpunkButton 
                   size="sm" 
-                  variant={completedAlbums.includes(`album${index + 1}`) ? "success" : "accent"}
+                  variant={completedAlbums.includes(`album${index + 1}`) ? "accent" : "accent"}
                   className="text-xs mt-2"
                   onClick={() => handleAction("album", `album${index + 1}`)}
                   disabled={completedAlbums.includes(`album${index + 1}`)}
