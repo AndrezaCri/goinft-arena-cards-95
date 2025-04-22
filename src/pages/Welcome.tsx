@@ -5,6 +5,7 @@ import { WalletButton } from "@/components/ui/wallet-button";
 import { WalletConnectModal } from "@/components/ui/wallet-connect-modal";
 import { CircleDollarSign, Repeat2, Trophy } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
+import { Link } from "react-router-dom";
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -20,17 +21,20 @@ const Welcome = () => {
     {
       icon: <CircleDollarSign className="w-8 h-8 text-neon-purple" />,
       title: "Colecionar",
-      description: "Compre pacotes e colecione cards NFT raros dos seus jogadores favoritos"
+      description: "Compre pacotes e colecione cards NFT raros dos seus jogadores favoritos",
+      link: "/albums"
     },
     {
       icon: <Repeat2 className="w-8 h-8 text-neon-blue" />,
       title: "Trocar",
-      description: "Troque cards com outros colecionadores para completar seu álbum"
+      description: "Troque cards com outros colecionadores para completar seu álbum",
+      link: "/marketplace"
     },
     {
       icon: <Trophy className="w-8 h-8 text-neon-pink" />,
       title: "Recompensas",
-      description: "Ganhe recompensas exclusivas completando álbuns e coleções"
+      description: "Ganhe recompensas exclusivas completando álbuns e coleções",
+      link: "/rewards"
     }
   ];
 
@@ -65,7 +69,8 @@ const Welcome = () => {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full mb-16">
           {features.map((feature, index) => (
-            <div
+            <Link
+              to={feature.link}
               key={index}
               className="relative group"
             >
@@ -79,7 +84,7 @@ const Welcome = () => {
                   {feature.description}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         
@@ -101,14 +106,9 @@ const Welcome = () => {
           </p>
         </div>
       </main>
-      
-      <WalletConnectModal
-        open={walletModalOpen}
-        onClose={() => setWalletModalOpen(false)}
-        onConnect={handleConnectWallet}
-      />
     </div>
   );
 };
 
 export default Welcome;
+
