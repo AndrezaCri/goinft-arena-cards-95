@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
@@ -91,11 +90,13 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
                       isHolographic
                       glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
                     >
-                      <img 
-                        src={`/lovable-uploads/${index === 5 ? "1cb631c9-795d-4a11-8750-3e34509f594d.png" : "506f8852-1303-4875-ae3d-6068e947cb1d.png"}`} 
-                        alt={`NFT Reward ${index + 1}`}
-                        className="h-full w-full object-cover"
-                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-goinft-card rounded-lg">
+                        <img 
+                          src={`/lovable-uploads/${index === 5 ? "1cb631c9-795d-4a11-8750-3e34509f594d.png" : "506f8852-1303-4875-ae3d-6068e947cb1d.png"}`} 
+                          alt={`NFT Reward ${index + 1}`}
+                          className="h-20 w-20 md:h-24 md:w-24 object-contain"
+                        />
+                      </div>
                     </NFTFloatingCard>
                   )}
                 </div>
