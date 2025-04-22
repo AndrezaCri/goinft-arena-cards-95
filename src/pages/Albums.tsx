@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -37,7 +36,7 @@ const albums = [
   {
     id: "4",
     name: "Lendas do Futebol Feminino",
-    coverImage: "/lovable-uploads/12836567-9d3c-4ffd-bcb7-2522e93a89c9.png", // Updated cover image
+    coverImage: "/lovable-uploads/12836567-9d3c-4ffd-bcb7-2522e93a89c9.png",
     progress: 10,
     totalCards: 25,
     collectedCards: 2,
@@ -45,7 +44,7 @@ const albums = [
   {
     id: "5",
     name: "Copa São Paulo 2025",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=CopaSaoPaulo",
+    coverImage: "/lovable-uploads/fa413546-ff6e-44d1-a74a-edfe85745477.png",
     progress: 0,
     totalCards: 28,
     collectedCards: 0,
