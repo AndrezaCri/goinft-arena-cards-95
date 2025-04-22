@@ -6,9 +6,47 @@ interface RewardsStatsProps {
   currentTab: "daily" | "weekly" | "albums" | "rank";
 }
 
+// Define more specific types for each stat category
+interface DailyStats {
+  currentStreak: number;
+  maxStreak: number;
+  progress: number;
+  label: string;
+}
+
+interface WeeklyStats {
+  completed: number;
+  total: number;
+  progress: number;
+  label: string;
+}
+
+interface AlbumsStats {
+  completed: number;
+  total: number;
+  progress: number;
+  label: string;
+}
+
+interface RankStats {
+  position: number;
+  total: number;
+  percentile: number;
+  progress: number;
+  label: string;
+}
+
+// Combined type for all possible stats
+type StatsData = {
+  daily: DailyStats;
+  weekly: WeeklyStats;
+  albums: AlbumsStats;
+  rank: RankStats;
+}
+
 export function RewardsStats({ currentTab }: RewardsStatsProps) {
   // Sample stats data - in a real app, this would come from API/context
-  const stats = {
+  const stats: StatsData = {
     daily: {
       currentStreak: 4,
       maxStreak: 7,
@@ -66,28 +104,28 @@ export function RewardsStats({ currentTab }: RewardsStatsProps) {
           {currentTab === "daily" && (
             <>
               <span className="text-white/70">Sequência atual</span>
-              <span className="font-orbitron text-white">{currentStats.currentStreak} dias</span>
+              <span className="font-orbitron text-white">{stats.daily.currentStreak} dias</span>
             </>
           )}
           
           {currentTab === "weekly" && (
             <>
               <span className="text-white/70">Missões completadas</span>
-              <span className="font-orbitron text-white">{currentStats.completed}/{currentStats.total}</span>
+              <span className="font-orbitron text-white">{stats.weekly.completed}/{stats.weekly.total}</span>
             </>
           )}
           
           {currentTab === "albums" && (
             <>
               <span className="text-white/70">Álbuns completados</span>
-              <span className="font-orbitron text-white">{currentStats.completed}/{currentStats.total}</span>
+              <span className="font-orbitron text-white">{stats.albums.completed}/{stats.albums.total}</span>
             </>
           )}
           
           {currentTab === "rank" && (
             <>
               <span className="text-white/70">Sua posição</span>
-              <span className="font-orbitron text-white">#{currentStats.position}</span>
+              <span className="font-orbitron text-white">#{stats.rank.position}</span>
             </>
           )}
         </div>
@@ -128,7 +166,7 @@ export function RewardsStats({ currentTab }: RewardsStatsProps) {
           
           {currentTab === "rank" && (
             <>
-              <span>Top {currentStats.percentile}%</span>
+              <span>Top {stats.rank.percentile}%</span>
               <span>Meta: Top 1%</span>
             </>
           )}
@@ -137,14 +175,14 @@ export function RewardsStats({ currentTab }: RewardsStatsProps) {
         {currentTab === "daily" && (
           <div className="flex justify-between items-center pt-2 border-t border-white/10">
             <span className="text-white/70">Sequência máxima</span>
-            <span className="font-orbitron text-neon-blue">{currentStats.maxStreak} dias</span>
+            <span className="font-orbitron text-neon-blue">{stats.daily.maxStreak} dias</span>
           </div>
         )}
         
         {currentTab === "rank" && (
           <div className="flex justify-between items-center pt-2 border-t border-white/10">
             <span className="text-white/70">Total de colecionadores</span>
-            <span className="font-orbitron text-white">{currentStats.total}</span>
+            <span className="font-orbitron text-white">{stats.rank.total}</span>
           </div>
         )}
       </div>
