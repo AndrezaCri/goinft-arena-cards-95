@@ -41,8 +41,8 @@ const recentNFTs = [
 const featuredAlbums = [
   {
     id: "1",
-    name: "Copa do Brasil",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=CopaDoBrasil",
+    name: "Paulista Feminino 2025",
+    coverImage: "/lovable-uploads/3ed65cb1-f49f-4076-be44-44a53cff5153.png",
     progress: 35,
     totalCards: 32,
     collectedCards: 11,
@@ -50,7 +50,7 @@ const featuredAlbums = [
   {
     id: "2",
     name: "Copa São Paulo",
-    coverImage: "https://placehold.co/800x600/1a1f2c/ffffff?text=CopaSaoPaulo",
+    coverImage: "/lovable-uploads/fa413546-ff6e-44d1-a74a-edfe85745477.png",
     progress: 20,
     totalCards: 40,
     collectedCards: 8,

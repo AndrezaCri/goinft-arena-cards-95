@@ -1,17 +1,9 @@
-import { AlbumCard } from "@/components/ui/album-card";
-import type { Album } from "@/types/album";
 
-interface Album {
-  id: string;
-  name: string;
-  coverImage: string;
-  progress: number;
-  totalCards: number;
-  collectedCards: number;
-}
+import { AlbumCard } from "@/components/ui/album-card";
+import type { Album as AlbumType } from "@/types/album";
 
 interface AlbumGridProps {
-  albums: Album[];
+  albums: AlbumType[];
   onAlbumClick: (albumId: string) => void;
 }
 
