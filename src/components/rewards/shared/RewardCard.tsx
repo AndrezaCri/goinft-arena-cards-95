@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { cn } from "@/lib/utils";
@@ -11,7 +10,8 @@ export interface RewardCardProps {
   isActive: boolean;
   isFloating?: boolean;
   className?: string;
-  imageClassName?: string; // New prop for custom image styling
+  imageClassName?: string;
+  backgroundClassName?: string;
   children?: ReactNode;
 }
 
@@ -23,7 +23,8 @@ export function RewardCard({
   isActive = true,
   isFloating = true,
   className,
-  imageClassName, // Add this to the destructuring
+  backgroundClassName,
+  imageClassName,
   children
 }: RewardCardProps) {
   return (
@@ -38,7 +39,10 @@ export function RewardCard({
       
       {isFloating ? (
         <NFTFloatingCard 
-          className="w-full" 
+          className={cn(
+            "w-full", 
+            backgroundClassName
+          )} 
           isHolographic
           glowColor={glowColor}
         >
@@ -48,19 +52,22 @@ export function RewardCard({
               alt={title}
               className={cn(
                 "h-16 w-16 md:h-20 md:w-20 object-contain", 
-                imageClassName // Allow overriding of default image classes
+                imageClassName
               )}
             />
           </div>
         </NFTFloatingCard>
       ) : (
-        <div className="bg-goinft-card rounded-lg border border-neon-blue/30 flex items-center justify-center p-4">
+        <div className={cn(
+          "bg-goinft-card rounded-lg border border-neon-blue/30 flex items-center justify-center p-4",
+          backgroundClassName
+        )}>
           <img 
             src={imageSrc}
             alt={title}
             className={cn(
               "h-16 w-16 md:h-20 md:w-20 object-contain", 
-              imageClassName // Allow overriding of default image classes
+              imageClassName
             )}
           />
         </div>
@@ -83,4 +90,3 @@ export function RewardCard({
     </div>
   );
 }
-
