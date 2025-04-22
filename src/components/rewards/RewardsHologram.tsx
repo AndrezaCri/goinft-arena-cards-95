@@ -1,7 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
+import { useRewards } from "@/contexts/RewardsContext";
 
 interface RewardsHologramProps {
   currentTab: "daily" | "weekly" | "albums" | "rank";
@@ -9,8 +9,15 @@ interface RewardsHologramProps {
 
 export function RewardsHologram({ currentTab }: RewardsHologramProps) {
   const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
+  const {
+    loginStreak,
+    completedMissions,
+    completedAlbums,
+    handleDailyLogin,
+    handleCompleteMission,
+    handleCompleteAlbum
+  } = useRewards();
   
-  // Simple animation to show rewards one by one
   useEffect(() => {
     setVisibleRewards([]);
     const showRewards = () => {
@@ -38,7 +45,20 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
     return () => clearTimeout(timeout);
   }, [currentTab]);
   
-  // Render different rewards based on the selected tab
+  const handleAction = (type: string, id: string) => {
+    switch (type) {
+      case "daily":
+        handleDailyLogin();
+        break;
+      case "mission":
+        handleCompleteMission(id);
+        break;
+      case "album":
+        handleCompleteAlbum(id);
+        break;
+    }
+  };
+
   const renderRewards = () => {
     switch (currentTab) {
       case "daily":
@@ -83,6 +103,15 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
                     {index < 5 ? `${[5, 10, 15, 20, 25][index % 5]} CHZ` : index === 5 ? "NFT Raro" : "NFT Lendário"}
                   </span>
                 </div>
+                <CyberpunkButton
+                  size="sm"
+                  variant={index <= loginStreak ? "accent" : "outline"}
+                  className="text-xs"
+                  onClick={() => index === loginStreak && handleAction("daily", `day${index + 1}`)}
+                  disabled={index !== loginStreak}
+                >
+                  {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
+                </CyberpunkButton>
               </div>
             ))}
           </div>
@@ -115,8 +144,10 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
                           size="sm" 
                           variant="accent" 
                           className="text-xs"
+                          onClick={() => handleAction("mission", `mission${index + 1}`)}
+                          disabled={completedMissions.includes(`mission${index + 1}`)}
                         >
-                          Iniciar
+                          {completedMissions.includes(`mission${index + 1}`) ? "Completo" : "Iniciar"}
                         </CyberpunkButton>
                       </div>
                     </div>
@@ -161,6 +192,15 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
                     </span>
                   </div>
                 </div>
+                <CyberpunkButton 
+                  size="sm" 
+                  variant={completedAlbums.includes(`album${index + 1}`) ? "success" : "accent"}
+                  className="text-xs mt-2"
+                  onClick={() => handleAction("album", `album${index + 1}`)}
+                  disabled={completedAlbums.includes(`album${index + 1}`)}
+                >
+                  {completedAlbums.includes(`album${index + 1}`) ? "Coletado" : "Coletar Recompensa"}
+                </CyberpunkButton>
               </div>
             ))}
           </div>
@@ -222,7 +262,6 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
     <div className="min-h-[400px]">
       <h3 className="font-orbitron text-lg text-white">Recompensas</h3>
       <div className="relative mt-2">
-        {/* Holographic effects */}
         <div className="absolute inset-0 bg-circuit-pattern opacity-10 pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-neon-purple/5 to-transparent pointer-events-none"></div>
         
