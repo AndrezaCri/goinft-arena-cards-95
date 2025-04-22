@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Wallet } from "lucide-react";
+import { WalletMinimal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface WalletButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -37,6 +37,7 @@ export function WalletButton({
 
   return (
     <Button
+      size="sm"  // Make the button smaller
       className={cn(
         "font-orbitron font-medium relative overflow-hidden",
         "before:absolute before:inset-0 before:bg-black/10 before:opacity-0 hover:before:opacity-100 before:transition",
@@ -45,8 +46,9 @@ export function WalletButton({
       )}
       {...props}
     >
-      <Wallet className="mr-2 h-4 w-4" />
-      {children || (isConnected && walletAddress ? formatAddress(walletAddress) : "Connect Wallet")}
+      <WalletMinimal className="mr-1 h-3 w-3" />  {/* Smaller icon */}
+      {children || (isConnected && walletAddress ? formatAddress(walletAddress) : "Wallet")}  {/* Shorter text */}
     </Button>
   );
 }
+
