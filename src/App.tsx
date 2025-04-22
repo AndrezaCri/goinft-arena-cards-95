@@ -13,6 +13,7 @@ import Albums from "@/pages/Albums";
 import Marketplace from "@/pages/Marketplace";
 import Packs from "@/pages/Packs";
 import Profile from "@/pages/Profile";
+import Rewards from "@/pages/Rewards";
 import NotFound from "@/pages/NotFound";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
@@ -53,6 +54,7 @@ const App = () => {
                   <Route path="/albums" element={<Albums />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/packs" element={<Packs />} />
+                  <Route path="/rewards" element={<Rewards />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
