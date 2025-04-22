@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { WalletButton } from "@/components/ui/wallet-button";
@@ -7,8 +6,8 @@ import { NFTCard } from "@/components/ui/nft-card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { Award, Trophy, Star, User } from "lucide-react";
+import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 
-// Mock data for collections
 const collections = [
   {
     id: "c1",
@@ -47,7 +46,6 @@ const collections = [
   },
 ];
 
-// Mock data for owned cards
 const ownedCards = [
   {
     id: "o1",
@@ -105,7 +103,6 @@ const ownedCards = [
   },
 ];
 
-// Mock data for achievements
 const achievements = [
   {
     id: "a1",
@@ -136,7 +133,6 @@ const achievements = [
   },
 ];
 
-// Mock data for transaction history
 const transactions = [
   {
     id: "t1",
@@ -177,26 +173,26 @@ const Profile = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
           <div className="flex-1">
-            <h1 className="text-white font-orbitron text-3xl font-bold mb-2">
-              My Profile
-            </h1>
+            <CyberpunkHeading variant="gradient" size="xl" className="mb-2">
+              Meu Perfil
+            </CyberpunkHeading>
             <p className="text-white/70">
-              Manage your collection, view stats and achievements
+              Gerencie sua coleção, veja estatísticas e conquistas
             </p>
           </div>
           
-          <div className="bg-goinft-card rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4">
+          <div className="cyberpunk-card p-4 flex flex-col sm:flex-row items-center gap-4">
             <div className="bg-goinft-darker rounded-full p-4">
-              <User className="h-8 w-8 text-white" />
+              <User className="h-8 w-8 text-neon-purple" />
             </div>
             
             <div className="text-center sm:text-left">
-              <p className="text-white/70 text-sm">Connected Wallet</p>
+              <p className="text-white/70 text-sm">Carteira Conectada</p>
               <p className="text-white font-orbitron font-medium">
                 {walletAddress}
               </p>
               <p className="text-neon-purple font-medium mt-1">
-                Balance: {walletBalance} CHZ
+                Saldo: {walletBalance} CHZ
               </p>
             </div>
             
@@ -204,81 +200,85 @@ const Profile = () => {
               variant="disconnect" 
               className="mt-2 sm:mt-0 sm:ml-4"
             >
-              Disconnect
+              Desconectar
             </WalletButton>
           </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-goinft-card rounded-xl p-4 flex flex-col items-center justify-center">
-            <span className="text-4xl font-bold text-white mb-2">
+          <div className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+            <span className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
               {ownedCards.length}
             </span>
-            <span className="text-white/70 text-sm">Total Cards</span>
+            <span className="text-white/70 text-sm font-medium">Total de Cards</span>
           </div>
           
-          <div className="bg-goinft-card rounded-xl p-4 flex flex-col items-center justify-center">
-            <span className="text-4xl font-bold text-white mb-2">
+          <div className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+            <span className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
               2
             </span>
-            <span className="text-white/70 text-sm">Albums in Progress</span>
+            <span className="text-white/70 text-sm font-medium">Álbuns em Progresso</span>
           </div>
           
-          <div className="bg-goinft-card rounded-xl p-4 flex flex-col items-center justify-center">
-            <span className="text-4xl font-bold text-white mb-2">
+          <div className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+            <span className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
               5
             </span>
-            <span className="text-white/70 text-sm">Trades Completed</span>
+            <span className="text-white/70 text-sm font-medium">Trocas Completadas</span>
           </div>
           
-          <div className="bg-goinft-card rounded-xl p-4 flex flex-col items-center justify-center">
-            <span className="text-4xl font-bold text-white mb-2">
+          <div className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+            <span className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
               3
             </span>
-            <span className="text-white/70 text-sm">Achievements Earned</span>
+            <span className="text-white/70 text-sm font-medium">Conquistas Ganhas</span>
           </div>
         </div>
         
-        <Tabs defaultValue="collection">
-          <TabsList className="bg-goinft-card mb-6">
-            <TabsTrigger value="collection">Collection</TabsTrigger>
-            <TabsTrigger value="achievements">Achievements</TabsTrigger>
-            <TabsTrigger value="history">Transaction History</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+        <Tabs defaultValue="collection" className="cyberpunk-card p-6">
+          <TabsList className="bg-goinft-darker mb-6 p-1 gap-1">
+            <TabsTrigger value="collection" className="data-[state=active]:bg-neon-purple data-[state=active]:text-white">
+              Coleção
+            </TabsTrigger>
+            <TabsTrigger value="achievements" className="data-[state=active]:bg-neon-purple data-[state=active]:text-white">
+              Conquistas
+            </TabsTrigger>
+            <TabsTrigger value="history" className="data-[state=active]:bg-neon-purple data-[state=active]:text-white">
+              Histórico
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="data-[state=active]:bg-neon-purple data-[state=active]:text-white">
+              Configurações
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="collection" className="mt-0">
             <div className="space-y-6">
               <div>
                 <h2 className="text-white font-orbitron text-xl font-bold mb-4">
-                  Collection Progress
+                  Progresso da Coleção
                 </h2>
                 
-                <div className="bg-goinft-card rounded-xl p-6">
-                  <div className="space-y-4">
-                    {collections.map((collection) => (
-                      <div key={collection.id}>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-white font-medium">{collection.name}</span>
-                          <span className="text-white/70">
-                            {collection.count}/{collection.total}
-                          </span>
-                        </div>
-                        <div className="w-full bg-goinft-darker rounded-full h-2">
-                          <div
-                            className="bg-gradient-to-r from-neon-purple to-neon-pink h-2 rounded-full"
-                            style={{ width: `${collection.progress}%` }}
-                          ></div>
-                        </div>
+                <div className="bg-goinft-darker rounded-xl p-6 space-y-4">
+                  {collections.map((collection) => (
+                    <div key={collection.id}>
+                      <div className="flex justify-between mb-1">
+                        <span className="text-white font-medium">{collection.name}</span>
+                        <span className="text-white/70">
+                          {collection.count}/{collection.total}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <Progress 
+                        value={collection.progress} 
+                        className="h-2 bg-goinft-card [&>[role=progressbar]]:bg-gradient-to-r [&>[role=progressbar]]:from-neon-purple [&>[role=progressbar]]:to-neon-blue" 
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
               
               <div>
                 <h2 className="text-white font-orbitron text-xl font-bold mb-4">
-                  My Cards
+                  Meus Cards
                 </h2>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -292,21 +292,21 @@ const Profile = () => {
           
           <TabsContent value="achievements" className="mt-0">
             <h2 className="text-white font-orbitron text-xl font-bold mb-4">
-              Achievements
+              Conquistas
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {achievements.map((achievement) => (
                 <div 
                   key={achievement.id} 
-                  className={`bg-goinft-card rounded-xl p-4 border-2 ${
+                  className={`cyberpunk-card p-4 relative overflow-hidden ${
                     achievement.completed 
-                      ? "border-neon-purple/50" 
-                      : "border-transparent"
+                      ? "border-2 border-neon-purple/50" 
+                      : "border border-neon-purple/20"
                   }`}
                 >
                   <div className="flex items-center mb-3">
-                    <div className="bg-goinft-light p-2 rounded-lg mr-3">
+                    <div className="bg-goinft-darker p-2 rounded-lg mr-3">
                       {achievement.icon}
                     </div>
                     <div>
@@ -321,24 +321,27 @@ const Profile = () => {
                   
                   <div className="mb-3">
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-white/70">Progress</span>
+                      <span className="text-white/70">Progresso</span>
                       <span className="text-white/70">{achievement.progress}%</span>
                     </div>
-                    <Progress value={achievement.progress} className="h-1.5 bg-goinft-darker" />
+                    <Progress 
+                      value={achievement.progress} 
+                      className="h-1.5 bg-goinft-darker [&>[role=progressbar]]:bg-gradient-to-r [&>[role=progressbar]]:from-neon-purple [&>[role=progressbar]]:to-neon-blue"
+                    />
                   </div>
                   
                   <div className="flex justify-between items-center">
                     <span className="text-white/70 text-sm">
-                      Reward: <span className="text-white">{achievement.reward}</span>
+                      Recompensa: <span className="text-neon-purple">{achievement.reward}</span>
                     </span>
                     
                     {achievement.completed ? (
-                      <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">
-                        Completed
+                      <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">
+                        Completado
                       </span>
                     ) : (
-                      <span className="bg-goinft-light text-white/70 px-2 py-1 rounded text-xs">
-                        In Progress
+                      <span className="bg-goinft-light text-white/70 px-2 py-1 rounded text-xs font-medium">
+                        Em Progresso
                       </span>
                     )}
                   </div>
@@ -349,22 +352,22 @@ const Profile = () => {
           
           <TabsContent value="history" className="mt-0">
             <h2 className="text-white font-orbitron text-xl font-bold mb-4">
-              Transaction History
+              Histórico de Transações
             </h2>
             
-            <div className="bg-goinft-card rounded-xl overflow-hidden">
+            <div className="bg-goinft-darker rounded-xl overflow-hidden">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-goinft-light">
-                    <TableHead className="text-white">Date</TableHead>
-                    <TableHead className="text-white">Type</TableHead>
+                  <TableRow className="border-goinft-light hover:bg-transparent">
+                    <TableHead className="text-white">Data</TableHead>
+                    <TableHead className="text-white">Tipo</TableHead>
                     <TableHead className="text-white">Item</TableHead>
-                    <TableHead className="text-white text-right">Amount (CHZ)</TableHead>
+                    <TableHead className="text-white text-right">Valor (CHZ)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {transactions.map((transaction) => (
-                    <TableRow key={transaction.id} className="border-goinft-light">
+                    <TableRow key={transaction.id} className="border-goinft-light hover:bg-goinft-card/50">
                       <TableCell className="text-white/70">
                         {transaction.date}
                       </TableCell>
@@ -401,37 +404,37 @@ const Profile = () => {
             </div>
           </TabsContent>
           
-          <TabsContent value="settings" className="mt-0">
-            <h2 className="text-white font-orbitron text-xl font-bold mb-4">
-              Account Settings
-            </h2>
-            
-            <div className="bg-goinft-card rounded-xl p-6 mb-6">
-              <h3 className="text-white font-medium mb-4">Wallet Connection</h3>
+          <TabsContent value="settings" className="mt-0 space-y-6">
+            <div className="bg-goinft-darker rounded-xl p-6">
+              <h3 className="text-white font-orbitron text-lg font-bold mb-4">
+                Conexão da Carteira
+              </h3>
               
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-goinft-darker rounded-lg">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-goinft-card rounded-lg border border-neon-purple/20">
                 <div>
                   <p className="text-white font-orbitron">
                     {walletAddress}
                   </p>
                   <p className="text-white/70 text-sm">
-                    Connected to Chiliz Chain Mainnet (Chain ID: 88888)
+                    Conectado à Chiliz Chain Mainnet (Chain ID: 88888)
                   </p>
                 </div>
                 
                 <WalletButton variant="disconnect">
-                  Disconnect
+                  Desconectar
                 </WalletButton>
               </div>
             </div>
             
-            <div className="bg-goinft-card rounded-xl p-6 mb-6">
-              <h3 className="text-white font-medium mb-4">Notifications</h3>
+            <div className="bg-goinft-darker rounded-xl p-6">
+              <h3 className="text-white font-orbitron text-lg font-bold mb-4">
+                Notificações
+              </h3>
               
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between p-4 bg-goinft-card rounded-lg border border-neon-purple/20">
                   <label className="text-white" htmlFor="trade-offers">
-                    Trade Offers
+                    Ofertas de Troca
                   </label>
                   <input
                     type="checkbox"
@@ -441,9 +444,9 @@ const Profile = () => {
                   />
                 </div>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between p-4 bg-goinft-card rounded-lg border border-neon-purple/20">
                   <label className="text-white" htmlFor="new-releases">
-                    New Pack Releases
+                    Novos Pacotes
                   </label>
                   <input
                     type="checkbox"
@@ -453,9 +456,9 @@ const Profile = () => {
                   />
                 </div>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between p-4 bg-goinft-card rounded-lg border border-neon-purple/20">
                   <label className="text-white" htmlFor="price-alerts">
-                    Price Alerts
+                    Alertas de Preço
                   </label>
                   <input
                     type="checkbox"
@@ -466,43 +469,45 @@ const Profile = () => {
               </div>
             </div>
             
-            <div className="bg-goinft-card rounded-xl p-6">
-              <h3 className="text-white font-medium mb-4">Display Settings</h3>
+            <div className="bg-goinft-darker rounded-xl p-6">
+              <h3 className="text-white font-orbitron text-lg font-bold mb-4">
+                Configurações de Exibição
+              </h3>
               
               <div className="space-y-4">
-                <div>
+                <div className="p-4 bg-goinft-card rounded-lg border border-neon-purple/20">
                   <label className="text-white block mb-2" htmlFor="card-view">
-                    Default Card View
+                    Visualização Padrão de Cards
                   </label>
                   <select
                     id="card-view"
-                    className="w-full bg-goinft-darker border-none rounded-lg p-2 text-white"
+                    className="w-full bg-goinft-darker border-none rounded-lg p-2 text-white focus:ring-neon-purple"
                   >
                     <option value="grid">Grid</option>
-                    <option value="list">List</option>
-                    <option value="compact">Compact</option>
+                    <option value="list">Lista</option>
+                    <option value="compact">Compacta</option>
                   </select>
                 </div>
                 
-                <div>
+                <div className="p-4 bg-goinft-card rounded-lg border border-neon-purple/20">
                   <label className="text-white block mb-2" htmlFor="animation">
-                    Animation Level
+                    Nível de Animação
                   </label>
                   <select
                     id="animation"
-                    className="w-full bg-goinft-darker border-none rounded-lg p-2 text-white"
+                    className="w-full bg-goinft-darker border-none rounded-lg p-2 text-white focus:ring-neon-purple"
                   >
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                    <option value="off">Off</option>
+                    <option value="high">Alto</option>
+                    <option value="medium">Médio</option>
+                    <option value="low">Baixo</option>
+                    <option value="off">Desligado</option>
                   </select>
                 </div>
               </div>
               
               <div className="mt-6">
-                <Button className="bg-gradient-to-r from-neon-purple to-neon-pink text-white">
-                  Save Settings
+                <Button className="w-full bg-gradient-to-r from-neon-purple to-neon-blue text-white hover:from-neon-blue hover:to-neon-purple transition-all duration-300">
+                  Salvar Configurações
                 </Button>
               </div>
             </div>
