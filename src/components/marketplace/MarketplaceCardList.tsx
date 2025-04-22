@@ -1,16 +1,6 @@
 
 import { NFTCard } from "@/components/ui/nft-card";
-
-interface MarketplaceCard {
-  id: string;
-  name: string;
-  image: string;
-  playerImage: string;
-  rarity: "common" | "rare" | "epic" | "legendary";
-  team: string;
-  position: string;
-  price: number;
-}
+import { MarketplaceCard } from "@/types/marketplace";
 
 interface MarketplaceCardListProps {
   cards: MarketplaceCard[];
