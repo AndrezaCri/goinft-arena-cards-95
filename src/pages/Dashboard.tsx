@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NFTCard } from "@/components/ui/nft-card";
 import { AlbumCard } from "@/components/ui/album-card";
 import { PackCard } from "@/components/ui/pack-card";
+import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 
 // Mock data for dashboard
 const recentNFTs = [
@@ -80,6 +81,11 @@ const featuredPacks = [
 
 const Dashboard = () => {
   const [walletBalance] = useState(100);
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
@@ -123,11 +129,13 @@ const Dashboard = () => {
             <p className="text-white/70 text-sm mb-4">
               Visualize e complete suas coleções de álbuns
             </p>
-            <Link to="/albums">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
-                Ver Álbuns
-              </Button>
-            </Link>
+            <CyberpunkButton 
+              variant="outline" 
+              className="w-full"
+              onClick={() => handleNavigate('/albums')}
+            >
+              Ver Álbuns
+            </CyberpunkButton>
           </div>
           
           <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
@@ -135,11 +143,13 @@ const Dashboard = () => {
             <p className="text-white/70 text-sm mb-4">
               Compre, venda e troque cartas com outros
             </p>
-            <Link to="/marketplace">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
-                Ir para o Mercado
-              </Button>
-            </Link>
+            <CyberpunkButton 
+              variant="outline" 
+              className="w-full"
+              onClick={() => handleNavigate('/marketplace')}
+            >
+              Ir para o Mercado
+            </CyberpunkButton>
           </div>
           
           <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
@@ -147,11 +157,13 @@ const Dashboard = () => {
             <p className="text-white/70 text-sm mb-4">
               Obtenha novas cartas para expandir sua coleção
             </p>
-            <Link to="/packs">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
-                Comprar Pacotes
-              </Button>
-            </Link>
+            <CyberpunkButton 
+              variant="outline" 
+              className="w-full"
+              onClick={() => handleNavigate('/packs')}
+            >
+              Comprar Pacotes
+            </CyberpunkButton>
           </div>
           
           <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
@@ -159,11 +171,13 @@ const Dashboard = () => {
             <p className="text-white/70 text-sm mb-4">
               Visualize suas estatísticas e progresso da coleção
             </p>
-            <Link to="/profile">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
-                Ver Perfil
-              </Button>
-            </Link>
+            <CyberpunkButton 
+              variant="outline" 
+              className="w-full"
+              onClick={() => handleNavigate('/profile')}
+            >
+              Ver Perfil
+            </CyberpunkButton>
           </div>
         </div>
         
@@ -171,14 +185,19 @@ const Dashboard = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Adições Recentes</h2>
-            <Link to="/albums" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
+            <div 
+              onClick={() => handleNavigate('/albums')} 
+              className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors cursor-pointer"
+            >
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
+            </div>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {recentNFTs.map((nft) => (
-              <NFTCard key={nft.id} {...nft} />
+              <div key={nft.id} onClick={() => handleNavigate('/albums')} className="cursor-pointer">
+                <NFTCard {...nft} />
+              </div>
             ))}
           </div>
         </section>
@@ -187,16 +206,19 @@ const Dashboard = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Álbuns em Destaque</h2>
-            <Link to="/albums" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
+            <div 
+              onClick={() => handleNavigate('/albums')} 
+              className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors cursor-pointer"
+            >
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredAlbums.map((album) => (
-              <Link key={album.id} to="/albums">
+              <div key={album.id} onClick={() => handleNavigate('/albums')} className="cursor-pointer">
                 <AlbumCard {...album} />
-              </Link>
+              </div>
             ))}
           </div>
         </section>
@@ -205,16 +227,19 @@ const Dashboard = () => {
         <section>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Pacotes em Destaque</h2>
-            <Link to="/packs" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
+            <div 
+              onClick={() => handleNavigate('/packs')} 
+              className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors cursor-pointer"
+            >
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {featuredPacks.map((pack) => (
-              <Link key={pack.id} to="/packs">
+              <div key={pack.id} onClick={() => handleNavigate('/packs')} className="cursor-pointer">
                 <PackCard {...pack} />
-              </Link>
+              </div>
             ))}
           </div>
         </section>
@@ -224,4 +249,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
