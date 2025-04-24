@@ -162,7 +162,7 @@ const Dashboard = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Adições Recentes</h2>
-            <Link to="/collection" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
+            <Link to="/albums" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
