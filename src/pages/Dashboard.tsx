@@ -117,45 +117,53 @@ const Dashboard = () => {
       {/* Dashboard Content */}
       <div className="container mx-auto px-4 -mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <Link to="/albums" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Meus Álbuns</h3>
             <p className="text-white/70 text-sm mb-4">
               Visualize e complete suas coleções de álbuns
             </p>
-            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
-              Ver Álbuns
-            </Button>
-          </Link>
+            <Link to="/albums">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+                Ver Álbuns
+              </Button>
+            </Link>
+          </div>
           
-          <Link to="/marketplace" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Mercado</h3>
             <p className="text-white/70 text-sm mb-4">
               Compre, venda e troque cartas com outros
             </p>
-            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
-              Ir para o Mercado
-            </Button>
-          </Link>
+            <Link to="/marketplace">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+                Ir para o Mercado
+              </Button>
+            </Link>
+          </div>
           
-          <Link to="/packs" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Comprar Pacotes</h3>
             <p className="text-white/70 text-sm mb-4">
               Obtenha novas cartas para expandir sua coleção
             </p>
-            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
-              Comprar Pacotes
-            </Button>
-          </Link>
+            <Link to="/packs">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+                Comprar Pacotes
+              </Button>
+            </Link>
+          </div>
           
-          <Link to="/profile" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Meu Perfil</h3>
             <p className="text-white/70 text-sm mb-4">
               Visualize suas estatísticas e progresso da coleção
             </p>
-            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
-              Ver Perfil
-            </Button>
-          </Link>
+            <Link to="/profile">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+                Ver Perfil
+              </Button>
+            </Link>
+          </div>
         </div>
         
         {/* Recent NFTs */}
@@ -185,7 +193,9 @@ const Dashboard = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredAlbums.map((album) => (
-              <AlbumCard key={album.id} {...album} />
+              <Link key={album.id} to="/albums">
+                <AlbumCard {...album} />
+              </Link>
             ))}
           </div>
         </section>
@@ -201,7 +211,9 @@ const Dashboard = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {featuredPacks.map((pack) => (
-              <PackCard key={pack.id} {...pack} />
+              <Link key={pack.id} to="/packs">
+                <PackCard key={pack.id} {...pack} />
+              </Link>
             ))}
           </div>
         </section>
