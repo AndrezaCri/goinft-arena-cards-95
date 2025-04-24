@@ -1,12 +1,10 @@
-
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NFTCard } from "@/components/ui/nft-card";
 import { AlbumCard } from "@/components/ui/album-card";
 import { PackCard } from "@/components/ui/pack-card";
-import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 
 // Mock data for dashboard
 const recentNFTs = [
@@ -81,11 +79,6 @@ const featuredPacks = [
 
 const Dashboard = () => {
   const [walletBalance] = useState(100);
-  const navigate = useNavigate();
-
-  const handleNavigate = (path: string) => {
-    navigate(path);
-  };
 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
@@ -124,80 +117,59 @@ const Dashboard = () => {
       {/* Dashboard Content */}
       <div className="container mx-auto px-4 -mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <Link to="/albums" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Meus Álbuns</h3>
             <p className="text-white/70 text-sm mb-4">
               Visualize e complete suas coleções de álbuns
             </p>
-            <CyberpunkButton 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleNavigate('/albums')}
-            >
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Ver Álbuns
-            </CyberpunkButton>
-          </div>
+            </Button>
+          </Link>
           
-          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <Link to="/marketplace" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Mercado</h3>
             <p className="text-white/70 text-sm mb-4">
               Compre, venda e troque cartas com outros
             </p>
-            <CyberpunkButton 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleNavigate('/marketplace')}
-            >
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Ir para o Mercado
-            </CyberpunkButton>
-          </div>
+            </Button>
+          </Link>
           
-          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <Link to="/packs" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Comprar Pacotes</h3>
             <p className="text-white/70 text-sm mb-4">
               Obtenha novas cartas para expandir sua coleção
             </p>
-            <CyberpunkButton 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleNavigate('/packs')}
-            >
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Comprar Pacotes
-            </CyberpunkButton>
-          </div>
+            </Button>
+          </Link>
           
-          <div className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
+          <Link to="/profile" className="cyberpunk-card p-6 text-center hover:scale-105 transition-all duration-300">
             <h3 className="text-white font-orbitron text-lg font-bold mb-2">Meu Perfil</h3>
             <p className="text-white/70 text-sm mb-4">
               Visualize suas estatísticas e progresso da coleção
             </p>
-            <CyberpunkButton 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleNavigate('/profile')}
-            >
+            <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
               Ver Perfil
-            </CyberpunkButton>
-          </div>
+            </Button>
+          </Link>
         </div>
         
         {/* Recent NFTs */}
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Adições Recentes</h2>
-            <div 
-              onClick={() => handleNavigate('/albums')} 
-              className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors cursor-pointer"
-            >
+            <Link to="/collection" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
-            </div>
+            </Link>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {recentNFTs.map((nft) => (
-              <div key={nft.id} onClick={() => handleNavigate('/albums')} className="cursor-pointer">
-                <NFTCard {...nft} />
-              </div>
+              <NFTCard key={nft.id} {...nft} />
             ))}
           </div>
         </section>
@@ -206,19 +178,14 @@ const Dashboard = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Álbuns em Destaque</h2>
-            <div 
-              onClick={() => handleNavigate('/albums')} 
-              className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors cursor-pointer"
-            >
+            <Link to="/albums" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
-            </div>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredAlbums.map((album) => (
-              <div key={album.id} onClick={() => handleNavigate('/albums')} className="cursor-pointer">
-                <AlbumCard {...album} />
-              </div>
+              <AlbumCard key={album.id} {...album} />
             ))}
           </div>
         </section>
@@ -227,19 +194,14 @@ const Dashboard = () => {
         <section>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-white font-orbitron text-2xl font-bold">Pacotes em Destaque</h2>
-            <div 
-              onClick={() => handleNavigate('/packs')} 
-              className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors cursor-pointer"
-            >
+            <Link to="/packs" className="text-neon-purple flex items-center font-orbitron text-sm hover:text-neon-pink transition-colors">
               Ver Todos <ArrowRight className="ml-1 h-4 w-4" />
-            </div>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {featuredPacks.map((pack) => (
-              <div key={pack.id} onClick={() => handleNavigate('/packs')} className="cursor-pointer">
-                <PackCard {...pack} />
-              </div>
+              <PackCard key={pack.id} {...pack} />
             ))}
           </div>
         </section>
