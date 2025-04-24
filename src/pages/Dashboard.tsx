@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -123,7 +124,7 @@ const Dashboard = () => {
               Visualize e complete suas coleções de álbuns
             </p>
             <Link to="/albums">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
                 Ver Álbuns
               </Button>
             </Link>
@@ -135,7 +136,7 @@ const Dashboard = () => {
               Compre, venda e troque cartas com outros
             </p>
             <Link to="/marketplace">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
                 Ir para o Mercado
               </Button>
             </Link>
@@ -147,7 +148,7 @@ const Dashboard = () => {
               Obtenha novas cartas para expandir sua coleção
             </p>
             <Link to="/packs">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
                 Comprar Pacotes
               </Button>
             </Link>
@@ -159,7 +160,7 @@ const Dashboard = () => {
               Visualize suas estatísticas e progresso da coleção
             </p>
             <Link to="/profile">
-              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20">
+              <Button variant="outline" className="border-neon-purple text-white hover:bg-neon-purple/20 w-full">
                 Ver Perfil
               </Button>
             </Link>
@@ -212,7 +213,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {featuredPacks.map((pack) => (
               <Link key={pack.id} to="/packs">
-                <PackCard key={pack.id} {...pack} />
+                <PackCard {...pack} />
               </Link>
             ))}
           </div>
@@ -223,3 +224,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
