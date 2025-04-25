@@ -44,7 +44,7 @@ export function WalletConnectDialog({
               className="w-full flex items-center gap-4 p-4 bg-goinft-dark hover:bg-goinft-dark/80 rounded-lg transition-colors border border-neon-purple/20 hover:border-neon-purple/40"
             >
               <img
-                src="/lovable-uploads/ff3ab835-fe5b-41b4-bb26-090dd5bce1bb.png"
+                src="/lovable-uploads/21594b52-9467-4c4d-b220-93a042d17073.png"
                 alt="Wallet options"
                 className="w-full object-contain"
               />
