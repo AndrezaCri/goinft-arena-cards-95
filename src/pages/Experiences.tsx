@@ -52,7 +52,7 @@ const Experiences = () => {
                   <img
                     src={experience.image} 
                     alt={experience.title}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                    className="object-contain w-full h-48 group-hover:scale-105 transition-transform duration-300" // Changed from object-cover to object-contain and added fixed height
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
                 </div>
