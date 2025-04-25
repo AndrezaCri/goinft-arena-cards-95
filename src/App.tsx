@@ -48,7 +48,7 @@ const App = () => {
                   onDisconnectWallet={handleDisconnectWallet}
                 >
                   <Routes>
-                    <Route path="/" element={<Navigate to="/profile" replace />} />
+                    <Route path="/" element={<Index />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/experiences" element={<Experiences />} />
                     <Route path="/albums" element={<Albums />} />
