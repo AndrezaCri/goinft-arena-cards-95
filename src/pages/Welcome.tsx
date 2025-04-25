@@ -2,19 +2,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WalletButton } from "@/components/ui/wallet-button";
-import { WalletConnectModal } from "@/components/ui/wallet-connect-modal";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CircleDollarSign, Repeat2, Trophy } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
 
 const Welcome = () => {
   const navigate = useNavigate();
-  const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const [showWalletOptions, setShowWalletOptions] = useState(false);
 
-  const handleConnectWallet = (provider: string) => {
+  const handleWalletConnect = (provider: string) => {
     console.log(`Connecting with ${provider}`);
-    setWalletModalOpen(false);
-    navigate("/dashboard");
+    setShowWalletOptions(false);
+    navigate("/profile");
   };
 
   const features = [
@@ -96,7 +96,7 @@ const Welcome = () => {
                        before:absolute before:inset-0 before:bg-gradient-to-r before:from-neon-blue before:to-neon-purple 
                        before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100
                        shadow-[0_0_20px_rgba(155,135,245,0.5)] hover:shadow-[0_0_30px_rgba(155,135,245,0.8)]"
-            onClick={() => setWalletModalOpen(true)}
+            onClick={() => setShowWalletOptions(true)}
           >
             <span className="relative z-10">Conectar Carteira</span>
           </WalletButton>
@@ -106,9 +106,30 @@ const Welcome = () => {
           </p>
         </div>
       </main>
+
+      <Dialog open={showWalletOptions} onOpenChange={setShowWalletOptions}>
+        <DialogContent className="sm:max-w-md bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center mb-4">
+              CONNECT WALLET
+            </DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4">
+            <button
+              onClick={() => handleWalletConnect('metamask')}
+              className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              <img
+                src="/lovable-uploads/a9e82a68-aa26-4896-b18f-3c7b4fcdd909.png"
+                alt="Wallet options"
+                className="w-full object-contain"
+              />
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
 export default Welcome;
-
