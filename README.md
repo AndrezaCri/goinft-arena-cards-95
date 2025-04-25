@@ -109,7 +109,7 @@ Contribuições devem seguir o padrão de PRs no GitHub. Sugestões e ideias sã
 
 Quer licenciar a solução para seu clube ou investir na plataforma?
 
-🌐 [Site oficial – GoINft](https://preview--goinft-arena-cards-95.lovable.app/welcome)
+🌐 [Site oficial – GoINft](https://preview--goinft-arena-cards-95.lovable.app/)
 
 ---
 
