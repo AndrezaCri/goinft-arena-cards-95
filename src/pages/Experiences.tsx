@@ -50,7 +50,7 @@ const Experiences = () => {
               <AspectRatio ratio={16 / 9}>
                 <div className="relative w-full h-full overflow-hidden rounded-t-lg">
                   <img
-                    src={experience.image}
+                    src={experience.image} 
                     alt={experience.title}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                   />
@@ -78,3 +78,4 @@ const Experiences = () => {
 };
 
 export default Experiences;
+

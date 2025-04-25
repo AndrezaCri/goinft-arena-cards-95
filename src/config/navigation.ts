@@ -8,3 +8,4 @@ export const navigationItems: NavItem[] = [
   { name: "Mercado", url: "/marketplace", icon: Briefcase },
   { name: "Recompensas", url: "/rewards", icon: Gift },
 ];
+
