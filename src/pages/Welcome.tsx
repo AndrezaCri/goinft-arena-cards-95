@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WalletButton } from "@/components/ui/wallet-button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { WalletConnectDialog } from "@/components/ui/wallet-connect-dialog";
 import { CircleDollarSign, Repeat2, Trophy } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
@@ -11,8 +10,8 @@ const Welcome = () => {
   const navigate = useNavigate();
   const [showWalletOptions, setShowWalletOptions] = useState(false);
 
-  const handleWalletConnect = (provider: string) => {
-    console.log(`Connecting with ${provider}`);
+  const handleWalletConnect = () => {
+    console.log(`Connecting wallet`);
     setShowWalletOptions(false);
     navigate("/profile");
   };
@@ -107,27 +106,12 @@ const Welcome = () => {
         </div>
       </main>
 
-      <Dialog open={showWalletOptions} onOpenChange={setShowWalletOptions}>
-        <DialogContent className="sm:max-w-md bg-white">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center mb-4">
-              CONNECT WALLET
-            </DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <button
-              onClick={() => handleWalletConnect('metamask')}
-              className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors"
-            >
-              <img
-                src="/lovable-uploads/a9e82a68-aa26-4896-b18f-3c7b4fcdd909.png"
-                alt="Wallet options"
-                className="w-full object-contain"
-              />
-            </button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* Replace standard Dialog with our custom WalletConnectDialog */}
+      <WalletConnectDialog 
+        isOpen={showWalletOptions} 
+        onClose={() => setShowWalletOptions(false)}
+        onConnect={handleWalletConnect}
+      />
     </div>
   );
 };
