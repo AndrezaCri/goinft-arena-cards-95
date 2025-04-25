@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { WalletButton } from "@/components/ui/wallet-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NFTCard } from "@/components/ui/nft-card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { Award, Trophy, Star, User } from "lucide-react";
+import { User } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
-import { WalletConnectDialog } from "@/components/ui/wallet-connect-dialog";
 
 const collections = [{
   id: "c1",
@@ -146,19 +143,8 @@ const transactions = [{
 }];
 
 const Profile = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState("");
-
-  const handleConnect = () => {
-    setIsConnected(true);
-    setWalletAddress("0x1234...5678");
-  };
-
-  const handleDisconnect = () => {
-    setIsConnected(false);
-    setWalletAddress("");
-  };
+  const [isConnected] = useState(true);
+  const [walletAddress] = useState("0x1234...5678");
 
   return <div className="min-h-screen bg-goinft-dark pb-16">
       <div className="container mx-auto px-4 py-8">
@@ -178,20 +164,14 @@ const Profile = () => {
             </div>
             
             <div className="text-center sm:text-left">
-              {isConnected ? <>
-                  <p className="text-white/70 text-sm">Carteira Conectada</p>
-                  <p className="text-white font-orbitron font-medium">
-                    {walletAddress}
-                  </p>
-                  <p className="text-neon-purple font-medium mt-1">
-                    Saldo: 85 CHZ
-                  </p>
-                </> : <p className="text-white/70">Carteira não conectada</p>}
+              <p className="text-white/70 text-sm">Carteira Conectada</p>
+              <p className="text-white font-orbitron font-medium">
+                {walletAddress}
+              </p>
+              <p className="text-neon-purple font-medium mt-1">
+                Saldo: 85 CHZ
+              </p>
             </div>
-            
-            <WalletButton variant={isConnected ? "disconnect" : "default"} className="mt-2 sm:mt-0 sm:ml-4" onClick={isConnected ? handleDisconnect : () => setIsDialogOpen(true)}>
-              {isConnected ? "Desconectar" : "Conectar"}
-            </WalletButton>
           </div>
         </div>
         
@@ -447,8 +427,6 @@ const Profile = () => {
           </TabsContent>
         </Tabs>
       </div>
-
-      <WalletConnectDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} onConnect={handleConnect} />
     </div>;
 };
 
