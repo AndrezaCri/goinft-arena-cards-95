@@ -25,7 +25,7 @@ const experiences = [
     id: 3,
     title: "Ingressos VIP",
     description: "Desconto especial em ingressos para a final do campeonato",
-    image: "https://placehold.co/600x400/1a1f2c/ffffff?text=Tickets",
+    image: "/lovable-uploads/a2fab7d0-7400-45db-9400-0c302e08a2a9.png",
     icon: Ticket,
     date: "2024-02-10"
   }
