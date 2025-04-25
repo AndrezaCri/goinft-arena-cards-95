@@ -9,7 +9,7 @@ const experiences = [
     id: 1,
     title: "Camisa Oficial do Time",
     description: "Ganhou uma camisa oficial autografada pelo time campeão",
-    image: "https://placehold.co/600x400/1a1f2c/ffffff?text=Jersey",
+    image: "/lovable-uploads/e8f16d84-3c1d-47c8-8448-9c4979f17b2e.png",
     icon: Trophy,
     date: "2024-03-15"
   },
@@ -78,4 +78,3 @@ const Experiences = () => {
 };
 
 export default Experiences;
-
