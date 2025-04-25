@@ -48,11 +48,11 @@ const Experiences = () => {
           <Card key={experience.id} className="group bg-goinft-darker border-neon-purple/20 hover:border-neon-purple/50 transition-all duration-300">
             <CardHeader className="p-0">
               <AspectRatio ratio={16 / 9}>
-                <div className="relative w-full h-full overflow-hidden rounded-t-lg">
+                <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-t-lg">
                   <img
                     src={experience.image} 
                     alt={experience.title}
-                    className="object-contain w-full h-48 group-hover:scale-105 transition-transform duration-300" // Changed from object-cover to object-contain and added fixed height
+                    className="object-contain w-full h-64 max-h-96 group-hover:scale-105 transition-transform duration-300" // Increased height and added max-height
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
                 </div>
