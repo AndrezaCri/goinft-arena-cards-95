@@ -29,25 +29,24 @@ export function WalletConnectDialog({
       <DialogContent className="sm:max-w-md bg-goinft-darker border-neon-purple/50">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-orbitron bg-gradient-to-r from-neon-purple to-neon-pink bg-clip-text text-transparent">
-            Conectar Carteira
+            CONNECT WALLET
           </DialogTitle>
         </DialogHeader>
         
         <div className="flex flex-col items-center gap-6">
-          <div className="w-full h-64 relative overflow-hidden rounded-lg">
-            <img
-              src="/lovable-uploads/3ce718df-0800-4c07-b401-398059dd6c51.png"
-              alt="Wallet Connect"
-              className="w-full h-full object-cover"
-            />
+          <div className="w-full p-6 space-y-4">
+            {/* MetaMask Option */}
+            <button
+              onClick={handleConnect}
+              className="w-full flex items-center gap-4 p-4 bg-white hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              <img
+                src="/lovable-uploads/970f6dd1-5724-46dd-afc0-02347c445e5d.png"
+                alt="Wallet options"
+                className="w-full object-contain"
+              />
+            </button>
           </div>
-          
-          <Button
-            onClick={handleConnect}
-            className="w-full bg-gradient-to-r from-neon-purple to-neon-pink hover:from-neon-pink hover:to-neon-purple text-white font-orbitron"
-          >
-            Conectar
-          </Button>
         </div>
       </DialogContent>
     </Dialog>

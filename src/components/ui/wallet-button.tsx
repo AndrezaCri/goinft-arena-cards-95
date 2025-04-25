@@ -37,7 +37,7 @@ export function WalletButton({
 
   return (
     <Button
-      size="sm"  // Make the button smaller
+      size="sm"
       className={cn(
         "font-orbitron font-medium relative overflow-hidden",
         "before:absolute before:inset-0 before:bg-black/10 before:opacity-0 hover:before:opacity-100 before:transition",
@@ -46,9 +46,8 @@ export function WalletButton({
       )}
       {...props}
     >
-      <WalletMinimal className="mr-1 h-3 w-3" />  {/* Smaller icon */}
-      {children || (isConnected && walletAddress ? formatAddress(walletAddress) : "Wallet")}  {/* Shorter text */}
+      <WalletMinimal className="mr-1 h-3 w-3" />
+      {children || (isConnected && walletAddress ? formatAddress(walletAddress) : "Wallet")}
     </Button>
   );
 }
-
