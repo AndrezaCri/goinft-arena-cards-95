@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Award, Trophy, Star, User } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
+import { WalletConnectDialog } from "@/components/ui/wallet-connect-dialog";
 
 const collections = [
   {
@@ -167,8 +168,19 @@ const transactions = [
 ];
 
 const Profile = () => {
-  const [walletAddress] = useState("0x1234...5678");
-  const [walletBalance] = useState(85);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
+
+  const handleConnect = () => {
+    setIsConnected(true);
+    setWalletAddress("0x1234...5678");
+  };
+
+  const handleDisconnect = () => {
+    setIsConnected(false);
+    setWalletAddress("");
+  };
 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
@@ -189,20 +201,27 @@ const Profile = () => {
             </div>
             
             <div className="text-center sm:text-left">
-              <p className="text-white/70 text-sm">Carteira Conectada</p>
-              <p className="text-white font-orbitron font-medium">
-                {walletAddress}
-              </p>
-              <p className="text-neon-purple font-medium mt-1">
-                Saldo: {walletBalance} CHZ
-              </p>
+              {isConnected ? (
+                <>
+                  <p className="text-white/70 text-sm">Carteira Conectada</p>
+                  <p className="text-white font-orbitron font-medium">
+                    {walletAddress}
+                  </p>
+                  <p className="text-neon-purple font-medium mt-1">
+                    Saldo: 85 CHZ
+                  </p>
+                </>
+              ) : (
+                <p className="text-white/70">Carteira não conectada</p>
+              )}
             </div>
             
             <WalletButton 
-              variant="disconnect" 
+              variant={isConnected ? "disconnect" : "default"}
               className="mt-2 sm:mt-0 sm:ml-4"
+              onClick={isConnected ? handleDisconnect : () => setIsDialogOpen(true)}
             >
-              Desconectar
+              {isConnected ? "Desconectar" : "Conectar"}
             </WalletButton>
           </div>
         </div>
@@ -531,6 +550,12 @@ const Profile = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      <WalletConnectDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onConnect={handleConnect}
+      />
     </div>
   );
 };
