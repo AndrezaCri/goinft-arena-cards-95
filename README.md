@@ -67,20 +67,6 @@ A aplicação utiliza a **Chiliz Chain** (ID: 88888) e é voltada para fãs de f
 
 ---
 
-## 🖼️ Exemplos Visuais
-
-> ⚠️ Coloque suas imagens reais na pasta `/assets` do repositório e atualize os caminhos abaixo.
-
-### 🎮 Interface de Cards Flutuantes
-![Cards Holográficos](./assets/cards-flutuantes.png)
-
-### 🎯 Tela de Missões e Recompensas
-![Sistema de Bonificação](./assets/bonus-recompensas.png)
-
-### 🧩 Álbum com Cards NFT
-![Álbum NFT](./assets/album-nft-goinft.png)
-
----
 
 ## 🏆 Sistema de Recompensas (Resumo)
 
@@ -123,7 +109,6 @@ Contribuições devem seguir o padrão de PRs no GitHub. Sugestões e ideias sã
 
 Quer licenciar a solução para seu clube ou investir na plataforma?
 
-📧 contato@goinft.app  
 🌐 [Site oficial – GoINft](https://preview--goinft-arena-cards-95.lovable.app/welcome)
 
 ---
