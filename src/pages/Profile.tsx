@@ -161,39 +161,18 @@ const Profile = () => {
   };
 
   return <div className="min-h-screen bg-goinft-dark pb-16">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
-          <div className="flex-1">
-            <CyberpunkHeading variant="gradient" size="xl" className="mb-2">
-              Meu Perfil
-            </CyberpunkHeading>
-            <p className="text-white/70">
-              Gerencie sua coleção, veja estatísticas e conquistas
-            </p>
-          </div>
-          
-          <div className="cyberpunk-card p-4 flex flex-col sm:flex-row items-center gap-4">
-            <div className="bg-goinft-darker rounded-full p-4">
-              <User className="h-8 w-8 text-neon-purple" />
-            </div>
-            
-            <div className="text-center sm:text-left">
-              {isConnected ? <>
-                  <p className="text-white/70 text-sm">Carteira Conectada</p>
-                  <p className="text-white font-orbitron font-medium">
-                    {walletAddress}
-                  </p>
-                  <p className="text-neon-purple font-medium mt-1">
-                    Saldo: 85 CHZ
-                  </p>
-                </> : <p className="text-white/70">Carteira não conectada</p>}
-            </div>
-            
-            <WalletButton variant={isConnected ? "disconnect" : "default"} className="mt-2 sm:mt-0 sm:ml-4" onClick={isConnected ? handleDisconnect : () => setIsDialogOpen(true)}>
-              {isConnected ? "Desconectar" : "Conectar"}
-            </WalletButton>
-          </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
+        <div className="flex-1">
+          <CyberpunkHeading variant="gradient" size="xl" className="mb-2">
+            Meu Perfil
+          </CyberpunkHeading>
+          <p className="text-white/70">
+            Gerencie sua coleção, veja estatísticas e conquistas
+          </p>
         </div>
+        
+        
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
@@ -449,7 +428,8 @@ const Profile = () => {
       </div>
 
       <WalletConnectDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} onConnect={handleConnect} />
-    </div>;
+    </div>
+  </div>;
 };
 
 export default Profile;
