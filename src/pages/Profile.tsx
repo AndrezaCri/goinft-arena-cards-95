@@ -234,6 +234,12 @@ const Profile = () => {
               3
             </span>
             <span className="text-white/70 text-sm font-medium">Conquistas Ganhas</span>
+            <Link 
+              to="/experiences"
+              className="mt-2 text-neon-purple text-sm hover:text-neon-blue transition-colors"
+            >
+              Ver Experiências
+            </Link>
           </div>
         </div>
         
