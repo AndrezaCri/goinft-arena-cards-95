@@ -1,10 +1,9 @@
 
-import { LayoutDashboard, FileText, Briefcase, Gift, User, Home } from "lucide-react";
+import { FileText, Briefcase, Gift, User, Home } from "lucide-react";
 import type { NavItem } from "@/components/ui/tubelight-navbar";
 
 export const navigationItems: NavItem[] = [
   { name: "Home", url: "/", icon: Home },
-  { name: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { name: "Álbuns", url: "/albums", icon: FileText },
   { name: "Mercado", url: "/marketplace", icon: Briefcase },
   { name: "Recompensas", url: "/rewards", icon: Gift },
