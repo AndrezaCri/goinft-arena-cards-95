@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
 interface WalletConnectDialogProps {
   isOpen: boolean;
@@ -29,19 +28,23 @@ export function WalletConnectDialog({
       <DialogContent className="sm:max-w-md bg-goinft-darker border-neon-purple/50">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-orbitron bg-gradient-to-r from-neon-purple to-neon-pink bg-clip-text text-transparent">
-            CONNECT WALLET
+            CONECTE SUA CARTEIRA
           </DialogTitle>
         </DialogHeader>
         
         <div className="flex flex-col items-center gap-6">
-          <div className="w-full p-6 space-y-4">
+          <p className="text-gray-400 text-center">
+            Conecte-se com um dos nossos provedores de carteira disponíveis para continuar
+          </p>
+          
+          <div className="w-full space-y-4">
             {/* MetaMask Option */}
             <button
               onClick={handleConnect}
-              className="w-full flex items-center gap-4 p-4 bg-white hover:bg-gray-50 rounded-lg transition-colors"
+              className="w-full flex items-center gap-4 p-4 bg-goinft-dark hover:bg-goinft-dark/80 rounded-lg transition-colors border border-neon-purple/20 hover:border-neon-purple/40"
             >
               <img
-                src="/lovable-uploads/970f6dd1-5724-46dd-afc0-02347c445e5d.png"
+                src="/lovable-uploads/ff3ab835-fe5b-41b4-bb26-090dd5bce1bb.png"
                 alt="Wallet options"
                 className="w-full object-contain"
               />
