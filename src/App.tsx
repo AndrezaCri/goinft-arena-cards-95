@@ -1,11 +1,12 @@
+
 import React, { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/layout/app-layout";
-import Index from "@/pages/Index";
+import Dashboard from "@/pages/Dashboard";
 import Albums from "@/pages/Albums";
 import Marketplace from "@/pages/Marketplace";
 import Packs from "@/pages/Packs";
@@ -48,7 +49,7 @@ const App = () => {
                   onDisconnectWallet={handleDisconnectWallet}
                 >
                   <Routes>
-                    <Route path="/" element={<Index />} />
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/experiences" element={<Experiences />} />
                     <Route path="/albums" element={<Albums />} />
