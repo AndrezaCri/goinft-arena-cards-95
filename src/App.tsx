@@ -12,6 +12,7 @@ import Marketplace from "@/pages/Marketplace";
 import Packs from "@/pages/Packs";
 import Profile from "@/pages/Profile";
 import Rewards from "@/pages/Rewards";
+import Experiences from "@/pages/Experiences";
 import NotFound from "@/pages/NotFound";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { RewardsProvider } from "@/contexts/RewardsContext";
@@ -48,8 +49,9 @@ const App = () => {
                   onDisconnectWallet={handleDisconnectWallet}
                 >
                   <Routes>
-                    <Route path="/" element={<Index />} />
+                    <Route path="/" element={<Navigate to="/profile" replace />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/experiences" element={<Experiences />} />
                     <Route path="/albums" element={<Albums />} />
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/packs" element={<Packs />} />

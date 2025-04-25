@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Progress } from "@/components/ui/progress";
 import { Award, Trophy, Star, User } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
+import { Link } from "react-router-dom";
 
 const collections = [
   {
@@ -106,12 +107,13 @@ const ownedCards = [
 const achievements = [
   {
     id: "a1",
-    name: "Collector Rookie",
-    description: "Collect your first 10 cards",
+    name: "Experiências Exclusivas",
+    description: "Desbloqueie experiências únicas com seus NFTs",
     progress: 100,
     completed: true,
-    reward: "5 CHZ",
+    reward: "Ver todas",
     icon: <Trophy className="h-6 w-6 text-yellow-400" />,
+    link: "/experiences"
   },
   {
     id: "a2",
@@ -335,14 +337,23 @@ const Profile = () => {
                       Recompensa: <span className="text-neon-purple">{achievement.reward}</span>
                     </span>
                     
-                    {achievement.completed ? (
-                      <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">
-                        Completado
-                      </span>
+                    {achievement.link ? (
+                      <Link 
+                        to={achievement.link}
+                        className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium hover:bg-green-500/30 transition-colors"
+                      >
+                        Ver Experiências
+                      </Link>
                     ) : (
-                      <span className="bg-goinft-light text-white/70 px-2 py-1 rounded text-xs font-medium">
-                        Em Progresso
-                      </span>
+                      achievement.completed ? (
+                        <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">
+                          Completado
+                        </span>
+                      ) : (
+                        <span className="bg-goinft-light text-white/70 px-2 py-1 rounded text-xs font-medium">
+                          Em Progresso
+                        </span>
+                      )
                     )}
                   </div>
                 </div>
