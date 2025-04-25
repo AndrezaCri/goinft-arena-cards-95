@@ -9,6 +9,7 @@ import { Award, Trophy, Star, User } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
 import { WalletConnectDialog } from "@/components/ui/wallet-connect-dialog";
+
 const collections = [{
   id: "c1",
   name: "Rare Cards",
@@ -40,6 +41,7 @@ const collections = [{
   total: 40,
   progress: 20
 }];
+
 const ownedCards = [{
   id: "o1",
   name: "Lionel Messi",
@@ -89,6 +91,7 @@ const ownedCards = [{
   position: "Midfielder",
   isOwned: true
 }];
+
 const achievements = [{
   id: "a1",
   name: "Experiências Exclusivas",
@@ -115,6 +118,7 @@ const achievements = [{
   reward: "Exclusive NFT",
   icon: <Star className="h-6 w-6 text-purple-400" />
 }];
+
 const transactions = [{
   id: "t1",
   type: "Purchase",
@@ -140,18 +144,22 @@ const transactions = [{
   amount: 5,
   date: "2023-05-10"
 }];
+
 const Profile = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
+
   const handleConnect = () => {
     setIsConnected(true);
     setWalletAddress("0x1234...5678");
   };
+
   const handleDisconnect = () => {
     setIsConnected(false);
     setWalletAddress("");
   };
+
   return <div className="min-h-screen bg-goinft-dark pb-16">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
@@ -209,15 +217,12 @@ const Profile = () => {
             <span className="text-white/70 text-sm font-medium">Trocas Completadas</span>
           </div>
           
-          <div className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+          <Link to="/experiences" className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
             <span className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
               3
             </span>
             <span className="text-white/70 text-sm font-medium">Experiências</span>
-            <Link to="/experiences" className="mt-2 text-neon-purple text-sm hover:text-neon-blue transition-colors">
-              Ver Experiências
-            </Link>
-          </div>
+          </Link>
         </div>
         
         <Tabs defaultValue="collection" className="cyberpunk-card p-6">
@@ -446,4 +451,5 @@ const Profile = () => {
       <WalletConnectDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} onConnect={handleConnect} />
     </div>;
 };
+
 export default Profile;
