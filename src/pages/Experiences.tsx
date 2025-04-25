@@ -17,7 +17,7 @@ const experiences = [
     id: 2,
     title: "Visita ao Estádio",
     description: "Tour exclusivo pelos bastidores do estádio com os jogadores",
-    image: "https://placehold.co/600x400/1a1f2c/ffffff?text=Stadium",
+    image: "/lovable-uploads/01c12234-3e5e-44b6-9ce4-c79e8dbd242f.png",
     icon: MapPin,
     date: "2024-02-28"
   },
@@ -52,7 +52,7 @@ const Experiences = () => {
                   <img
                     src={experience.image} 
                     alt={experience.title}
-                    className="object-contain w-full h-64 max-h-96 group-hover:scale-105 transition-transform duration-300" // Increased height and added max-height
+                    className="object-contain w-full h-64 max-h-96 group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
                 </div>
