@@ -44,7 +44,7 @@ export function WalletConnectDialog({
               className="w-full flex items-center gap-4 p-4 bg-goinft-dark hover:bg-goinft-dark/80 rounded-lg transition-colors border border-neon-purple/20 hover:border-neon-purple/40"
             >
               <img
-                src="/lovable-uploads/a4e98ccc-5db6-4d13-bab4-2e05434b6b0a.png"
+                src="/lovable-uploads/5494d7e8-f6e3-4084-8ece-88815237d767.png"
                 alt="MetaMask and Phantom wallet options"
                 className="w-full object-contain"
               />
