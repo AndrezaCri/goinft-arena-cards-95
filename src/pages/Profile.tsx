@@ -3,9 +3,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NFTCard } from "@/components/ui/nft-card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { User } from "lucide-react";
+import { User, Trophy, Award, Star } from "lucide-react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
+import { WalletButton } from "@/components/ui/wallet-button";
+import { Button } from "@/components/ui/button";
 
 const collections = [{
   id: "c1",
