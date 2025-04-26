@@ -2,6 +2,7 @@
 
 [🔗 Acesse o App Web](https://preview--goinft-arena-cards-95.lovable.app/)  
 🎥 [Assista ao Vídeo de Apresentação](#)(https://drive.google.com/file/d/1ywaCgq7DU8bLEaq5NMLH7tynkaJadfDf/view?usp=drive_link)
+
 📊 [Acesse o Pitch Deck](#)(https://www.canva.com/design/DAGlBsxCACM/9SxO-skuiF0Aua6av4989g/edit?utm_content=DAGlBsxCACM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ---
