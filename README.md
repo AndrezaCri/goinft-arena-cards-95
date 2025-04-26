@@ -1,8 +1,8 @@
 # 🏟️ GoINft – O Futuro do Colecionismo Esportivo em NFT
 
 [🔗 Acesse o App Web](https://preview--goinft-arena-cards-95.lovable.app/)  
-🎥 [Assista ao Vídeo de Apresentação](#) *(link em breve)*  
-📊 [Acesse o Pitch Deck](#) *(link em breve)*  
+🎥 [Assista ao Vídeo de Apresentação](#)(https://drive.google.com/drive/folders/1aQ8teYBMt6X80E1Ah45rw2xFHIrat3R1?usp=sharing)
+📊 [Acesse o Pitch Deck](#)(https://www.canva.com/design/DAGlBsxCACM/9SxO-skuiF0Aua6av4989g/edit?utm_content=DAGlBsxCACM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ---
 
