@@ -78,6 +78,6 @@ const Albums = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Albums;
