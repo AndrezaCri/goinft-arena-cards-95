@@ -1,4 +1,3 @@
-
 import { Album, AlbumCard } from "@/types/album";
 
 export const albums: Album[] = [
@@ -6,41 +5,41 @@ export const albums: Album[] = [
     id: "1",
     name: "Paulista Feminino 2025",
     coverImage: "/lovable-uploads/3ed65cb1-f49f-4076-be44-44a53cff5153.png",
-    progress: 35,
+    progress: 100,
     totalCards: 32,
-    collectedCards: 11,
+    collectedCards: 32,
   },
   {
     id: "2",
     name: "Copa do Brasil 2000",
     coverImage: "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
-    progress: 20,
+    progress: 100,
     totalCards: 40,
-    collectedCards: 8,
+    collectedCards: 40,
   },
   {
     id: "3",
     name: "Sulamericana 2025",
     coverImage: "/lovable-uploads/8959e228-6687-4e32-bf1e-849b2c9ea30c.png",
-    progress: 45,
+    progress: 100,
     totalCards: 30,
-    collectedCards: 13,
+    collectedCards: 30,
   },
   {
     id: "4",
     name: "Lendas do Futebol Feminino",
     coverImage: "/lovable-uploads/12836567-9d3c-4ffd-bcb7-2522e93a89c9.png",
-    progress: 10,
+    progress: 100,
     totalCards: 25,
-    collectedCards: 2,
+    collectedCards: 25,
   },
   {
     id: "5",
     name: "Copa São Paulo 2025",
     coverImage: "/lovable-uploads/fa413546-ff6e-44d1-a74a-edfe85745477.png",
-    progress: 0,
+    progress: 100,
     totalCards: 28,
-    collectedCards: 0,
+    collectedCards: 28,
   },
 ];
 
