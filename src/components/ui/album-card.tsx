@@ -40,7 +40,7 @@ export function AlbumCard({
       )}
       onClick={onClick}
     >
-      <div className="relative" style={{ aspectRatio: '256/384' }}>
+      <div className="relative" style={{ aspectRatio: '230/320' }}>
         {!imageLoaded && (
           <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
         )}
@@ -54,8 +54,8 @@ export function AlbumCard({
           )}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
-          width="256"
-          height="384"
+          width="230"
+          height="320"
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

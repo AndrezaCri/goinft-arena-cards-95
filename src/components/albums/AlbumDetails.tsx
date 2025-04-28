@@ -23,7 +23,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         <div className="flex flex-col sm:flex-row gap-6 relative z-10">
           <div className="w-full sm:w-64 relative group">
             {!albumImageLoaded && (
-              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '256/384' }}></div>
+              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '230/320' }}></div>
             )}
             <img 
               src={album.coverImage} 
@@ -34,9 +34,9 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               )}
               onLoad={() => setAlbumImageLoaded(true)}
               loading="lazy"
-              width="256"
-              height="384"
-              style={{ aspectRatio: '256/384' }}
+              width="230"
+              height="320"
+              style={{ aspectRatio: '230/320' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
           </div>
@@ -94,7 +94,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         {Array.from({ length: 4 }).map((_, index) => (
           <div 
             key={`empty-${index}`} 
-            className="aspect-[256/384] rounded-xl border-2 border-dashed border-neon-purple/30 bg-goinft-card/50 flex items-center justify-center group hover:border-neon-purple/50 transition-colors duration-300"
+            className="aspect-[230/320] rounded-xl border-2 border-dashed border-neon-purple/30 bg-goinft-card/50 flex items-center justify-center group hover:border-neon-purple/50 transition-colors duration-300"
           >
             <span className="text-white/30 font-orbitron group-hover:text-white/50 transition-colors duration-300">
               Espaço Vazio
