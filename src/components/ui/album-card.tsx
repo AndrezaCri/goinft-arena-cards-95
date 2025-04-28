@@ -33,7 +33,7 @@ export function AlbumCard({
   return (
     <Card
       className={cn(
-        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[30%]",
+        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[23%]",
         "bg-goinft-card border-none hover:shadow-lg",
         !locked && "hover:scale-105",
         className

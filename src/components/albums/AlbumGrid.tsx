@@ -10,7 +10,7 @@ interface AlbumGridProps {
 
 export function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   return (
-    <div className="flex flex-wrap justify-start gap-6">
+    <div className="flex flex-wrap justify-center gap-4">
       {albums.map((album, index) => {
         const isUnlocked = index === 0 || unlockedAlbums.includes(album.id);
         
