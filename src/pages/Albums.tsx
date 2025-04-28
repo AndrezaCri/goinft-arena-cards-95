@@ -8,10 +8,12 @@ import { AlbumHeader } from "@/components/albums/AlbumHeader";
 import { albums, worldCupCards } from "@/data/albums-mock-data";
 import type { Album } from "@/types/album";
 import { AlbumStickerGrid } from "@/components/ui/album-sticker-grid";
+import { useRewards } from "@/contexts/RewardsContext";
 
 const Albums = () => {
   const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("all-albums");
+  const { completedAlbums } = useRewards();
 
   const handleAlbumClick = (albumId: string) => {
     setSelectedAlbum(albumId);
@@ -43,7 +45,11 @@ const Albums = () => {
             />
             
             <TabsContent value="all-albums" className="mt-0">
-              <AlbumGrid albums={albums} onAlbumClick={handleAlbumClick} />
+              <AlbumGrid 
+                albums={albums} 
+                onAlbumClick={handleAlbumClick}
+                unlockedAlbums={completedAlbums} 
+              />
             </TabsContent>
             
             <TabsContent value="album-view" className="mt-0">
@@ -54,7 +60,11 @@ const Albums = () => {
                   onBack={handleBackToAlbums}
                 />
               ) : (
-                <AlbumGrid albums={albums} onAlbumClick={handleAlbumClick} />
+                <AlbumGrid 
+                  albums={albums} 
+                  onAlbumClick={handleAlbumClick}
+                  unlockedAlbums={completedAlbums} 
+                />
               )}
             </TabsContent>
             

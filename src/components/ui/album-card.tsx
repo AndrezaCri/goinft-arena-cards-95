@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { Lock } from "lucide-react";
 import { useState } from "react";
 
 interface AlbumCardProps {
@@ -13,6 +14,7 @@ interface AlbumCardProps {
   collectedCards: number;
   onClick?: () => void;
   className?: string;
+  locked?: boolean;
 }
 
 export function AlbumCard({
@@ -24,6 +26,7 @@ export function AlbumCard({
   collectedCards,
   onClick,
   className,
+  locked = false,
 }: AlbumCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   
@@ -32,7 +35,7 @@ export function AlbumCard({
       className={cn(
         "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform",
         "bg-goinft-card border-none hover:shadow-lg",
-        "hover:scale-105",
+        !locked && "hover:scale-105",
         className
       )}
       onClick={onClick}
@@ -56,6 +59,15 @@ export function AlbumCard({
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        
+        {locked && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 z-10">
+            <Lock className="w-12 h-12 text-white/70" />
+            <p className="text-white font-orbitron mt-4 text-center px-4">
+              Complete as recompensas para desbloquear
+            </p>
+          </div>
+        )}
         
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h3 className="text-white font-orbitron text-xl font-bold mb-1">{name}</h3>
