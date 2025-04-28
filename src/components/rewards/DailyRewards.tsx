@@ -80,11 +80,11 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
               {index < 5 ? `${[5, 10, 15, 20, 25][index % 5]} CHZ` : index === 5 ? "NFT Raro" : "NFT Lendário"}
             </span>
           </div>
-          <div className="flex flex-row gap-1 mt-1">
+          <div className="mt-1">
             <CyberpunkButton
               size="sm"
               variant={index <= loginStreak ? "accent" : "outline"}
-              className="text-xs px-2 py-1 h-auto"
+              className="text-[10px] px-2 py-0.5 h-6 min-h-0 min-w-0"
               onClick={() => index === loginStreak && handleDailyLogin()}
               disabled={index !== loginStreak}
             >

@@ -36,39 +36,40 @@ export function ShareProgressButton() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="bg-gradient-to-r from-neon-purple to-neon-blue text-white border-none hover:from-neon-blue hover:to-neon-purple transition-all duration-300"
+          size="sm"
+          className="text-[10px] px-2 py-0 h-6 bg-gradient-to-r from-neon-purple to-neon-blue text-white border-none hover:from-neon-blue hover:to-neon-purple transition-all duration-300"
         >
-          <Share className="mr-2 h-4 w-4" />
-          Compartilhar Progresso
+          <Share className="mr-1 h-3 w-3" />
+          Compartilhar
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-goinft-dark border border-neon-purple/20">
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
           onClick={() => handleShare("twitter")}
         >
-          <Twitter className="h-4 w-4" />
+          <Twitter className="h-3 w-3" />
           Twitter
         </DropdownMenuItem>
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
           onClick={() => handleShare("facebook")}
         >
-          <Facebook className="h-4 w-4" />
+          <Facebook className="h-3 w-3" />
           Facebook
         </DropdownMenuItem>
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
           onClick={() => handleShare("instagram")}
         >
-          <Instagram className="h-4 w-4" />
+          <Instagram className="h-3 w-3" />
           Instagram
         </DropdownMenuItem>
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
           onClick={() => handleShare("linkedin")}
         >
-          <Linkedin className="h-4 w-4" />
+          <Linkedin className="h-3 w-3" />
           LinkedIn
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -69,11 +69,11 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
               </span>
             </div>
           </div>
-          <div className="flex flex-row gap-2 mt-2">
+          <div className="mt-2 flex justify-center">
             <CyberpunkButton 
               size="sm" 
               variant={completedAlbums.includes(`album${index + 1}`) ? "accent" : "accent"}
-              className="text-xs px-2 py-1 h-auto"
+              className="text-[10px] px-2 py-0.5 h-6 min-h-0 min-w-0"
               onClick={() => handleCompleteAlbum(`album${index + 1}`)}
               disabled={completedAlbums.includes(`album${index + 1}`)}
             >

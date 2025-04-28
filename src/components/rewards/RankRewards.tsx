@@ -2,6 +2,7 @@
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { useState, memo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 // Optimized image component
 const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
@@ -73,6 +74,22 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
                 "Bola Autografada + Experiência Exclusiva"
               ][index]}
             </span>
+          </div>
+          <div className="mt-2 flex space-x-2 justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-[10px] px-2 py-0 h-6 min-h-0 border border-neon-purple/50 bg-goinft-dark/50 text-white hover:bg-neon-purple/20"
+            >
+              Ver Detalhes
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-[10px] px-2 py-0 h-6 min-h-0 border border-neon-blue/50 bg-goinft-dark/50 text-white hover:bg-neon-blue/20"
+            >
+              Compartilhar
+            </Button>
           </div>
         </div>
       ))}
