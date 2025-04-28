@@ -27,10 +27,6 @@ export function AlbumCard({
 }: AlbumCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   
-  // Create a smaller resolution version of the image path
-  // Since we're using external images, we'll simulate a smaller resolution
-  const optimizedImageSrc = coverImage;
-  
   return (
     <Card
       className={cn(
@@ -41,13 +37,13 @@ export function AlbumCard({
       )}
       onClick={onClick}
     >
-      <div className="relative pb-[80%]">
+      <div className="relative" style={{ aspectRatio: '256/384' }}>
         {!imageLoaded && (
           <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
         )}
         
         <img 
-          src={optimizedImageSrc} 
+          src={coverImage} 
           alt={name} 
           className={cn(
             "absolute inset-0 w-full h-full object-cover",
@@ -55,8 +51,8 @@ export function AlbumCard({
           )}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
-          width="300"
-          height="240"
+          width="256"
+          height="384"
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
