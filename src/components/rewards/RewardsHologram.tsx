@@ -4,12 +4,13 @@ import { DailyRewards } from "./DailyRewards";
 import { WeeklyMissions } from "./WeeklyMissions";
 import { AlbumRewards } from "./AlbumRewards";
 import { RankRewards } from "./RankRewards";
+import { memo } from "react";
 
 interface RewardsHologramProps {
   currentTab: "daily" | "weekly" | "albums" | "rank";
 }
 
-export function RewardsHologram({ currentTab }: RewardsHologramProps) {
+export const RewardsHologram = memo(function RewardsHologram({ currentTab }: RewardsHologramProps) {
   const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
   
   useEffect(() => {
@@ -64,4 +65,4 @@ export function RewardsHologram({ currentTab }: RewardsHologramProps) {
       </div>
     </div>
   );
-}
+});

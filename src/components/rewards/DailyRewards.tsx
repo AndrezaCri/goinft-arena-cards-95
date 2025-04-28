@@ -3,29 +3,29 @@ import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 // Optimized image component to handle loading state
-const OptimizedRewardImage = ({ src, alt, className }: { src: string, alt: string, className?: string }) => {
+const OptimizedRewardImage = memo(function OptimizedRewardImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
   const [loaded, setLoaded] = useState(false);
   
   return (
-    <>
-      {!loaded && <Skeleton className={`h-16 w-16 md:h-20 md:w-20 object-contain bg-goinft-darker/60`} />}
+    <div className="relative w-full h-full">
+      {!loaded && <Skeleton className={`absolute inset-0 h-full w-full bg-goinft-darker/60 rounded-lg`} />}
       <img 
         src={src} 
         alt={alt}
-        className={`${className} ${loaded ? '' : 'opacity-0'} transition-opacity duration-300`}
+        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 w-full h-full object-contain`}
         onLoad={() => setLoaded(true)}
         loading="lazy"
         width="80"
         height="80"
       />
-    </>
+    </div>
   );
-};
+});
 
-export function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
+export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { loginStreak, handleDailyLogin } = useRewards();
 
   // Predefine image sources to prevent recalculation on render
@@ -67,13 +67,10 @@ export function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
                 isHolographic
                 glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
               >
-                <img 
+                <OptimizedRewardImage 
                   src={index === 5 ? rewardImages[5] : rewardImages[6]}
                   alt={`NFT Reward ${index + 1}`}
                   className="h-full w-full object-cover"
-                  loading="lazy"
-                  width="140"
-                  height="200"
                 />
               </NFTFloatingCard>
             )}
@@ -83,17 +80,19 @@ export function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
               {index < 5 ? `${[5, 10, 15, 20, 25][index % 5]} CHZ` : index === 5 ? "NFT Raro" : "NFT Lendário"}
             </span>
           </div>
-          <CyberpunkButton
-            size="sm"
-            variant={index <= loginStreak ? "accent" : "outline"}
-            className="text-xs"
-            onClick={() => index === loginStreak && handleDailyLogin()}
-            disabled={index !== loginStreak}
-          >
-            {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
-          </CyberpunkButton>
+          <div className="flex flex-row gap-1 mt-1">
+            <CyberpunkButton
+              size="sm"
+              variant={index <= loginStreak ? "accent" : "outline"}
+              className="text-xs px-2 py-1 h-auto"
+              onClick={() => index === loginStreak && handleDailyLogin()}
+              disabled={index !== loginStreak}
+            >
+              {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
+            </CyberpunkButton>
+          </div>
         </div>
       ))}
     </div>
   );
-}
+});

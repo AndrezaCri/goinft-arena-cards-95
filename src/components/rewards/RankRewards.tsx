@@ -1,7 +1,36 @@
 
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
+import { useState, memo } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Optimized image component
+const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
+  const [loaded, setLoaded] = useState(false);
+  
+  return (
+    <div className="relative w-full h-full">
+      {!loaded && <Skeleton className="absolute inset-0 h-40 w-40 bg-goinft-darker/60 rounded-lg" />}
+      <img 
+        src={src} 
+        alt={alt}
+        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 w-full h-full object-contain`}
+        onLoad={() => setLoaded(true)}
+        loading="lazy"
+        width="160"
+        height="160"
+      />
+    </div>
+  );
+});
 
 export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
+  // Image sources
+  const rankImages = [
+    "3ed65cb1-f49f-4076-be44-44a53cff5153.png", 
+    "784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png", 
+    "83efb069-d2ec-496b-81f2-330f7015674f.png"
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
       {Array.from({ length: 3 }).map((_, index) => (
@@ -22,11 +51,13 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
               }
             >
               <div className="absolute inset-0 flex items-center justify-center">
-                <img 
-                  src={`/lovable-uploads/${["3ed65cb1-f49f-4076-be44-44a53cff5153.png", "784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png", "83efb069-d2ec-496b-81f2-330f7015674f.png"][index]}`} 
-                  alt={`Recompensa ${index + 1}`}
-                  className="h-40 w-40 object-contain"
-                />
+                <div className="h-40 w-40">
+                  <OptimizedImage 
+                    src={`/lovable-uploads/${rankImages[index]}`} 
+                    alt={`Recompensa ${index + 1}`}
+                    className="h-40 w-40 object-contain"
+                  />
+                </div>
               </div>
             </NFTFloatingCard>
             <div className="absolute -top-4 -right-4 bg-goinft-dark border-2 border-neon-purple px-3 py-1 rounded-full font-orbitron text-white text-sm">
