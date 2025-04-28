@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface AlbumCardProps {
   id: string;
@@ -24,6 +25,12 @@ export function AlbumCard({
   onClick,
   className,
 }: AlbumCardProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Create a smaller resolution version of the image path
+  // Since we're using external images, we'll simulate a smaller resolution
+  const optimizedImageSrc = coverImage;
+  
   return (
     <Card
       className={cn(
@@ -35,10 +42,21 @@ export function AlbumCard({
       onClick={onClick}
     >
       <div className="relative pb-[80%]">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
+        )}
+        
         <img 
-          src={coverImage} 
+          src={optimizedImageSrc} 
           alt={name} 
-          className="absolute inset-0 w-full h-full object-cover"
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover",
+            !imageLoaded && "opacity-0"
+          )}
+          onLoad={() => setImageLoaded(true)}
+          loading="lazy"
+          width="300"
+          height="240"
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

@@ -1,3 +1,4 @@
+
 import { Album, AlbumCard } from "@/types/album";
 
 export const albums: Album[] = [
@@ -47,7 +48,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc1",
     name: "Neymar Jr",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Neymar",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Neymar",
     rarity: "legendary",
     team: "Al Hilal",
     position: "Forward",
@@ -56,7 +57,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc2",
     name: "Vinicius Jr",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Vini",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Vini",
     rarity: "epic",
     team: "Real Madrid",
     position: "Forward",
@@ -65,7 +66,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc3",
     name: "Marta",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Marta",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Marta",
     rarity: "legendary",
     team: "Orlando Pride",
     position: "Forward",
@@ -74,7 +75,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc4",
     name: "Debinha",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Debinha",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Debinha",
     rarity: "epic",
     team: "Kansas City Current",
     position: "Forward",
@@ -83,7 +84,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc5",
     name: "Bia Zaneratto",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Bia",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Bia",
     rarity: "rare",
     team: "Palmeiras",
     position: "Forward",
@@ -92,7 +93,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc6",
     name: "Endrick",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Endrick",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Endrick",
     rarity: "rare",
     team: "Palmeiras",
     position: "Forward",
@@ -101,7 +102,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc7",
     name: "Marquinhos",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Marquinhos",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Marquinhos",
     rarity: "rare",
     team: "PSG",
     position: "Defender",
@@ -110,7 +111,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc8",
     name: "Tamires",
-    image: "https://placehold.co/600x800/1a1f2c/ffffff?text=Tamires",
+    image: "https://placehold.co/300x400/1a1f2c/ffffff?text=Tamires",
     rarity: "epic",
     team: "Corinthians",
     position: "Defender",

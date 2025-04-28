@@ -1,5 +1,7 @@
+
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
+import { useState } from "react";
 
 interface AlbumDetailsProps {
   album: Album;
@@ -8,6 +10,8 @@ interface AlbumDetailsProps {
 }
 
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
+  const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
+
   return (
     <>
       <div className="bg-goinft-card rounded-xl p-6 mb-8 border border-neon-purple/30 relative overflow-hidden group">
@@ -17,10 +21,20 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
 
         <div className="flex flex-col sm:flex-row gap-6 relative z-10">
           <div className="w-full sm:w-64 relative group">
+            {!albumImageLoaded && (
+              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg"></div>
+            )}
             <img 
               src={album.coverImage} 
               alt={album.name}
-              className="w-full h-auto rounded-lg border border-neon-purple/30 transition-transform duration-300 group-hover:scale-[1.02]"
+              className={cn(
+                "w-full h-auto rounded-lg border border-neon-purple/30 transition-transform duration-300 group-hover:scale-[1.02]",
+                !albumImageLoaded && "opacity-0"
+              )}
+              onLoad={() => setAlbumImageLoaded(true)}
+              loading="lazy"
+              width="256"
+              height="320"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
           </div>
