@@ -2,6 +2,7 @@
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface AlbumDetailsProps {
   album: Album;
