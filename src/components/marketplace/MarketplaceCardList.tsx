@@ -1,13 +1,15 @@
 
 import { NFTCard } from "@/components/ui/nft-card";
 import { MarketplaceCard } from "@/types/marketplace";
+import { memo } from "react";
 
 interface MarketplaceCardListProps {
   cards: MarketplaceCard[];
   onCardClick: (card: MarketplaceCard) => void;
 }
 
-export function MarketplaceCardList({ cards, onCardClick }: MarketplaceCardListProps) {
+// Using memo to prevent unnecessary rerenders
+export const MarketplaceCardList = memo(function MarketplaceCardList({ cards, onCardClick }: MarketplaceCardListProps) {
   if (cards.length === 0) {
     return (
       <div className="text-center py-12 bg-goinft-card/30 rounded-xl backdrop-blur-sm border border-neon-purple/20">
@@ -34,4 +36,4 @@ export function MarketplaceCardList({ cards, onCardClick }: MarketplaceCardListP
       ))}
     </div>
   );
-}
+});

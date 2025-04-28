@@ -13,23 +13,29 @@ const STICKERS = [
     club: "La Liga",
     img: "/lovable-uploads/8fa39490-b282-4507-beb3-bf4813082d17.png",
     rarity: "legendary" as const,
+    width: 200,
+    height: 280,
   },
   {
     name: "Atlético Madrid",
     club: "La Liga",
     img: "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png",
     rarity: "epic" as const,
+    width: 200,
+    height: 280,
   },
   {
     name: "Arsenal",
     club: "Premier League",
     img: "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
     rarity: "rare" as const,
+    width: 200,
+    height: 280,
   },
 ];
 
 // Image component with loading state
-const OptimizedImage = ({ src, alt, className }: { src: string; alt: string; className?: string }) => {
+const OptimizedImage = ({ src, alt, className, width = 200, height = 280 }: { src: string; alt: string; className?: string; width?: number; height?: number }) => {
   const [loaded, setLoaded] = useState(false);
   
   return (
@@ -38,9 +44,11 @@ const OptimizedImage = ({ src, alt, className }: { src: string; alt: string; cla
       <img
         src={src}
         alt={alt}
-        className={`${className} ${loaded ? '' : 'opacity-0'}`}
+        className={`${className} ${loaded ? '' : 'opacity-0'} transition-opacity duration-300`}
         onLoad={() => setLoaded(true)}
         loading="lazy"
+        width={width}
+        height={height}
       />
     </>
   );
@@ -87,6 +95,8 @@ const Index = () => {
                       src={sticker.img}
                       alt={sticker.name}
                       className="w-full h-full object-cover"
+                      width={sticker.width}
+                      height={sticker.height}
                     />
                   </NFTFloatingCard>
                 </div>

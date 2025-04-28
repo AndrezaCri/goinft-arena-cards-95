@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { getRandomPosition, getRandomRotation, CARD_SIZES } from "@/utils/animation-utils";
 import { Skeleton } from "@/components/ui/skeleton";
-import * as React from "react"; // Add explicit React import
+import * as React from "react";
 
 interface NFTFloatingCardProps {
   className?: string;
@@ -29,18 +29,18 @@ export function NFTFloatingCard({
   const [isLoading, setIsLoading] = useState(true);
   const animationTimeoutRef = useRef<number | null>(null);
   
-  // Optimize animations by reducing frequency
+  // Reduce animation frequency to improve performance
   useEffect(() => {
     const updatePosition = () => {
       setPosition(getRandomPosition());
       setRotation(getRandomRotation());
       
-      // Schedule next update with a longer interval (reduced animation frequency)
-      animationTimeoutRef.current = window.setTimeout(updatePosition, 8000);
+      // Schedule next update with a longer interval
+      animationTimeoutRef.current = window.setTimeout(updatePosition, 10000);
     };
     
     // Initial timeout with delay
-    animationTimeoutRef.current = window.setTimeout(updatePosition, 5000);
+    animationTimeoutRef.current = window.setTimeout(updatePosition, 6000);
     
     // Cleanup
     return () => {
@@ -50,7 +50,7 @@ export function NFTFloatingCard({
     };
   }, []);
 
-  // Handle when child image is loaded
+  // Handle child image loading
   const handleImageLoaded = () => {
     setIsLoading(false);
   };
@@ -61,6 +61,7 @@ export function NFTFloatingCard({
       return React.cloneElement(child as React.ReactElement<any>, {
         onLoad: handleImageLoaded,
         loading: "lazy",
+        fetchPriority: "low",
         style: { 
           ...(child.props.style || {}),
           display: isLoading ? 'none' : 'block'
@@ -82,10 +83,11 @@ export function NFTFloatingCard({
         transition: `transform 5s ease-in-out`,
         animationDelay: delay,
         animationDuration: duration,
-        boxShadow: `0 0 20px ${glowColor}`
+        boxShadow: `0 0 20px ${glowColor}`,
+        willChange: 'transform'
       }}
     >
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-neon-purple/50 via-neon-blue/30 to-neon-purple/50 opacity-30 animate-pulse-glow" />
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-neon-purple/50 via-neon-blue/30 to-neon-purple/50 opacity-30" />
       
       <div className="relative w-full h-full rounded-lg overflow-hidden border border-neon-purple/50 flex items-center justify-center">
         {isLoading && (
@@ -100,7 +102,7 @@ export function NFTFloatingCard({
         className="absolute inset-0 opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent"
         style={{
           backgroundSize: "200% 200%",
-          animation: "card-shine 8s linear infinite",
+          animation: "card-shine 10s linear infinite",
           animationDelay: delay
         }}
       />

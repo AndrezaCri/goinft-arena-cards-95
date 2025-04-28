@@ -1,6 +1,7 @@
 
 import { AlbumCard } from "@/components/ui/album-card";
 import type { Album as AlbumType } from "@/types/album";
+import { memo } from "react";
 
 interface AlbumGridProps {
   albums: AlbumType[];
@@ -8,7 +9,8 @@ interface AlbumGridProps {
   unlockedAlbums: string[];
 }
 
-export function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
+// Using memo to prevent unnecessary rerenders
+export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {albums.map((album) => {
@@ -26,4 +28,4 @@ export function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridPro
       })}
     </div>
   );
-}
+});
