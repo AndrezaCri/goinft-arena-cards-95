@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { Trophy, Zap } from "lucide-react";
+import { Suspense, lazy } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
+// Define stickers outside component to prevent re-creation on render
 const STICKERS = [
   {
     name: "Barcelona",
@@ -24,6 +27,24 @@ const STICKERS = [
     rarity: "rare" as const,
   },
 ];
+
+// Image component with loading state
+const OptimizedImage = ({ src, alt, className }: { src: string; alt: string; className?: string }) => {
+  const [loaded, setLoaded] = useState(false);
+  
+  return (
+    <>
+      {!loaded && <Skeleton className={`${className} absolute inset-0`} />}
+      <img
+        src={src}
+        alt={alt}
+        className={`${className} ${loaded ? '' : 'opacity-0'}`}
+        onLoad={() => setLoaded(true)}
+        loading="lazy"
+      />
+    </>
+  );
+};
 
 const Index = () => {
   const navigate = useNavigate();
@@ -62,7 +83,7 @@ const Index = () => {
                         : "rgba(59,130,246,0.5)"
                     }
                   >
-                    <img
+                    <OptimizedImage
                       src={sticker.img}
                       alt={sticker.name}
                       className="w-full h-full object-cover"

@@ -1,6 +1,7 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface WalletConnectDialogProps {
   isOpen: boolean;
@@ -13,6 +14,8 @@ export function WalletConnectDialog({
   onClose,
   onConnect
 }: WalletConnectDialogProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
   const handleConnect = () => {
     onConnect();
     onClose();
@@ -28,8 +31,20 @@ export function WalletConnectDialog({
         <div className="flex flex-col items-center gap-6">
           <div className="w-full space-y-4">
             {/* MetaMask Option */}
-            <button onClick={handleConnect} className="w-full flex items-center gap-4 p-4 bg-goinft-dark hover:bg-goinft-dark/80 rounded-lg transition-colors border border-neon-purple/20 hover:border-neon-purple/40">
-              <img src="/lovable-uploads/5494d7e8-f6e3-4084-8ece-88815237d767.png" alt="MetaMask and Phantom wallet options" className="w-full object-contain" />
+            <button 
+              onClick={handleConnect} 
+              className="w-full flex items-center gap-4 p-4 bg-goinft-dark hover:bg-goinft-dark/80 rounded-lg transition-colors border border-neon-purple/20 hover:border-neon-purple/40"
+            >
+              {!imageLoaded && (
+                <Skeleton className="w-full h-[200px] bg-goinft-light/20" />
+              )}
+              <img 
+                src="/lovable-uploads/5494d7e8-f6e3-4084-8ece-88815237d767.png" 
+                alt="MetaMask and Phantom wallet options" 
+                className={`w-full object-contain ${imageLoaded ? '' : 'hidden'}`}
+                onLoad={() => setImageLoaded(true)}
+                loading="eager" // Load this immediately as it's in a dialog
+              />
             </button>
           </div>
         </div>

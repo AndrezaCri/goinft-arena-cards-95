@@ -1,7 +1,8 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { getRandomPosition, getRandomRotation, CARD_SIZES } from "@/utils/animation-utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface NFTFloatingCardProps {
   className?: string;
@@ -24,15 +25,49 @@ export function NFTFloatingCard({
 }: NFTFloatingCardProps) {
   const [position, setPosition] = useState(getRandomPosition());
   const [rotation, setRotation] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const animationTimeoutRef = useRef<number | null>(null);
   
+  // Optimize animations by reducing frequency
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updatePosition = () => {
       setPosition(getRandomPosition());
       setRotation(getRandomRotation());
-    }, 5000);
+      
+      // Schedule next update with a longer interval (reduced animation frequency)
+      animationTimeoutRef.current = window.setTimeout(updatePosition, 8000);
+    };
     
-    return () => clearInterval(interval);
+    // Initial timeout with delay
+    animationTimeoutRef.current = window.setTimeout(updatePosition, 5000);
+    
+    // Cleanup
+    return () => {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
   }, []);
+
+  // Handle when child image is loaded
+  const handleImageLoaded = () => {
+    setIsLoading(false);
+  };
+
+  // Wrap children to detect when images are loaded
+  const wrappedChildren = React.Children.map(children, child => {
+    if (React.isValidElement(child) && child.type === 'img') {
+      return React.cloneElement(child as React.ReactElement<any>, {
+        onLoad: handleImageLoaded,
+        loading: "lazy",
+        style: { 
+          ...(child.props.style || {}),
+          display: isLoading ? 'none' : 'block'
+        }
+      });
+    }
+    return child;
+  });
 
   return (
     <div 
@@ -52,7 +87,10 @@ export function NFTFloatingCard({
       <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-neon-purple/50 via-neon-blue/30 to-neon-purple/50 opacity-30 animate-pulse-glow" />
       
       <div className="relative w-full h-full rounded-lg overflow-hidden border border-neon-purple/50 flex items-center justify-center">
-        {children}
+        {isLoading && (
+          <Skeleton className="absolute inset-0 bg-goinft-darker/80" />
+        )}
+        {wrappedChildren}
       </div>
       
       <div className="absolute inset-0 bg-circuit-pattern opacity-10" />
@@ -68,4 +106,3 @@ export function NFTFloatingCard({
     </div>
   );
 }
-
