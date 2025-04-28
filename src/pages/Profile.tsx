@@ -8,6 +8,7 @@ import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Link } from "react-router-dom";
 import { WalletButton } from "@/components/ui/wallet-button";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const collections = [{
   id: "c1",
@@ -147,6 +148,7 @@ const transactions = [{
 const Profile = () => {
   const [isConnected] = useState(true);
   const [walletAddress] = useState("0x1234...5678");
+  const [experiencesLoaded, setExperiencesLoaded] = useState(false);
 
   return <div className="min-h-screen bg-goinft-dark pb-16">
       <div className="container mx-auto px-4 py-8">
@@ -200,10 +202,26 @@ const Profile = () => {
           </div>
           
           <Link to="/experiences" className="cyberpunk-card p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+            {!experiencesLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Skeleton className="w-full h-full rounded-lg bg-goinft-light/10" />
+              </div>
+            )}
             <span className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
               3
             </span>
-            <span className="text-white/70 text-sm font-medium">Experiências</span>
+            <span className="text-white/70 text-sm font-medium">
+              Experiências
+              <img 
+                src="/lovable-uploads/e8f16d84-3c1d-47c8-8448-9c4979f17b2e.png"
+                alt="Experiences preview"
+                className="hidden"
+                onLoad={() => setExperiencesLoaded(true)}
+                width="10" 
+                height="10"
+                loading="lazy"
+              />
+            </span>
           </Link>
         </div>
         
