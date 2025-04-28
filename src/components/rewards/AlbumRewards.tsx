@@ -28,12 +28,12 @@ const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { s
 export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { completedAlbums, handleCompleteAlbum } = useRewards();
 
-  // Image sources
+  // New image sources (using the uploaded football card images)
   const albumImages = [
-    "f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png", 
-    "9832dfdf-6d17-4325-8a48-c213e974b590.png", 
-    "d9140fa2-0a1d-43c3-b0a7-58d2465593b5.png", 
-    "fa413546-ff6e-44d1-a74a-edfe85745477.png"
+    "483bb85d-188b-4c59-b6dc-5e106d3762c1.png", // Palmeiras
+    "65007311-0241-4a63-8f02-9786481b17f9.png", // Portuguesa
+    "a8f39cfe-b28c-49cb-ac3b-50f4593dcefe.png", // São Paulo
+    "9f7cc95c-8f90-4672-ac10-8968c65ae5d7.png", // Corinthians
   ];
 
   return (
@@ -42,38 +42,43 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
         <div key={index} className={`flex flex-col items-center transition-opacity duration-500 ${visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'}`}>
           <div className="text-center mb-2">
             <span className="font-orbitron text-sm text-white">
-              {["Álbum Copa SP", "Álbum Brasileirão", "Álbum Libertadores", "Álbum Legends"][index]}
+              {["Álbum Palmeiras", "Álbum Portuguesa", "Álbum São Paulo", "Álbum Corinthians"][index]}
             </span>
           </div>
           <NFTFloatingCard 
             className="h-40 w-full" 
             isHolographic
-            glowColor={index === 3 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
+            glowColor={
+              index === 0 ? "rgba(0, 255, 0, 0.8)" : 
+              index === 1 ? "rgba(255, 0, 0, 0.8)" : 
+              index === 2 ? "rgba(255, 0, 0, 0.8)" : 
+              "rgba(0, 0, 255, 0.8)"
+            }
           >
             <div className="absolute inset-0 flex items-center justify-center">
               <OptimizedImage 
                 src={`/lovable-uploads/${albumImages[index]}`}
                 alt={`Álbum ${index + 1}`}
-                className="h-32 w-32 object-contain"
+                className="h-full w-full object-cover"
               />
             </div>
           </NFTFloatingCard>
           <div className="mt-3 text-center">
             <h4 className="text-white text-sm font-orbitron mb-1">Recompensa</h4>
-            <div className="flex items-center justify-center gap-2">
-              <span className="bg-goinft-dark px-2 py-1 rounded text-xs text-neon-blue">
+            <div className="flex items-center justify-center gap-1">
+              <span className="bg-goinft-dark px-1.5 py-0.5 rounded text-xs text-neon-blue">
                 {index !== 3 ? "10 CHZ" : "50 CHZ"}
               </span>
-              <span className="bg-goinft-dark px-2 py-1 rounded text-xs text-neon-green">
+              <span className="bg-goinft-dark px-1.5 py-0.5 rounded text-xs text-neon-green">
                 NFT Exclusivo
               </span>
             </div>
           </div>
-          <div className="mt-2 flex justify-center">
+          <div className="mt-1 flex space-x-1 justify-center">
             <CyberpunkButton 
-              size="sm" 
+              size="xs" 
               variant={completedAlbums.includes(`album${index + 1}`) ? "accent" : "accent"}
-              className="text-[10px] px-2 py-0.5 h-6 min-h-0 min-w-0"
+              className="px-2 py-0 h-5 min-h-0 min-w-0"
               onClick={() => handleCompleteAlbum(`album${index + 1}`)}
               disabled={completedAlbums.includes(`album${index + 1}`)}
             >

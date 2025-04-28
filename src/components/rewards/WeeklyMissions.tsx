@@ -61,9 +61,9 @@ export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] })
                 </h4>
                 <div className="mt-3 flex justify-center">
                   <CyberpunkButton 
-                    size="sm" 
+                    size="xs" 
                     variant={completedMissions.includes(`mission${index + 1}`) ? "accent" : "accent"}
-                    className="text-[10px] px-2 py-0.5 h-6 min-h-0 min-w-0"
+                    className="px-2 py-0 h-5 min-h-0 min-w-0"
                     onClick={() => handleCompleteMission(`mission${index + 1}`)}
                     disabled={completedMissions.includes(`mission${index + 1}`)}
                   >

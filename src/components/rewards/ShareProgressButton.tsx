@@ -36,10 +36,10 @@ export function ShareProgressButton() {
       <DropdownMenuTrigger asChild>
         <CyberpunkButton
           variant="primary"
-          size="sm"
-          className="text-[10px] px-2 py-0 h-6"
+          size="xs"
+          className="px-2 py-0 h-5"
         >
-          <Share className="mr-1 h-3 w-3" />
+          <Share className="mr-1 h-2 w-2" />
           Compartilhar
         </CyberpunkButton>
       </DropdownMenuTrigger>
