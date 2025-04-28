@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { getRandomPosition, getRandomRotation, CARD_SIZES } from "@/utils/animation-utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import * as React from "react"; // Add explicit React import
 
 interface NFTFloatingCardProps {
   className?: string;

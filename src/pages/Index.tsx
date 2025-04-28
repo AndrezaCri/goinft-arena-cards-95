@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { Trophy, Zap } from "lucide-react";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react"; // Added useState import
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Define stickers outside component to prevent re-creation on render
