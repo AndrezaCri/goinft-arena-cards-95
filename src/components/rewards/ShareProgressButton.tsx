@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
-import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
+import { Button } from "@/components/ui/button";
 
 export function ShareProgressButton() {
   const shareText = "🎮 Venha colecionar cards de futebol comigo no GoINft! Já tenho mais de 100 cards na minha coleção. Baixe agora e ganhe recompensas exclusivas! 🏆";
@@ -34,42 +34,41 @@ export function ShareProgressButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <CyberpunkButton
-          variant="primary"
-          size="xs"
-          className="px-2 py-0 h-5"
+        <Button
+          variant="outline"
+          className="bg-gradient-to-r from-neon-purple to-neon-blue text-white border-none hover:from-neon-blue hover:to-neon-purple transition-all duration-300"
         >
-          <Share className="mr-1 h-2 w-2" />
-          Compartilhar
-        </CyberpunkButton>
+          <Share className="mr-2 h-4 w-4" />
+          Compartilhar Progresso
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-goinft-dark border border-neon-purple/20">
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
           onClick={() => handleShare("twitter")}
         >
-          <Twitter className="h-3 w-3" />
+          <Twitter className="h-4 w-4" />
           Twitter
         </DropdownMenuItem>
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
           onClick={() => handleShare("facebook")}
         >
-          <Facebook className="h-3 w-3" />
+          <Facebook className="h-4 w-4" />
           Facebook
         </DropdownMenuItem>
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
           onClick={() => handleShare("instagram")}
         >
-          <Instagram className="h-3 w-3" />
+          <Instagram className="h-4 w-4" />
           Instagram
         </DropdownMenuItem>
         <DropdownMenuItem 
-          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer text-xs py-1"
+          className="flex items-center gap-2 text-white hover:bg-neon-purple/20 cursor-pointer"
           onClick={() => handleShare("linkedin")}
         >
-          <Linkedin className="h-3 w-3" />
+          <Linkedin className="h-4 w-4" />
           LinkedIn
         </DropdownMenuItem>
       </DropdownMenuContent>

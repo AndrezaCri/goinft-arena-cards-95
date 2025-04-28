@@ -2,7 +2,6 @@
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { useState, memo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 
 // Optimized image component
 const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
@@ -74,22 +73,6 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
                 "Bola Autografada + Experiência Exclusiva"
               ][index]}
             </span>
-          </div>
-          <div className="mt-2 flex space-x-2 justify-center">
-            <CyberpunkButton
-              variant="outline"
-              size="xs"
-              className="px-1.5 py-0 h-5 min-h-0 border border-neon-purple/50 bg-goinft-dark/50 text-white hover:bg-neon-purple/20"
-            >
-              Ver Detalhes
-            </CyberpunkButton>
-            <CyberpunkButton
-              variant="outline"
-              size="xs"
-              className="px-1.5 py-0 h-5 min-h-0 border border-neon-blue/50 bg-goinft-dark/50 text-white hover:bg-neon-blue/20"
-            >
-              Compartilhar
-            </CyberpunkButton>
           </div>
         </div>
       ))}
