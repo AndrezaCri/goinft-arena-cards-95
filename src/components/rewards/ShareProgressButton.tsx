@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 
 export function ShareProgressButton() {
   const shareText = "🎮 Venha colecionar cards de futebol comigo no GoINft! Já tenho mais de 100 cards na minha coleção. Baixe agora e ganhe recompensas exclusivas! 🏆";
@@ -34,14 +34,14 @@ export function ShareProgressButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
+        <CyberpunkButton
+          variant="primary"
           size="sm"
-          className="text-[10px] px-2 py-0 h-6 bg-gradient-to-r from-neon-purple to-neon-blue text-white border-none hover:from-neon-blue hover:to-neon-purple transition-all duration-300"
+          className="text-[10px] px-2 py-0 h-6"
         >
           <Share className="mr-1 h-3 w-3" />
           Compartilhar
-        </Button>
+        </CyberpunkButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-goinft-dark border border-neon-purple/20">
         <DropdownMenuItem 

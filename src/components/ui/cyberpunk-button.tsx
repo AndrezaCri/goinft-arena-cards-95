@@ -42,6 +42,15 @@ const CyberpunkButton = forwardRef<HTMLButtonElement, CyberpunkButtonProps>(
       high: "hover:shadow-[0_0_25px_rgba(155,135,245,0.8)]"
     };
     
+    // Hover effect for all variants (gradient swap on hover)
+    const hoverEffectByVariant = {
+      primary: "before:bg-gradient-to-r before:from-neon-blue before:to-neon-purple",
+      secondary: "before:bg-gradient-to-r before:from-goinft-light before:to-goinft-dark",
+      accent: "before:bg-gradient-to-r before:from-neon-blue before:to-neon-green",
+      outline: "before:bg-gradient-to-r before:from-neon-purple before:to-neon-blue before:bg-opacity-20",
+      success: "before:bg-gradient-to-r before:from-green-400 before:to-green-500"
+    };
+
     return (
       <button
         className={cn(
@@ -51,10 +60,11 @@ const CyberpunkButton = forwardRef<HTMLButtonElement, CyberpunkButtonProps>(
           "before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300",
           "hover:before:opacity-100 hover:scale-105",
           
-          // Variant, size and glow styles
+          // Variant, size, glow styles, and hover effect
           variantStyles[variant],
           sizeStyles[size],
           glowStyles[glowIntensity],
+          hoverEffectByVariant[variant],
           
           // Custom classes
           className
@@ -62,9 +72,6 @@ const CyberpunkButton = forwardRef<HTMLButtonElement, CyberpunkButtonProps>(
         ref={ref}
         {...props}
       >
-        {/* Hover gradient */}
-        <span className="absolute inset-0 opacity-0 bg-gradient-to-r from-neon-blue to-neon-purple transition-opacity duration-300 group-hover:opacity-100"></span>
-        
         {/* Content */}
         <span className="relative z-10">{children}</span>
       </button>
