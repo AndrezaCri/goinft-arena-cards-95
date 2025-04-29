@@ -5,9 +5,9 @@ export const albums: Album[] = [
     id: "1",
     name: "Paulista Feminino 2025",
     coverImage: "/lovable-uploads/3ed65cb1-f49f-4076-be44-44a53cff5153.png",
-    progress: 100,
-    totalCards: 32,
-    collectedCards: 32,
+    progress: 70,
+    totalCards: 12,
+    collectedCards: 8,
   },
   {
     id: "2",
