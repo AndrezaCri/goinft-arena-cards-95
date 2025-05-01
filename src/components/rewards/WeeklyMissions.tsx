@@ -46,7 +46,7 @@ export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] })
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Updated image sources with the new user-uploaded images
+  // Updated image sources with the new uploaded images
   const missionImages = [
     "41cc2534-5691-4017-9139-eabc6252d7b4.png", 
     "e6ee08c7-701b-443a-aef5-c1564bcc3bf0.png", 
@@ -202,4 +202,3 @@ export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] })
     </div>
   );
 }
-
