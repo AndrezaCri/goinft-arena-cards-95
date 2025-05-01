@@ -45,13 +45,13 @@ export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] })
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Updated image sources - using the new football player card images
+  // Updated image sources with the new images the user provided
   const missionImages = [
-    "9b9a32b3-ddb4-4e4f-8339-109e0d619734.png", 
-    "6a1095cc-dfc7-45f2-8fe8-14a4e4f84d13.png", 
-    "41748649-ead6-431c-9020-d53c932e9d0c.png", 
-    "4f41d46d-a825-4c09-ae75-3b8e7a75a998.png", 
-    "6d059f5e-11b1-459c-95bf-bd77dc3c1153.png"
+    "4263efde-699d-4758-a229-b5e15b0b60dd.png", 
+    "343ecced-bcdd-4ce6-badc-866a4c51a80a.png", 
+    "1cb631c9-795d-4a11-8750-3e34509f594d.png", 
+    "21594b52-9467-4c4d-b220-93a042d17073.png", 
+    "3ce718df-0800-4c07-b401-398059dd6c51.png"
   ];
 
   return (
