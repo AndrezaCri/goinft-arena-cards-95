@@ -4,6 +4,7 @@ import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
 import { useState, memo } from "react";
 import { OptimizedImage } from "./OptimizedImage";
+import { TouchpadIcon } from "lucide-react";
 
 export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { loginStreak, handleDailyLogin } = useRewards();
@@ -19,6 +20,15 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
     "/lovable-uploads/506f8852-1303-4875-ae3d-6068e947cb1d.png"
   ];
 
+  // Define neon colors for each card
+  const neonColors = [
+    "rgba(0, 217, 255, 0.8)",    // Azul neon
+    "rgba(155, 135, 245, 0.8)",  // Roxo neon
+    "rgba(255, 71, 225, 0.8)",   // Rosa neon
+    "rgba(255, 0, 76, 0.8)",     // Vermelho neon
+    "rgba(113, 130, 255, 0.8)",  // Azul-roxo neon
+  ];
+
   return (
     <div className="grid grid-cols-7 gap-2 mt-4 items-end">
       {Array.from({ length: 7 }).map((_, index) => (
@@ -28,14 +38,28 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
           </div>
           <div className="relative h-28 md:h-36 w-full">
             {index < 5 ? (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-goinft-card rounded-lg h-20 w-20 md:h-24 md:w-24 flex items-center justify-center border border-neon-blue/30">
+              <div 
+                className="absolute inset-0 flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-105 active:scale-95"
+                onClick={() => index === loginStreak && handleDailyLogin()}
+              >
+                <div 
+                  className="bg-goinft-card rounded-lg h-20 w-20 md:h-24 md:w-24 flex items-center justify-center relative overflow-hidden"
+                  style={{
+                    boxShadow: `0 0 15px ${neonColors[index % 5]}`,
+                    border: `1px solid ${neonColors[index % 5]}`
+                  }}
+                >
                   <OptimizedImage 
                     src={rewardImages[index % 5]}
                     alt={`Reward ${index + 1}`}
                     className="w-full h-full p-1 object-contain"
                   />
-                  {/* Removed the CHZ value label that was here */}
+                  <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+                  {index === loginStreak && (
+                    <div className="absolute bottom-1 right-1">
+                      <TouchpadIcon size={16} className="text-white/80 animate-pulse" />
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
