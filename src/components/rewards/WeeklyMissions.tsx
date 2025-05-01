@@ -1,8 +1,9 @@
 
 import { useRewards } from "@/contexts/RewardsContext";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Optimized image component
 const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
@@ -26,20 +27,47 @@ const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { s
 
 export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] }) {
   const { completedMissions, handleCompleteMission } = useRewards();
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  
+  // Check if screen width is less than 920px
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 920);
+    };
+    
+    // Initial check
+    checkScreenSize();
+    
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
-  // Image sources
+  // Updated image sources - using the new images
   const missionImages = [
-    "880aa3ab-ecec-4848-808a-018afa7bb652.png", 
-    "920baa56-b00d-43ea-8372-f544a6ca420e.png", 
-    "e7bd521b-75c6-4c78-817b-74fff9947c90.png", 
-    "687d40f8-9816-4f77-989c-1129fd953a1e.png", 
-    "c0d8c9e1-73d1-408e-8931-a00e77136d8d.png"
+    "b709815b-18b5-4688-aaaf-2fbfba8a575c.png", 
+    "4a6557ee-f96a-4b74-9c95-826470fd2d47.png", 
+    "f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png", 
+    "e29f7503-47fa-4f39-a6e6-d80e60975d62.png", 
+    "9832dfdf-6d17-4325-8a48-c213e974b590.png"
   ];
 
   return (
-    <div className="grid grid-cols-3 md:grid-cols-5 gap-6 mt-6">
+    <div className={`grid gap-6 mt-6 ${
+      isSmallScreen 
+        ? 'grid-cols-2 md:grid-cols-3' 
+        : 'grid-cols-4 md:grid-cols-5'
+    }`}>
       {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className={`flex flex-col items-center transition-opacity duration-500 ${visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'}`}>
+        <div key={index} 
+          className={`flex flex-col items-center transition-opacity duration-500 ${
+            visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'
+          } ${
+            isSmallScreen && index >= 4 ? 'col-span-2 md:col-span-1' : ''
+          }`}
+        >
           <div className="text-center mb-2">
             <span className="font-orbitron text-sm text-white">Missão {index + 1}</span>
           </div>
