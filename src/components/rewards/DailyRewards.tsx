@@ -2,35 +2,15 @@
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useState, memo } from "react";
-
-// Optimized image component to handle loading state
-const OptimizedRewardImage = memo(function OptimizedRewardImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
-  const [loaded, setLoaded] = useState(false);
-  
-  return (
-    <div className="relative w-full h-full">
-      {!loaded && <Skeleton className={`absolute inset-0 h-full w-full bg-goinft-darker/60 rounded-lg`} />}
-      <img 
-        src={src} 
-        alt={alt}
-        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 w-full h-full object-contain`}
-        onLoad={() => setLoaded(true)}
-        loading="lazy"
-        width="80"
-        height="80"
-      />
-    </div>
-  );
-});
+import { OptimizedImage } from "./OptimizedImage";
 
 export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { loginStreak, handleDailyLogin } = useRewards();
 
   // Predefine image sources to prevent recalculation on render
   const rewardImages = [
-    "/lovable-uploads/4263efde-699d-4758-a229-b5e15b0b60dd.png",
+    "/lovable-uploads/e9a53e0a-1b26-470f-8caf-42d4165b8295.png", // Updated with Messi card
     "/lovable-uploads/8959e228-6687-4e32-bf1e-849b2c9ea30c.png",
     "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
     "/lovable-uploads/e8cc150f-670e-4639-8235-bfd8df7e7551.png",
@@ -50,7 +30,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
             {index < 5 ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-goinft-card rounded-lg h-20 w-20 md:h-24 md:w-24 flex items-center justify-center border border-neon-blue/30">
-                  <OptimizedRewardImage 
+                  <OptimizedImage 
                     src={rewardImages[index % 5]}
                     alt={`Reward ${index + 1}`}
                     className="h-16 w-16 md:h-20 md:w-20 object-contain"
@@ -67,7 +47,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                 isHolographic
                 glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
               >
-                <OptimizedRewardImage 
+                <OptimizedImage 
                   src={index === 5 ? rewardImages[5] : rewardImages[6]}
                   alt={`NFT Reward ${index + 1}`}
                   className="h-full w-full object-cover"
