@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -16,6 +16,15 @@ export function WalletConnectDialog({
 }: WalletConnectDialogProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   
+  // Preload wallet image when component mounts or becomes visible
+  useEffect(() => {
+    if (isOpen) {
+      const preloadImage = new Image();
+      preloadImage.src = "/lovable-uploads/d3221d18-063e-4407-a1f1-7e24eb8580ae.png";
+      preloadImage.onload = () => setImageLoaded(true);
+    }
+  }, [isOpen]);
+  
   const handleConnect = () => {
     onConnect();
     onClose();
@@ -30,7 +39,7 @@ export function WalletConnectDialog({
         
         <div className="flex flex-col items-center gap-6">
           <div className="w-full">
-            {/* MetaMask and Phantom Options */}
+            {/* Optimized MetaMask and Phantom Options */}
             <button 
               onClick={handleConnect} 
               className="w-full flex items-center justify-center p-2 bg-transparent"
@@ -41,11 +50,12 @@ export function WalletConnectDialog({
               <img 
                 src="/lovable-uploads/d3221d18-063e-4407-a1f1-7e24eb8580ae.png" 
                 alt="MetaMask and Phantom wallet options" 
-                className={`w-full max-w-[320px] object-contain ${imageLoaded ? '' : 'hidden'}`}
-                onLoad={() => setImageLoaded(true)}
+                className={`w-full max-w-[320px] object-contain transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 width="320"
                 height="160"
                 loading="eager" // Load this immediately as it's in a dialog
+                decoding="async" // Use async decoding to improve performance
+                style={{ contentVisibility: "auto" }} // Modern browser optimization
               />
             </button>
           </div>
