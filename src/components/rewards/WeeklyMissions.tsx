@@ -30,7 +30,7 @@ export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] })
   const { completedMissions, handleCompleteMission } = useRewards();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   
-  // Check if screen width is less than 920px
+  // Check if screen width is less than or equal to 920px
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth <= 920);
@@ -46,7 +46,7 @@ export function WeeklyMissions({ visibleRewards }: { visibleRewards: number[] })
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Updated image sources with the new uploaded images
+  // Mission images
   const missionImages = [
     "41cc2534-5691-4017-9139-eabc6252d7b4.png", 
     "e6ee08c7-701b-443a-aef5-c1564bcc3bf0.png", 
