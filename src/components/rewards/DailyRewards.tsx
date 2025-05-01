@@ -35,9 +35,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                     alt={`Reward ${index + 1}`}
                     className="w-full h-full p-1 object-contain"
                   />
-                  <div className="absolute -bottom-2 -right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded-full font-orbitron">
-                    {[5, 10, 15, 20, 25][index % 5]} CHZ
-                  </div>
+                  {/* Removed the CHZ value label that was here */}
                 </div>
               </div>
             ) : (
