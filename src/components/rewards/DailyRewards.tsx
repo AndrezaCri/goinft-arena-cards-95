@@ -12,7 +12,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
   const rewardImages = [
     "/lovable-uploads/fec225a0-7769-4430-9324-ff998d02cff7.png", // Updated with Corinthians NFT image
     "/lovable-uploads/d7073944-876d-4bf4-a27f-37856e26104f.png", // Updated with Palmeiras NFT image
-    "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
+    "/lovable-uploads/36934527-c197-41c7-a597-69e6ff76e3fb.png", // Updated with Portuguesa NFT image
     "/lovable-uploads/e8cc150f-670e-4639-8235-bfd8df7e7551.png",
     "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
     "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
