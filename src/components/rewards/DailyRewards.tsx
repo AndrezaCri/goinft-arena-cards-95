@@ -1,6 +1,5 @@
 
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
 import { useState, memo } from "react";
 import { OptimizedImage } from "./OptimizedImage";
@@ -59,17 +58,6 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
             <span className="text-xs text-white/70">
               {index < 5 ? `${[5, 10, 15, 20, 25][index % 5]} CHZ` : index === 5 ? "NFT Raro" : "NFT Lendário"}
             </span>
-          </div>
-          <div className="flex flex-row gap-1 mt-1">
-            <CyberpunkButton
-              size="sm"
-              variant={index <= loginStreak ? "accent" : "outline"}
-              className="text-xs px-2 py-1 h-auto"
-              onClick={() => index === loginStreak && handleDailyLogin()}
-              disabled={index !== loginStreak}
-            >
-              {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
-            </CyberpunkButton>
           </div>
         </div>
       ))}
