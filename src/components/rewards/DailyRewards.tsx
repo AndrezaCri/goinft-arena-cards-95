@@ -68,7 +68,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
             {index < 5 ? (
               <div 
                 className="absolute inset-0 flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-105 active:scale-95"
-                onClick={() => index === loginStreak && handleDailyLogin()}
+                onClick={() => index <= loginStreak && handleDailyLogin()}
               >
                 <div 
                   className="bg-goinft-card rounded-lg h-20 w-20 md:h-24 md:w-24 flex items-center justify-center relative overflow-hidden"
@@ -81,10 +81,10 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                     src={rewardImages[index % 5]}
                     alt={`Reward ${index + 1}`}
                     className="w-full h-full p-1 object-contain"
-                    priority={index === loginStreak}
+                    priority={index <= loginStreak}
                   />
                   <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
-                  {index === loginStreak && (
+                  {index <= loginStreak && (
                     <div className="absolute bottom-1 right-1">
                       <TouchpadIcon size={16} className="text-white/80 animate-pulse" />
                     </div>
@@ -116,8 +116,8 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
               size="sm"
               variant={index <= loginStreak ? "accent" : "outline"}
               className="text-xs px-2 py-1 h-auto"
-              onClick={() => index === loginStreak && handleDailyLogin()}
-              disabled={index !== loginStreak}
+              onClick={() => index <= loginStreak && handleDailyLogin()}
+              disabled={index > loginStreak}
             >
               {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
             </CyberpunkButton>
