@@ -2,6 +2,7 @@
 import { NFTCard } from "@/components/ui/nft-card";
 import { MarketplaceCard } from "@/types/marketplace";
 import { memo } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MarketplaceCardListProps {
   cards: MarketplaceCard[];
@@ -10,6 +11,8 @@ interface MarketplaceCardListProps {
 
 // Using memo to prevent unnecessary rerenders
 export const MarketplaceCardList = memo(function MarketplaceCardList({ cards, onCardClick }: MarketplaceCardListProps) {
+  const isMobile = useIsMobile();
+
   if (cards.length === 0) {
     return (
       <div className="text-center py-12 bg-goinft-card/30 rounded-xl backdrop-blur-sm border border-neon-purple/20">
@@ -25,13 +28,13 @@ export const MarketplaceCardList = memo(function MarketplaceCardList({ cards, on
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'} gap-4 justify-items-center`}>
       {cards.map((card) => (
         <NFTCard 
           key={card.id} 
           {...card} 
           onClick={() => onCardClick(card)}
-          className="transform hover:scale-105 transition-transform duration-300" 
+          className={`transform hover:scale-105 transition-transform duration-300 ${isMobile ? 'w-full' : ''}`} 
         />
       ))}
     </div>

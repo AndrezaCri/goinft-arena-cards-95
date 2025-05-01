@@ -2,6 +2,7 @@
 import { AlbumCard } from "@/components/ui/album-card";
 import type { Album as AlbumType } from "@/types/album";
 import { memo } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AlbumGridProps {
   albums: AlbumType[];
@@ -11,6 +12,8 @@ interface AlbumGridProps {
 
 // Using memo to prevent unnecessary rerenders
 export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
+  const isMobile = useIsMobile();
+  
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {albums.map((album) => {
@@ -21,7 +24,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
             key={album.id} 
             {...album} 
             onClick={() => isUnlocked ? onAlbumClick(album.id) : undefined}
-            className={!isUnlocked ? "opacity-60 grayscale" : ""}
+            className={`${!isUnlocked ? "opacity-60 grayscale" : ""} ${isMobile ? "w-[30%]" : ""}`}
             locked={!isUnlocked}
           />
         );

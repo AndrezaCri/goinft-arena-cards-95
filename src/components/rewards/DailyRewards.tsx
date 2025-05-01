@@ -5,10 +5,12 @@ import { useRewards } from "@/contexts/RewardsContext";
 import { useState, memo, useMemo, useEffect } from "react";
 import { OptimizedImage } from "./OptimizedImage";
 import { TouchpadIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { loginStreak, handleDailyLogin } = useRewards();
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  const isMobile = useIsMobile();
 
   // Predefine image sources to prevent recalculation on render
   const rewardImages = useMemo(() => [
@@ -58,72 +60,84 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
   ];
 
   return (
-    <div className="grid grid-cols-7 gap-2 mt-4 items-end">
-      {Array.from({ length: 7 }).map((_, index) => (
-        <div key={index} className={`flex flex-col items-center transition-opacity duration-500 ${visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="text-center mb-2">
-            <span className="font-orbitron text-sm text-white">Dia {index + 1}</span>
-          </div>
-          <div className="relative h-28 md:h-36 w-full">
-            {index < 5 ? (
-              <div 
-                className="absolute inset-0 flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-105 active:scale-95"
-                onClick={() => index <= loginStreak && handleDailyLogin()}
-              >
+    <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} gap-2 mt-4 items-end justify-items-center`}>
+      {Array.from({ length: 7 }).map((_, index) => {
+        // For mobile, determine which row this card should be in
+        const mobileRow = Math.floor(index / 3);
+        const isVisibleForCurrentRow = !isMobile || (mobileRow === 0 || visibleRewards.includes(index));
+        
+        return (
+          <div 
+            key={index} 
+            className={`flex flex-col items-center transition-opacity duration-500 
+              ${visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'}
+              ${isMobile && index >= 3 ? 'mt-6' : ''}
+              ${isVisibleForCurrentRow ? '' : 'hidden'}`}
+          >
+            <div className="text-center mb-2">
+              <span className="font-orbitron text-sm text-white">Dia {index + 1}</span>
+            </div>
+            <div className="relative h-28 md:h-36 w-full">
+              {index < 5 ? (
                 <div 
-                  className="bg-goinft-card rounded-lg h-20 w-20 md:h-24 md:w-24 flex items-center justify-center relative overflow-hidden"
-                  style={{
-                    boxShadow: `0 0 15px ${neonColors[index % 5]}`,
-                    border: `1px solid ${neonColors[index % 5]}`
-                  }}
+                  className="absolute inset-0 flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-105 active:scale-95"
+                  onClick={() => index <= loginStreak && handleDailyLogin()}
+                >
+                  <div 
+                    className="bg-goinft-card rounded-lg h-20 w-20 md:h-24 md:w-24 flex items-center justify-center relative overflow-hidden"
+                    style={{
+                      boxShadow: `0 0 15px ${neonColors[index % 5]}`,
+                      border: `1px solid ${neonColors[index % 5]}`
+                    }}
+                  >
+                    <OptimizedImage 
+                      src={rewardImages[index % 5]}
+                      alt={`Reward ${index + 1}`}
+                      className="w-full h-full p-1 object-contain"
+                      priority={index <= loginStreak}
+                    />
+                    <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+                    {index <= loginStreak && (
+                      <div className="absolute bottom-1 right-1">
+                        <TouchpadIcon size={16} className="text-white/80 animate-pulse" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <NFTFloatingCard 
+                  className="h-full w-full" 
+                  size="sm" 
+                  isHolographic
+                  glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
                 >
                   <OptimizedImage 
-                    src={rewardImages[index % 5]}
-                    alt={`Reward ${index + 1}`}
-                    className="w-full h-full p-1 object-contain"
-                    priority={index <= loginStreak}
+                    src={index === 5 ? rewardImages[5] : rewardImages[6]}
+                    alt={`NFT Reward ${index + 1}`}
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
-                  {index <= loginStreak && (
-                    <div className="absolute bottom-1 right-1">
-                      <TouchpadIcon size={16} className="text-white/80 animate-pulse" />
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <NFTFloatingCard 
-                className="h-full w-full" 
-                size="sm" 
-                isHolographic
-                glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
+                </NFTFloatingCard>
+              )}
+            </div>
+            <div className="mt-2 text-center">
+              <span className="text-xs text-white/70">
+                {index < 5 ? `${[5, 10, 15, 20, 25][index % 5]} CHZ` : index === 5 ? "NFT Raro" : "NFT Lendário"}
+              </span>
+            </div>
+            <div className="flex flex-row gap-1 mt-1">
+              <CyberpunkButton
+                size="sm"
+                variant={index <= loginStreak ? "accent" : "outline"}
+                className="text-xs px-2 py-1 h-auto"
+                onClick={() => index <= loginStreak && handleDailyLogin()}
+                disabled={index > loginStreak}
               >
-                <OptimizedImage 
-                  src={index === 5 ? rewardImages[5] : rewardImages[6]}
-                  alt={`NFT Reward ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </NFTFloatingCard>
-            )}
+                {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
+              </CyberpunkButton>
+            </div>
           </div>
-          <div className="mt-2 text-center">
-            <span className="text-xs text-white/70">
-              {index < 5 ? `${[5, 10, 15, 20, 25][index % 5]} CHZ` : index === 5 ? "NFT Raro" : "NFT Lendário"}
-            </span>
-          </div>
-          <div className="flex flex-row gap-1 mt-1">
-            <CyberpunkButton
-              size="sm"
-              variant={index <= loginStreak ? "accent" : "outline"}
-              className="text-xs px-2 py-1 h-auto"
-              onClick={() => index <= loginStreak && handleDailyLogin()}
-              disabled={index > loginStreak}
-            >
-              {index < loginStreak ? "Coletado" : index === loginStreak ? "Coletar" : "Bloqueado"}
-            </CyberpunkButton>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 });
