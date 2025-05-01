@@ -31,7 +31,7 @@ export function MissionCard({
           <OptimizedImage 
             src={`/lovable-uploads/${imageSrc}`} 
             alt={`Missão ${index + 1}`}
-            className="h-16 w-16 object-contain"
+            className="w-full h-full object-contain"
           />
         </div>
         <div className="text-center mt-2 flex-grow">

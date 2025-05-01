@@ -33,7 +33,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                   <OptimizedImage 
                     src={rewardImages[index % 5]}
                     alt={`Reward ${index + 1}`}
-                    className="h-16 w-16 md:h-20 md:w-20 object-contain"
+                    className="w-full h-full p-1 object-contain"
                   />
                   <div className="absolute -bottom-2 -right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded-full font-orbitron">
                     {[5, 10, 15, 20, 25][index % 5]} CHZ
@@ -50,7 +50,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                 <OptimizedImage 
                   src={index === 5 ? rewardImages[5] : rewardImages[6]}
                   alt={`NFT Reward ${index + 1}`}
-                  className="h-full w-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               </NFTFloatingCard>
             )}

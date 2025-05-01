@@ -25,7 +25,7 @@ export const OptimizedImage = memo(function OptimizedImage({
       <img 
         src={src} 
         alt={alt}
-        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+        className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
         onLoad={() => setLoaded(true)}
         loading="lazy"
         width={width}
