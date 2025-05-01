@@ -2,15 +2,16 @@
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
-import { useState, memo } from "react";
+import { useState, memo, useMemo, useEffect } from "react";
 import { OptimizedImage } from "./OptimizedImage";
 import { TouchpadIcon } from "lucide-react";
 
 export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { loginStreak, handleDailyLogin } = useRewards();
+  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
 
   // Predefine image sources to prevent recalculation on render
-  const rewardImages = [
+  const rewardImages = useMemo(() => [
     "/lovable-uploads/fec225a0-7769-4430-9324-ff998d02cff7.png", // Updated with Corinthians NFT image
     "/lovable-uploads/d7073944-876d-4bf4-a27f-37856e26104f.png", // Updated with Palmeiras NFT image
     "/lovable-uploads/7a2ce23a-6caa-4056-9830-219bcbc3a2e3.png", // Updated with new Corinthians NFT image
@@ -18,7 +19,34 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
     "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
     "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
     "/lovable-uploads/506f8852-1303-4875-ae3d-6068e947cb1d.png"
-  ];
+  ], []);
+
+  // Preload key images on component mount
+  useEffect(() => {
+    const preloadImages = async () => {
+      // Only preload visible images with priority to the one for current streak
+      const imagesToPreload = visibleRewards
+        .filter(idx => idx <= loginStreak + 1) // Current day and next day
+        .map(idx => rewardImages[idx % rewardImages.length]);
+      
+      // Only preload images we haven't loaded yet
+      const newImagesToLoad = imagesToPreload.filter(img => !preloadedImages.includes(img));
+      
+      if (newImagesToLoad.length > 0) {
+        await Promise.all(newImagesToLoad.map(src => {
+          return new Promise<void>((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve();
+            img.src = src;
+          });
+        }));
+        
+        setPreloadedImages(prev => [...prev, ...newImagesToLoad]);
+      }
+    };
+    
+    preloadImages();
+  }, [visibleRewards, loginStreak, rewardImages, preloadedImages]);
 
   // Define neon colors for each card
   const neonColors = [
@@ -53,6 +81,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                     src={rewardImages[index % 5]}
                     alt={`Reward ${index + 1}`}
                     className="w-full h-full p-1 object-contain"
+                    priority={index === loginStreak}
                   />
                   <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                   {index === loginStreak && (
