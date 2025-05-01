@@ -11,7 +11,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
   // Predefine image sources to prevent recalculation on render
   const rewardImages = [
     "/lovable-uploads/fec225a0-7769-4430-9324-ff998d02cff7.png", // Updated with Corinthians NFT image
-    "/lovable-uploads/8959e228-6687-4e32-bf1e-849b2c9ea30c.png",
+    "/lovable-uploads/2b9ce63a-9d14-4999-a171-8876b959a22a.png", // Updated with new Corinthians NFT image
     "/lovable-uploads/8b42a4aa-6e29-46c0-a04e-60ebfa0b064c.png",
     "/lovable-uploads/e8cc150f-670e-4639-8235-bfd8df7e7551.png",
     "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
