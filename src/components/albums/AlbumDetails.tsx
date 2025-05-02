@@ -150,9 +150,9 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-6 relative z-10">
-          <div className="w-full sm:w-64 relative group">
+          <div className="w-full sm:w-44 relative group">
             {!albumImageLoaded && (
-              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '230/320' }}></div>
+              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '3/4' }}></div>
             )}
             <OptimizedImage 
               src={album.coverImage} 
@@ -162,8 +162,8 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
                 !albumImageLoaded && "opacity-0"
               )}
               onLoad={handleImageLoad}
-              width="230"
-              height="320"
+              width="175"
+              height="230"
               priority={true}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
