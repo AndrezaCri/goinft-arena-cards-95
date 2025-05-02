@@ -36,8 +36,22 @@ const experiences = [
   }
 ];
 
+// Define proper interface for ExperienceCard props
+interface ExperienceCardProps {
+  experience: {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    thumbnailImage: string;
+    icon: React.ForwardRefExoticComponent<any>;
+    date: string;
+  };
+  isPriority: boolean;
+}
+
 // Componente de Card de Experiência memoizado
-const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }) {
+const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }: ExperienceCardProps) {
   return (
     <Card 
       key={experience.id} 

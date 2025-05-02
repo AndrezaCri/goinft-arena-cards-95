@@ -11,8 +11,15 @@ interface AlbumDetailsProps {
   onBack: () => void;
 }
 
+// Define proper interfaces for the memo components
+interface StatCardProps {
+  label: string;
+  value: string | number;
+  colorClass: string;
+}
+
 // Componente isolado para os cards de estatísticas do álbum
-const StatCard = memo(function StatCard({ label, value, colorClass }) {
+const StatCard = memo(function StatCard({ label, value, colorClass }: StatCardProps) {
   return (
     <div className="cyberpunk-card p-4">
       <span className={`block text-sm ${colorClass}`}>{label}</span>
@@ -21,8 +28,12 @@ const StatCard = memo(function StatCard({ label, value, colorClass }) {
   );
 });
 
+interface PlaceholderCardProps {
+  index: number;
+}
+
 // Componente isolado para o placeholder card
-const PlaceholderCard = memo(function PlaceholderCard({ index }) {
+const PlaceholderCard = memo(function PlaceholderCard({ index }: PlaceholderCardProps) {
   return (
     <div 
       key={`empty-${index}`} 
