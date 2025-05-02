@@ -1,10 +1,10 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Trophy, Ticket, MapPin } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 const experiences = [
   {
@@ -37,13 +37,8 @@ const experiences = [
 ];
 
 const Experiences = () => {
-  const [loadedImages, setLoadedImages] = useState<{[key: number]: boolean}>({});
-
-  // Track which images have loaded
-  const handleImageLoaded = (id: number) => {
-    setLoadedImages(prev => ({...prev, [id]: true}));
-  };
-
+  // We don't need to track loaded images manually when using OptimizedImage
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <CyberpunkHeading 
@@ -64,17 +59,13 @@ const Experiences = () => {
             <CardHeader className="p-0">
               <AspectRatio ratio={16 / 9}>
                 <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-t-lg">
-                  {!loadedImages[experience.id] && (
-                    <Skeleton className="absolute inset-0 bg-goinft-darker" />
-                  )}
-                  <img
-                    src={experience.thumbnailImage} 
+                  <OptimizedImage
+                    src={experience.thumbnailImage}
                     alt={experience.title}
-                    className={`object-contain w-full h-auto max-h-56 group-hover:scale-105 transition-transform duration-300 ${loadedImages[experience.id] ? 'opacity-100' : 'opacity-0'}`}
-                    onLoad={() => handleImageLoaded(experience.id)}
-                    loading="lazy"
+                    className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
                     width="400"
                     height="225"
+                    priority={experience.id === 1} // Only prioritize the first image
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
                 </div>
