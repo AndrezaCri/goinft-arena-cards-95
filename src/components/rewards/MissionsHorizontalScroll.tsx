@@ -1,7 +1,6 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MissionCard } from "./MissionCard";
-import { memo } from "react";
 
 interface MissionsHorizontalScrollProps {
   missions: Array<{
@@ -15,7 +14,7 @@ interface MissionsHorizontalScrollProps {
   visibleRewards: number[];
 }
 
-export const MissionsHorizontalScroll = memo(function MissionsHorizontalScroll({
+export function MissionsHorizontalScroll({
   missions,
   completedMissions,
   onCompleteMission,
@@ -48,4 +47,4 @@ export const MissionsHorizontalScroll = memo(function MissionsHorizontalScroll({
       </div>
     </ScrollArea>
   );
-});
+}

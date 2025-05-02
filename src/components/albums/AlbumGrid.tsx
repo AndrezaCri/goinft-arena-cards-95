@@ -10,33 +10,33 @@ interface AlbumGridProps {
   unlockedAlbums: string[];
 }
 
-// Componente de grid de álbuns com carregamento otimizado
+// Componente virtualizado para mostrar apenas álbuns visíveis
 export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   const isMobile = useIsMobile();
   const gridRef = useRef<HTMLDivElement>(null);
-  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1, 2])); // Mostrar os 3 primeiros por padrão
+  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1, 2, 3])); // Mostrar primeiros 4 por padrão
   
-  // Processar álbuns uma vez
+  // Pré-processando os álbuns para evitar cálculos repetidos durante a renderização
   const processedAlbums = useMemo(() => 
     albums.map((album, index) => {
       const isUnlocked = album.id === "1" || unlockedAlbums.includes(album.id);
       return {
         ...album,
         isUnlocked,
-        isPriority: index < 3 // Os 3 primeiros álbuns são prioridade
+        isPriority: index === 0 || index === 1 // Apenas os dois primeiros álbuns são prioritários
       };
     }),
     [albums, unlockedAlbums]
   );
   
-  // Lidar com clique no álbum com useCallback
+  // Usando useCallback para evitar recriação da função a cada renderização
   const handleAlbumClick = useCallback((albumId: string, isUnlocked: boolean) => {
     if (isUnlocked) {
       onAlbumClick(albumId);
     }
   }, [onAlbumClick]);
   
-  // IntersectionObserver mais eficiente para renderização virtualizada
+  // Implement intersection observer for virtualized rendering
   useEffect(() => {
     if (!gridRef.current) return;
     
@@ -51,7 +51,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
           if (entry.isIntersecting) {
             newVisibleIndexes.add(index);
             
-            // Pré-carregar o próximo álbum
+            // Pre-load next two albums
             if (index + 1 < processedAlbums.length) newVisibleIndexes.add(index + 1);
             if (index + 2 < processedAlbums.length) newVisibleIndexes.add(index + 2);
           }
@@ -60,7 +60,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
         setVisibleIndexes(newVisibleIndexes);
       },
       {
-        rootMargin: '100px',
+        rootMargin: '100px 0px 100px 0px',
         threshold: 0.1
       }
     );
@@ -75,7 +75,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
   }, [processedAlbums.length]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-4" ref={gridRef}>
+    <div className="flex flex-wrap justify-center gap-6" ref={gridRef}>
       {processedAlbums.map((album, index) => (
         <div 
           key={album.id}
@@ -91,9 +91,9 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
               priority={album.isPriority}
             />
           )}
-          {/* Placeholder mais leve para álbuns não visíveis */}
+          {/* Placeholder de tamanho fixo para álbuns não visíveis */}
           {!visibleIndexes.has(index) && (
-            <div className="bg-goinft-darker/30 rounded-xl w-[220px] mx-auto" style={{ height: '350px' }}></div>
+            <div className="bg-goinft-darker/30 rounded-xl w-[280px] mx-auto" style={{ aspectRatio: '230/320' }}></div>
           )}
         </div>
       ))}

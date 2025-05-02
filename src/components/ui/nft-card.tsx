@@ -1,37 +1,33 @@
 
+import { memo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
-import { OptimizedImage } from "@/components/rewards/OptimizedImage";
-import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 interface NFTCardProps {
   id: string;
   name: string;
   image: string;
   rarity: "common" | "rare" | "epic" | "legendary";
-  team?: string;
-  position?: string;
+  team: string;
+  position: string;
   isOwned?: boolean;
   onClick?: () => void;
+  className?: string;
   priority?: boolean;
-  className?: string; // Added className prop to fix the TypeScript errors
 }
 
+// Dados estáticos definidos fora do componente
 const rarityColors = {
-  common: "border-gray-400",
-  rare: "border-neon-blue",
-  epic: "border-neon-purple",
-  legendary: "border-neon-gold",
+  common: "bg-blue-500",
+  rare: "bg-purple-500",
+  epic: "bg-pink-500",
+  legendary: "bg-amber-500",
 };
 
-const rarityBgs = {
-  common: "bg-gradient-to-b from-gray-700 to-gray-900",
-  rare: "bg-gradient-to-b from-blue-700 to-blue-900",
-  epic: "bg-gradient-to-b from-purple-700 to-purple-900",
-  legendary: "bg-gradient-to-b from-amber-500 to-amber-800",
-};
-
-export function NFTCard({
+// Usando memo para evitar re-renderizações desnecessárias
+export const NFTCard = memo(function NFTCard({
   id,
   name,
   image,
@@ -40,71 +36,49 @@ export function NFTCard({
   position,
   isOwned = false,
   onClick,
+  className,
   priority = false,
-  className, // Added className to the destructured props
 }: NFTCardProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
+  // Usando useCallback para o handler de clique
+  const handleClick = useCallback(() => {
+    if (onClick) onClick();
+  }, [onClick]);
 
   return (
     <Card
       className={cn(
-        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform",
-        "bg-goinft-card border-2",
-        rarityColors[rarity],
-        !isOwned && "opacity-60 grayscale",
-        isOwned && "hover:scale-105",
-        className // Added className to the cn function
+        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform h-full",
+        "bg-goinft-card border-none hover:shadow-lg hover:scale-105",
+        rarity === "legendary" && "border-t-2 border-amber-500",
+        className
       )}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <div className="relative" style={{ aspectRatio: '230/320' }}>
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-goinft-darker"></div>
-        )}
-        
-        <OptimizedImage
-          src={image}
+        <OptimizedImage 
+          src={image} 
           alt={name}
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover",
-            !imageLoaded && "opacity-0"
-          )}
-          onLoad={() => setImageLoaded(true)}
-          width="230" // Aumentado de 80 para 230 para melhor visualização
-          height="320" // Ajustado proporcionalmente
-          quality={80} // Aumentado de 20 para 80 para garantir qualidade suficiente
+          className="absolute inset-0 w-full h-full object-cover"
+          width="230"
+          height="320"
           priority={priority}
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         
-        {!isOwned && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
-            <span className="text-white font-orbitron">Não coletada</span>
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <div className="flex justify-between items-center mb-2">
+            <Badge className={cn("text-xs", rarityColors[rarity])}>{rarity}</Badge>
+            {isOwned && <Badge variant="outline" className="bg-green-900/50 text-green-300 text-xs">Owned</Badge>}
           </div>
-        )}
-        
-        <div className="absolute bottom-0 left-0 right-0 p-2">
-          <div className={`${rarityBgs[rarity]} rounded-md p-1.5`}>
-            <h3 className="text-white font-orbitron text-sm font-bold truncate">{name}</h3>
-            
-            {team && (
-              <p className="text-white/80 text-xs truncate">{team}</p>
-            )}
-            
-            {position && (
-              <div className="flex justify-between items-center mt-1">
-                <span className="bg-black/30 text-white/90 text-xs px-2 py-0.5 rounded">
-                  {position}
-                </span>
-                <span className="text-white/90 text-xs capitalize">
-                  {rarity}
-                </span>
-              </div>
-            )}
+          
+          <h3 className="text-white font-orbitron text-lg font-bold mb-1 truncate">{name}</h3>
+          <div className="flex justify-between text-white/80 text-xs">
+            <span>{team}</span>
+            <span>{position}</span>
           </div>
         </div>
       </div>
     </Card>
   );
-}
+});

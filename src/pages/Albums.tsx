@@ -1,5 +1,5 @@
 
-import { useState, useCallback, useMemo, Suspense, memo, useEffect } from "react";
+import { useState, useCallback, useMemo, Suspense, memo } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AlbumGrid } from "@/components/albums/AlbumGrid";
 import { AlbumDetails } from "@/components/albums/AlbumDetails";
@@ -10,14 +10,14 @@ import type { Album } from "@/types/album";
 import { useRewards } from "@/contexts/RewardsContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Lightweight loading skeleton
+// Componente de fallback para carregamento
 const LoadingSkeleton = memo(function LoadingSkeleton() {
   return (
     <div className="space-y-4">
-      <Skeleton className="h-40 w-full rounded-xl" /> {/* Reduced height from h-64 to h-40 */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4"> {/* Reduced from md:grid-cols-4 lg:grid-cols-5 to keep it simpler */}
-        {Array.from({ length: 2 }).map((_, i) => ( // Reduced from 4 to 2 skeletons
-          <Skeleton key={i} className="h-40 w-full rounded-xl" /> // Reduced height from h-64 to h-40
+      <Skeleton className="h-64 w-full rounded-xl" />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <Skeleton key={i} className="h-64 w-full rounded-xl" />
         ))}
       </div>
     </div>
@@ -29,18 +29,16 @@ const Albums = () => {
   const [activeTab, setActiveTab] = useState("all-albums");
   const { completedAlbums } = useRewards();
   const [isClientSide, setIsClientSide] = useState(false);
-  const [isAlbumDetailsLoaded, setIsAlbumDetailsLoaded] = useState(false);
 
-  // Only render on client-side to avoid hydration issues
+  // Habilitar renderização apenas do lado do cliente para evitar problemas de hidratação
   useEffect(() => {
     setIsClientSide(true);
   }, []);
 
-  // Optimized handlers
+  // Otimizando handlers com useCallback
   const handleAlbumClick = useCallback((albumId: string) => {
     setSelectedAlbum(albumId);
     setActiveTab("album-view");
-    setIsAlbumDetailsLoaded(false);
   }, []);
 
   const handleBackToAlbums = useCallback(() => {
@@ -48,25 +46,13 @@ const Albums = () => {
     setActiveTab("all-albums");
   }, []);
 
-  // Memoized current album
+  // Calculando currentAlbum com useMemo
   const currentAlbum = useMemo(() => 
     albums.find(a => a.id === selectedAlbum), 
     [selectedAlbum]
   );
 
-  // Simpler background loading for album details
-  useEffect(() => {
-    if (currentAlbum && !isAlbumDetailsLoaded) {
-      // Shorter timeout for quicker perceived loading
-      const timer = setTimeout(() => {
-        setIsAlbumDetailsLoaded(true);
-      }, 50);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [currentAlbum, isAlbumDetailsLoaded]);
-
-  // Simplified content rendering
+  // Renderizando condicionalmente os componentes pesados apenas quando necessário
   const renderActiveContent = useCallback(() => {
     if (!isClientSide) return <LoadingSkeleton />;
 
@@ -83,15 +69,11 @@ const Albums = () => {
     if (activeTab === "album-view" && selectedAlbum && currentAlbum) {
       return (
         <Suspense fallback={<LoadingSkeleton />}>
-          {isAlbumDetailsLoaded ? (
-            <AlbumDetails 
-              album={currentAlbum}
-              cards={worldCupCards}
-              onBack={handleBackToAlbums}
-            />
-          ) : (
-            <LoadingSkeleton />
-          )}
+          <AlbumDetails 
+            album={currentAlbum}
+            cards={worldCupCards}
+            onBack={handleBackToAlbums}
+          />
         </Suspense>
       );
     }
@@ -112,14 +94,18 @@ const Albums = () => {
         unlockedAlbums={completedAlbums} 
       />
     );
-  }, [activeTab, selectedAlbum, currentAlbum, handleAlbumClick, handleBackToAlbums, completedAlbums, isClientSide, isAlbumDetailsLoaded]);
+  }, [activeTab, selectedAlbum, currentAlbum, handleAlbumClick, handleBackToAlbums, completedAlbums, isClientSide]);
 
-  // Very simplified backdrop 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
-      <div className="container mx-auto px-4 py-6"> {/* Reduced padding from py-8 to py-6 */}
+      <div className="container mx-auto px-4 py-8">
         <div className="relative">
-          {/* Removed background elements entirely for performance */}
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-neon-purple/10 filter blur-[100px] animate-pulse"></div>
+            <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-neon-blue/10 filter blur-[100px] animate-pulse"></div>
+          </div>
+          
+          <div className="absolute inset-0 bg-circuit-bg opacity-5 z-0"></div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="relative z-10">
             <AlbumHeader 

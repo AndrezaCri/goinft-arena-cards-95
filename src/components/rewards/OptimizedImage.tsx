@@ -10,7 +10,6 @@ interface OptimizedImageProps {
   height?: string;
   priority?: boolean;
   onLoad?: () => void;
-  quality?: number;
 }
 
 export const OptimizedImage = memo(function OptimizedImage({ 
@@ -20,8 +19,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   width = "64",
   height = "64",
   priority = false,
-  onLoad,
-  quality = 80 // Aumentado de 20 para 80 para garantir qualidade suficiente
+  onLoad
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
@@ -29,17 +27,8 @@ export const OptimizedImage = memo(function OptimizedImage({
   const imageRef = useRef<HTMLImageElement | null>(null);
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
-  const [error, setError] = useState(false);
   
-  // Função simplificada para otimizar a fonte da imagem
-  const getOptimizedSrc = useCallback((originalSrc: string): string => {
-    if (!originalSrc) return originalSrc;
-    
-    // Retornar a fonte original para garantir que a imagem carregue corretamente
-    return originalSrc;
-  }, []);
-  
-  // Cleanup
+  // Cleanup function to prevent memory leaks
   useEffect(() => {
     return () => {
       isMounted.current = false;
@@ -49,15 +38,15 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
-  // Carregamento lazy com Intersection Observer
+  // Implementing lazy loading with Intersection Observer
   useEffect(() => {
-    // Carregar imagens priority imediatamente
+    // For priority images, load immediately
     if (priority && !imgSrc && src) {
       setImgSrc(src);
       return;
     }
     
-    // Para imagens não-priority, usar Intersection Observer
+    // For non-priority images, use Intersection Observer
     if (!priority && !imgSrc && imageWrapperRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && isMounted.current) {
@@ -65,22 +54,22 @@ export const OptimizedImage = memo(function OptimizedImage({
           observerRef.current?.disconnect();
         }
       }, {
-        rootMargin: '100px',
-        threshold: 0.1
+        rootMargin: '200px', // Preload when within 200px distance
+        threshold: 0.01
       });
       
       observerRef.current.observe(imageWrapperRef.current);
     }
     
-    // Cleanup
+    // Cleanup when component unmounts or src changes
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
     };
-  }, [priority, src, imgSrc, getOptimizedSrc]);
+  }, [priority, src, imgSrc]);
   
-  // Handle image load
+  // Optimizing callback function
   const handleImageLoad = useCallback(() => {
     if (isMounted.current) {
       setLoaded(true);
@@ -88,22 +77,14 @@ export const OptimizedImage = memo(function OptimizedImage({
     }
   }, [onLoad]);
   
-  // Lidar com erro de carregamento
-  const handleImageError = useCallback(() => {
-    if (isMounted.current) {
-      setError(true);
-      console.error(`Failed to load image: ${src}`);
-    }
-  }, [src]);
-  
-  // Forçar skeleton a desaparecer após um tempo
+  // Remove skeleton after a maximum time
   useEffect(() => {
     if (!loaded && imgSrc) {
       const timeout = setTimeout(() => {
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 800);
+      }, 2000); // 2 seconds max wait time (reduced from 3)
       
       return () => clearTimeout(timeout);
     }
@@ -112,11 +93,6 @@ export const OptimizedImage = memo(function OptimizedImage({
   return (
     <div ref={imageWrapperRef} className="relative w-full h-full">
       {!loaded && imgSrc && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
-      {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-goinft-darker/80 text-white text-xs text-center p-2">
-          Erro ao carregar imagem
-        </div>
-      )}
       {imgSrc && (
         <img 
           ref={imageRef}
@@ -124,11 +100,10 @@ export const OptimizedImage = memo(function OptimizedImage({
           alt={alt}
           className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
           onLoad={handleImageLoad}
-          onError={handleImageError}
           loading={priority ? "eager" : "lazy"}
           width={width}
           height={height}
-          decoding="async"
+          decoding={priority ? "sync" : "async"}
         />
       )}
     </div>
