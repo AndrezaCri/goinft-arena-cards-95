@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -32,22 +32,6 @@ export function AlbumCard({
   priority = false,
 }: AlbumCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [errorLoading, setErrorLoading] = useState(false);
-  
-  // Forçar carregamento após um tempo
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!imageLoaded && !errorLoading) {
-        // Se a imagem não carregou, tente novamente
-        setErrorLoading(true);
-        setTimeout(() => {
-          setErrorLoading(false);
-        }, 100);
-      }
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, [imageLoaded, errorLoading]);
   
   return (
     <Card
@@ -67,14 +51,11 @@ export function AlbumCard({
         <OptimizedImage 
           src={coverImage} 
           alt={name} 
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover",
-            !imageLoaded && "opacity-0"
-          )}
+          className="absolute inset-0 w-full h-full object-cover"
           onLoad={() => setImageLoaded(true)}
           width="280"
           height="390"
-          priority={true} // Sempre carregamos com prioridade, independente da prop
+          priority={true} // Sempre usar prioridade para todas as imagens para garantir carregamento
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

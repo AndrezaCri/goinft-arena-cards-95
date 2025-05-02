@@ -22,21 +22,14 @@ export const OptimizedImage = memo(function OptimizedImage({
   onLoad
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
-  // Sempre definir imgSrc com o valor de src - não usar lazy loading condicional
   const [imgSrc, setImgSrc] = useState<string>(src);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
   const retryCount = useRef(0);
   
-  // Cleanup function to prevent memory leaks
+  // Cleanup function para evitar memory leaks
   useEffect(() => {
     return () => {
       isMounted.current = false;
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
     };
   }, []);
   
@@ -44,6 +37,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   useEffect(() => {
     if (src && src !== imgSrc) {
       setImgSrc(src);
+      setLoaded(false);
     }
   }, [src, imgSrc]);
   
@@ -64,13 +58,13 @@ export const OptimizedImage = memo(function OptimizedImage({
           // Se não conseguimos carregar após 3 tentativas, setamos como carregado
           setLoaded(true);
         }
-      }, 2000); // 2 segundos de espera
+      }, 1500); // Reduzimos para 1.5 segundos para começar o retry mais cedo
       
       return () => clearTimeout(timeout);
     }
   }, [loaded, imgSrc, src]);
   
-  // Optimizing callback function
+  // Optimizando as funções de callback
   const handleImageLoad = useCallback(() => {
     if (isMounted.current) {
       setLoaded(true);
@@ -87,25 +81,25 @@ export const OptimizedImage = memo(function OptimizedImage({
         if (isMounted.current) {
           setImgSrc(src);
         }
-      }, 300);
+      }, 100);
     } else if (isMounted.current) {
       // Se várias tentativas falharem, considerar como carregado para não travar a UI
+      console.error(`Failed to load image: ${src}`);
       setLoaded(true);
     }
   }, [src]);
   
   return (
-    <div ref={imageWrapperRef} className="relative w-full h-full">
+    <div className="relative w-full h-full">
       {!loaded && imgSrc && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
       {imgSrc && (
         <img 
-          ref={imageRef}
           src={imgSrc} 
           alt={alt}
           className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          loading="eager" // Sempre carregamento eager para evitar problemas
+          loading="eager" // Sempre eager loading para evitar problemas
           width={width}
           height={height}
           decoding="async"
