@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { MissionCard } from "./MissionCard";
 
 interface MissionsVerticalStackProps {
