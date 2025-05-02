@@ -51,6 +51,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
   const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1, 2, 3, 4, 5])); // Aumentado número inicial de cards visíveis
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   // Use useCallback for event handlers
   const handleImageLoad = useCallback(() => {
@@ -137,7 +138,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-6 relative z-10">
-          <div className="w-full sm:w-44 relative group">
+          <div className="w-full sm:w-44 relative group" ref={imageRef}>
             {!albumImageLoaded && (
               <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ height: '230px' }}></div>
             )}
@@ -154,7 +155,14 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               priority={true}
               objectFit="cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
+            {/* Ajustado para ter a altura igual à da imagem (230px) */}
+            <div className="absolute bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg" 
+              style={{ 
+                top: 0, 
+                left: 0, 
+                right: 0, 
+                height: '230px' 
+              }}></div>
           </div>
           
           <div className="flex-1">
