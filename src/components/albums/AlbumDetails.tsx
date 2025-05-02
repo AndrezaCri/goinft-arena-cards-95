@@ -1,7 +1,7 @@
 
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
-import { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
+import { useState, useCallback, useMemo, memo, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
@@ -57,16 +57,17 @@ const NFTCardWithVirtualization = memo(function NFTCardWithVirtualization({
   isVisible,
   ...card 
 }: NFTCardWithVirtualizationProps) {
-  return isVisible || isPriority ? (
-    <NFTCard {...card} priority={isPriority} />
-  ) : (
-    <div className="aspect-[230/320] bg-goinft-darker/30 rounded-lg animate-pulse"></div>
-  );
+  // Simplified component - direct rendering for better performance
+  if (!isVisible && !isPriority) {
+    return <div className="aspect-[230/320] bg-goinft-darker/30 rounded-lg"></div>;
+  }
+  
+  return <NFTCard {...card} priority={isPriority} />;
 });
 
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
-  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1])); // Primeiros 2 cards visíveis por padrão
+  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1]));
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   // Use useCallback for event handlers
@@ -74,16 +75,10 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     setAlbumImageLoaded(true);
   }, []);
 
-  // Use useCallback for event handlers
-  const handleBackClick = useCallback(() => {
-    onBack();
-  }, [onBack]);
-  
-  // Implementar observador de interseção para virtualizar os cards
+  // Implement simplified intersection observer for virtualization
   useEffect(() => {
     if (!cardsContainerRef.current) return;
     
-    const cardElements = cardsContainerRef.current.querySelectorAll('.nft-card-container');
     const observer = new IntersectionObserver(
       (entries) => {
         const newVisibleIndexes = new Set(visibleCardIndexes);
@@ -93,31 +88,28 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
           
           if (entry.isIntersecting) {
             newVisibleIndexes.add(index);
-            
-            // Pre-load next two cards
+            // Only preload the very next card for minimal loading
             if (index + 1 < cards.length) newVisibleIndexes.add(index + 1);
-            if (index + 2 < cards.length) newVisibleIndexes.add(index + 2);
           }
         });
         
         setVisibleCardIndexes(newVisibleIndexes);
       },
       {
-        rootMargin: '100px 0px 100px 0px',
+        rootMargin: '50px', // Reduced margin for more immediate loading
         threshold: 0.1
       }
     );
     
-    cardElements.forEach(element => {
+    // Find and observe all card containers
+    cardsContainerRef.current.querySelectorAll('.nft-card-container').forEach(element => {
       observer.observe(element);
     });
     
-    return () => {
-      observer.disconnect();
-    };
-  }, [cards.length]);
+    return () => observer.disconnect();
+  }, [cards.length, visibleCardIndexes]);
 
-  // Use useMemo for derived values that don't need to be recalculated on every render
+  // Simplified placeholder cards
   const placeholderCards = useMemo(() => 
     Array.from({ length: 4 }).map((_, index) => (
       <PlaceholderCard key={index} index={index} />
@@ -125,7 +117,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     []
   );
   
-  // Memoize album stats to prevent recalculations
+  // Album stats calculation
   const albumStats = useMemo(() => [
     { label: "Total de Cards", value: album.totalCards, colorClass: "text-neon-purple/70" },
     { label: "Colecionados", value: album.collectedCards, colorClass: "text-neon-blue/70" },
@@ -133,48 +125,44 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     { label: "Faltando", value: album.totalCards - album.collectedCards, colorClass: "text-neon-green/70" },
   ], [album.totalCards, album.collectedCards, album.progress]);
   
-  // Memoize prepared cards to prevent recalculations on every render
+  // Prepared cards with priority flag
   const preparedCards = useMemo(() => 
     cards.map((card, index) => ({
       ...card,
-      isPriority: index < 2 // Apenas os primeiros 2 cards são prioritários
+      isPriority: index < 1 // Only the first card is priority to reduce initial load
     })),
     [cards]
   );
 
   return (
     <>
-      <div className="bg-goinft-card rounded-xl p-6 mb-8 border border-neon-purple/30 relative overflow-hidden group">
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-6 relative z-10">
-          <div className="w-full sm:w-64 relative group">
+      <div className="bg-goinft-card rounded-xl p-4 mb-6 border border-neon-purple/30 relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row gap-4 relative z-10">
+          <div className="w-full sm:w-48 relative">
             {!albumImageLoaded && (
-              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '230/320' }}></div>
+              <div className="w-full h-full absolute inset-0 bg-goinft-darker rounded-lg" style={{ aspectRatio: '230/320' }}></div>
             )}
             <OptimizedImage 
               src={album.coverImage} 
               alt={album.name}
               className={cn(
-                "w-full h-auto rounded-lg border border-neon-purple/30 transition-transform duration-300 group-hover:scale-[1.02]",
+                "w-full h-auto rounded-lg border border-neon-purple/30",
                 !albumImageLoaded && "opacity-0"
               )}
               onLoad={handleImageLoad}
-              width="230"
-              height="320"
+              width="100"
+              height="140"
               priority={true}
+              quality={20}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
           </div>
           
           <div className="flex-1">
-            <h2 className="text-white font-orbitron text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-neon-purple to-neon-blue">
+            <h2 className="text-white font-orbitron text-xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-neon-purple to-neon-blue">
               {album.name}
             </h2>
             
-            <div className="grid grid-cols-2 gap-4 text-white/70 mb-6">
+            <div className="grid grid-cols-2 gap-3 text-white/70 mb-4">
               {albumStats.map((stat, index) => (
                 <StatCard 
                   key={index}
@@ -185,23 +173,17 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               ))}
             </div>
             
-            <div className="w-full bg-goinft-darker rounded-full h-2.5 mb-6 relative overflow-hidden">
+            <div className="w-full bg-goinft-darker rounded-full h-2 mb-4 relative overflow-hidden">
               <div 
-                className="absolute inset-0 bg-gradient-to-r from-neon-purple via-neon-blue to-neon-pink h-2.5"
+                className="absolute inset-0 bg-gradient-to-r from-neon-purple via-neon-blue to-neon-pink h-2"
                 style={{ width: `${album.progress}%` }}
-              >
-                <div className="absolute inset-0 animate-[pulse_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-              </div>
+              ></div>
             </div>
-            
-            <p className="text-white/70 mb-4">
-              Complete este álbum para ganhar recompensas e conquistas exclusivas!
-            </p>
           </div>
         </div>
       </div>
       
-      <div ref={cardsContainerRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div ref={cardsContainerRef} className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {preparedCards.map((card, index) => (
           <div key={card.id} className="nft-card-container" data-index={index}>
             <NFTCardWithVirtualization 

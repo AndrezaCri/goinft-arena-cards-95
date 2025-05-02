@@ -21,7 +21,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   height = "64",
   priority = false,
   onLoad,
-  quality = 40 // Reduced quality from 75 to 40
+  quality = 20 // Further reduced quality from 40 to 20
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
@@ -30,13 +30,13 @@ export const OptimizedImage = memo(function OptimizedImage({
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
   
-  // Optimize image source - reduce size aggressively
+  // Ultra-optimized image source
   const getOptimizedSrc = useCallback((originalSrc: string): string => {
     if (!originalSrc) return originalSrc;
     
-    // For external images, use a tiny placeholder
+    // For external images, use tiny placeholders
     if (originalSrc.includes('unsplash.com')) {
-      return originalSrc.replace(/w=\d+/, 'w=100').replace(/q=\d+/, 'q=30');
+      return originalSrc.replace(/w=\d+/, 'w=50').replace(/q=\d+/, 'q=10');
     }
     
     if (originalSrc.includes('placeholder.com')) {
@@ -44,10 +44,10 @@ export const OptimizedImage = memo(function OptimizedImage({
     }
     
     // For other URLs, add quality params
-    if (originalSrc.startsWith('http')) {
+    if (originalSrc.startsWith('http') || originalSrc.startsWith('/')) {
       const separator = originalSrc.includes('?') ? '&' : '?';
-      // Reduce requested width dramatically to improve load times
-      const requestedWidth = Math.min(parseInt(width), 150); // Cap at 150px
+      // Drastically reduce requested width to improve load times
+      const requestedWidth = Math.min(parseInt(width), 100); // Cap at 100px width
       return `${originalSrc}${separator}q=${quality}&w=${requestedWidth}`;
     }
     
@@ -64,7 +64,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
-  // Use Intersection Observer for extreme lazy loading
+  // Ultra lazy loading with minimal Intersection Observer
   useEffect(() => {
     // Load priority images immediately but with optimized source
     if (priority && !imgSrc && src) {
@@ -72,7 +72,7 @@ export const OptimizedImage = memo(function OptimizedImage({
       return;
     }
     
-    // For non-priority images, use more aggressive Intersection Observer
+    // For non-priority images, use minimal Intersection Observer
     if (!priority && !imgSrc && imageWrapperRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && isMounted.current) {
@@ -80,8 +80,8 @@ export const OptimizedImage = memo(function OptimizedImage({
           observerRef.current?.disconnect();
         }
       }, {
-        rootMargin: '100px', // Reduced from 200px to 100px for more just-in-time loading
-        threshold: 0.1 // Increased threshold so image loads when more visible
+        rootMargin: '50px', // Further reduced from 100px to 50px
+        threshold: 0.1
       });
       
       observerRef.current.observe(imageWrapperRef.current);
@@ -110,7 +110,7 @@ export const OptimizedImage = memo(function OptimizedImage({
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 800); // Further reduced from 1500ms to 800ms
+      }, 500); // Further reduced from 800ms to 500ms
       
       return () => clearTimeout(timeout);
     }
@@ -129,7 +129,7 @@ export const OptimizedImage = memo(function OptimizedImage({
           loading={priority ? "eager" : "lazy"}
           width={width}
           height={height}
-          decoding={priority ? "sync" : "async"}
+          decoding="async"
         />
       )}
     </div>
