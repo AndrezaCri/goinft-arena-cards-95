@@ -1,5 +1,5 @@
 
-import { memo, useState, useEffect, useCallback } from "react";
+import { memo, useState, useEffect, useCallback, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface OptimizedImageProps {
@@ -23,57 +23,62 @@ export const OptimizedImage = memo(function OptimizedImage({
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const isMounted = useRef(true);
   
-  // Implementando carregamento progressivo baseado no Intersection Observer
+  // Cleanup function to prevent memory leaks
   useEffect(() => {
-    let isMounted = true;
-    
-    // Para imagens prioritárias, carregue imediatamente
+    return () => {
+      isMounted.current = false;
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+  
+  // Implementing progressive loading based on Intersection Observer
+  useEffect(() => {
+    // For priority images, load immediately
     if (priority && !imgSrc && src) {
       setImgSrc(src);
       return;
     }
     
-    // Para imagens não prioritárias, use Intersection Observer
+    // For non-priority images, use Intersection Observer
     if (!priority && !imgSrc) {
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && isMounted) {
+      const element = document.createElement('div');
+      
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && isMounted.current) {
           setImgSrc(src);
-          observer.disconnect();
+          observerRef.current?.disconnect();
         }
       }, {
-        rootMargin: '200px', // Pré-carrega quando estiver a 200px de distância
+        rootMargin: '200px', // Preload when within 200px distance
         threshold: 0.01
       });
       
-      // Elemento temporário para observação
-      const element = document.createElement('div');
-      observer.observe(element);
-      
-      // Limpeza
-      return () => {
-        observer.disconnect();
-        isMounted = false;
-      };
+      observerRef.current.observe(element);
     }
-    
-    return () => {
-      isMounted = false;
-    };
   }, [priority, src, imgSrc]);
   
-  // Otimizando função de callback com useCallback
+  // Optimizing callback function
   const handleImageLoad = useCallback(() => {
-    setLoaded(true);
-    if (onLoad) onLoad();
+    if (isMounted.current) {
+      setLoaded(true);
+      if (onLoad) onLoad();
+    }
   }, [onLoad]);
   
-  // Removendo o skeleton após um tempo máximo, mesmo se a imagem não carregar
+  // Remove skeleton after a maximum time
   useEffect(() => {
     if (!loaded && imgSrc) {
       const timeout = setTimeout(() => {
-        setLoaded(true);
-      }, 5000); // 5 segundos máximo de espera
+        if (isMounted.current) {
+          setLoaded(true);
+        }
+      }, 3000); // 3 seconds max wait time (reduced from 5)
       
       return () => clearTimeout(timeout);
     }
@@ -84,6 +89,7 @@ export const OptimizedImage = memo(function OptimizedImage({
       {!loaded && imgSrc && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
       {imgSrc && (
         <img 
+          ref={imageRef}
           src={imgSrc} 
           alt={alt}
           className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}

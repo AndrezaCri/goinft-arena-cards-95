@@ -1,5 +1,5 @@
 
-import { useState, useMemo, memo } from "react";
+import { useState, useMemo, memo, useCallback } from "react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -52,6 +52,11 @@ interface ExperienceCardProps {
 
 // Componente de Card de Experiência memoizado
 const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }: ExperienceCardProps) {
+  // Using useCallback for any event handlers (if we had any)
+  const handleCardClick = useCallback(() => {
+    // Handle click event if needed
+  }, []);
+
   return (
     <Card 
       key={experience.id} 
@@ -66,7 +71,7 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }: 
               className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
               width="400"
               height="225"
-              priority={isPriority} // Apenas a primeira imagem é prioritária
+              priority={isPriority}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
           </div>
@@ -89,12 +94,17 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }: 
 });
 
 const Experiences = () => {
-  // Usando useMemo para preparar as experiências com a flag de prioridade
+  // Using useMemo for derived state to prevent re-calculations
   const preparedExperiences = useMemo(() => {
     return experiences.map((exp, index) => ({
       ...exp,
       isPriority: index === 0 // Apenas o primeiro item é prioritário
     }));
+  }, []); // Empty dependency array since experiences is static
+  
+  // Using useCallback for any event handlers (if we had any)
+  const handleExperienceClick = useCallback((id: number) => {
+    // Handle click event if needed
   }, []);
 
   return (

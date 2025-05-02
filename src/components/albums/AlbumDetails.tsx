@@ -49,12 +49,17 @@ const PlaceholderCard = memo(function PlaceholderCard({ index }: PlaceholderCard
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
 
-  // Use useCallback para funções de evento
+  // Use useCallback for event handlers
   const handleImageLoad = useCallback(() => {
     setAlbumImageLoaded(true);
   }, []);
 
-  // Use useMemo para os placeholder cards
+  // Use useCallback for event handlers
+  const handleBackClick = useCallback(() => {
+    onBack();
+  }, [onBack]);
+
+  // Use useMemo for derived values that don't need to be recalculated on every render
   const placeholderCards = useMemo(() => 
     Array.from({ length: 4 }).map((_, index) => (
       <PlaceholderCard key={index} index={index} />
@@ -62,15 +67,15 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     []
   );
   
-  // Preparar estatísticas do álbum com useMemo
+  // Memoize album stats to prevent recalculations
   const albumStats = useMemo(() => [
     { label: "Total de Cards", value: album.totalCards, colorClass: "text-neon-purple/70" },
     { label: "Colecionados", value: album.collectedCards, colorClass: "text-neon-blue/70" },
     { label: "Progresso", value: `${Math.round(album.progress)}%`, colorClass: "text-neon-pink/70" },
     { label: "Faltando", value: album.totalCards - album.collectedCards, colorClass: "text-neon-green/70" },
-  ], [album]);
+  ], [album.totalCards, album.collectedCards, album.progress]);
   
-  // Preparar cards para renderização otimizada
+  // Memoize prepared cards to prevent recalculations on every render
   const preparedCards = useMemo(() => 
     cards.map((card, index) => ({
       ...card,
