@@ -36,14 +36,14 @@ export function AlbumCard({
   return (
     <Card
       className={cn(
-        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[190px] mx-auto",
+        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[280px] mx-auto",
         "bg-goinft-card border-none hover:shadow-lg",
         !locked && "hover:scale-105",
         className
       )}
       onClick={onClick}
     >
-      <div className="relative" style={{ aspectRatio: '190/210' }}>
+      <div className="relative" style={{ aspectRatio: '230/320' }}>
         {!imageLoaded && (
           <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
         )}
@@ -53,8 +53,8 @@ export function AlbumCard({
           alt={name} 
           className="absolute inset-0 w-full h-full object-cover"
           onLoad={() => setImageLoaded(true)}
-          width="190"
-          height="210"
+          width="280"
+          height="390"
           priority={true} // Sempre usar prioridade para todas as imagens para garantir carregamento
         />
         
@@ -62,22 +62,22 @@ export function AlbumCard({
         
         {locked && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 z-10">
-            <Lock className="w-10 h-10 text-white/70" />
-            <p className="text-white font-orbitron mt-2 text-sm text-center px-3">
+            <Lock className="w-12 h-12 text-white/70" />
+            <p className="text-white font-orbitron mt-4 text-center px-4">
               Complete as recompensas para desbloquear
             </p>
           </div>
         )}
         
-        <div className="absolute bottom-0 left-0 right-0 p-3">
-          <h3 className="text-white font-orbitron text-lg font-bold mb-1">{name}</h3>
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h3 className="text-white font-orbitron text-xl font-bold mb-1">{name}</h3>
           
-          <div className="flex justify-between text-white/80 text-xs mb-1">
+          <div className="flex justify-between text-white/80 text-sm mb-2">
             <span>{collectedCards} / {totalCards} cards</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
           
-          <Progress value={progress} className="h-1.5 bg-white/20" />
+          <Progress value={progress} className="h-2 bg-white/20" />
         </div>
       </div>
     </Card>
