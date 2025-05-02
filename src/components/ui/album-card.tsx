@@ -44,19 +44,21 @@ export function AlbumCard({
       onClick={onClick}
     >
       <div className="relative" style={{ aspectRatio: '190/210' }}>
-        {!imageLoaded && (
+        {!imageLoaded && !locked && (
           <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
         )}
         
-        <OptimizedImage 
-          src={coverImage} 
-          alt={name} 
-          className="absolute inset-0 w-full h-full object-cover"
-          onLoad={() => setImageLoaded(true)}
-          width="190"
-          height="210"
-          priority={true}
-        />
+        {!locked && (
+          <OptimizedImage 
+            src={coverImage} 
+            alt={name} 
+            className="absolute inset-0 w-full h-full object-cover"
+            onLoad={() => setImageLoaded(true)}
+            width="190"
+            height="210"
+            priority={true}
+          />
+        )}
         
         {/* Add cyberpunk glow effect overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

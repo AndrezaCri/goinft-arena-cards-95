@@ -41,38 +41,6 @@ export const albums: Album[] = [
     totalCards: 28,
     collectedCards: 28,
   },
-  {
-    id: "6",
-    name: "Campeonato Brasileiro 2025",
-    coverImage: "/lovable-uploads/f9929074-04ed-4bb7-8be6-8ede5133f460.png", // Corinthians Azul
-    progress: 85,
-    totalCards: 20,
-    collectedCards: 17,
-  },
-  {
-    id: "7",
-    name: "Champions League 2025",
-    coverImage: "/lovable-uploads/cdeb02f9-00e3-439a-b98d-22b8f5b19b96.png", // Corinthians atleta
-    progress: 65,
-    totalCards: 18,
-    collectedCards: 12,
-  },
-  {
-    id: "8",
-    name: "Copa Feminina 2025",
-    coverImage: "/lovable-uploads/675d76af-fadf-439d-b9ad-748450ddc027.png", // Corinthians Roxo
-    progress: 45,
-    totalCards: 22,
-    collectedCards: 10,
-  },
-  {
-    id: "9",
-    name: "Mundial de Clubes 2025",
-    coverImage: "/lovable-uploads/e705d9ff-bc2e-4ace-a4e6-ef2511d34a56.png", // Corinthians novamente
-    progress: 30,
-    totalCards: 15,
-    collectedCards: 5,
-  },
 ];
 
 export const worldCupCards: AlbumCard[] = [
