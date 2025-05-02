@@ -21,7 +21,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   height = "64",
   priority = false,
   onLoad,
-  quality = 20 // Further reduced quality from 40 to 20
+  quality = 80 // Aumentado de 20 para 80 para garantir qualidade suficiente
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
@@ -29,32 +29,17 @@ export const OptimizedImage = memo(function OptimizedImage({
   const imageRef = useRef<HTMLImageElement | null>(null);
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
+  const [error, setError] = useState(false);
   
-  // Ultra-optimized image source
+  // Função simplificada para otimizar a fonte da imagem
   const getOptimizedSrc = useCallback((originalSrc: string): string => {
     if (!originalSrc) return originalSrc;
     
-    // For external images, use tiny placeholders
-    if (originalSrc.includes('unsplash.com')) {
-      return originalSrc.replace(/w=\d+/, 'w=50').replace(/q=\d+/, 'q=10');
-    }
-    
-    if (originalSrc.includes('placeholder.com')) {
-      return originalSrc;
-    }
-    
-    // For other URLs, add quality params
-    if (originalSrc.startsWith('http') || originalSrc.startsWith('/')) {
-      const separator = originalSrc.includes('?') ? '&' : '?';
-      // Drastically reduce requested width to improve load times
-      const requestedWidth = Math.min(parseInt(width), 100); // Cap at 100px width
-      return `${originalSrc}${separator}q=${quality}&w=${requestedWidth}`;
-    }
-    
+    // Retornar a fonte original para garantir que a imagem carregue corretamente
     return originalSrc;
-  }, [width, quality]);
+  }, []);
   
-  // Cleanup function
+  // Cleanup
   useEffect(() => {
     return () => {
       isMounted.current = false;
@@ -64,23 +49,23 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
-  // Ultra lazy loading with minimal Intersection Observer
+  // Carregamento lazy com Intersection Observer
   useEffect(() => {
-    // Load priority images immediately but with optimized source
+    // Carregar imagens priority imediatamente
     if (priority && !imgSrc && src) {
-      setImgSrc(getOptimizedSrc(src));
+      setImgSrc(src);
       return;
     }
     
-    // For non-priority images, use minimal Intersection Observer
+    // Para imagens não-priority, usar Intersection Observer
     if (!priority && !imgSrc && imageWrapperRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && isMounted.current) {
-          setImgSrc(getOptimizedSrc(src));
+          setImgSrc(src);
           observerRef.current?.disconnect();
         }
       }, {
-        rootMargin: '50px', // Further reduced from 100px to 50px
+        rootMargin: '100px',
         threshold: 0.1
       });
       
@@ -103,14 +88,22 @@ export const OptimizedImage = memo(function OptimizedImage({
     }
   }, [onLoad]);
   
-  // Force skeleton to disappear after a very short time
+  // Lidar com erro de carregamento
+  const handleImageError = useCallback(() => {
+    if (isMounted.current) {
+      setError(true);
+      console.error(`Failed to load image: ${src}`);
+    }
+  }, [src]);
+  
+  // Forçar skeleton a desaparecer após um tempo
   useEffect(() => {
     if (!loaded && imgSrc) {
       const timeout = setTimeout(() => {
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 500); // Further reduced from 800ms to 500ms
+      }, 800);
       
       return () => clearTimeout(timeout);
     }
@@ -119,6 +112,11 @@ export const OptimizedImage = memo(function OptimizedImage({
   return (
     <div ref={imageWrapperRef} className="relative w-full h-full">
       {!loaded && imgSrc && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-goinft-darker/80 text-white text-xs text-center p-2">
+          Erro ao carregar imagem
+        </div>
+      )}
       {imgSrc && (
         <img 
           ref={imageRef}
@@ -126,6 +124,7 @@ export const OptimizedImage = memo(function OptimizedImage({
           alt={alt}
           className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
           onLoad={handleImageLoad}
+          onError={handleImageError}
           loading={priority ? "eager" : "lazy"}
           width={width}
           height={height}

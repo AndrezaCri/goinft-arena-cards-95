@@ -10,33 +10,33 @@ interface AlbumGridProps {
   unlockedAlbums: string[];
 }
 
-// Virtualized component to only show visible albums
+// Componente de grid de álbuns com carregamento otimizado
 export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   const isMobile = useIsMobile();
   const gridRef = useRef<HTMLDivElement>(null);
-  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0])); // Show only the first by default (reduced)
+  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1, 2])); // Mostrar os 3 primeiros por padrão
   
-  // Pre-process albums once
+  // Processar álbuns uma vez
   const processedAlbums = useMemo(() => 
     albums.map((album, index) => {
       const isUnlocked = album.id === "1" || unlockedAlbums.includes(album.id);
       return {
         ...album,
         isUnlocked,
-        isPriority: index === 0 // Only the first album is priority
+        isPriority: index < 3 // Os 3 primeiros álbuns são prioridade
       };
     }),
     [albums, unlockedAlbums]
   );
   
-  // Handle album click with useCallback
+  // Lidar com clique no álbum com useCallback
   const handleAlbumClick = useCallback((albumId: string, isUnlocked: boolean) => {
     if (isUnlocked) {
       onAlbumClick(albumId);
     }
   }, [onAlbumClick]);
   
-  // More aggressive intersection observer for virtualized rendering
+  // IntersectionObserver mais eficiente para renderização virtualizada
   useEffect(() => {
     if (!gridRef.current) return;
     
@@ -51,21 +51,17 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
           if (entry.isIntersecting) {
             newVisibleIndexes.add(index);
             
-            // Only preload the next album
+            // Pré-carregar o próximo álbum
             if (index + 1 < processedAlbums.length) newVisibleIndexes.add(index + 1);
-          } else {
-            // Be more aggressive about removing non-visible albums
-            if (index !== 0 && !entry.isIntersecting && Math.abs(index - Array.from(newVisibleIndexes)[0]) > 2) {
-              newVisibleIndexes.delete(index);
-            }
+            if (index + 2 < processedAlbums.length) newVisibleIndexes.add(index + 2);
           }
         });
         
         setVisibleIndexes(newVisibleIndexes);
       },
       {
-        rootMargin: '20px 0px', // Much reduced from 50px to 20px
-        threshold: 0.2 // Increased threshold for more just-in-time loading
+        rootMargin: '100px',
+        threshold: 0.1
       }
     );
     
@@ -79,7 +75,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
   }, [processedAlbums.length]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-4" ref={gridRef}> {/* Reduced gap from 6 to 4 */}
+    <div className="flex flex-wrap justify-center gap-4" ref={gridRef}>
       {processedAlbums.map((album, index) => (
         <div 
           key={album.id}
@@ -95,9 +91,9 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
               priority={album.isPriority}
             />
           )}
-          {/* Smaller, lighter placeholder for non-visible albums */}
+          {/* Placeholder mais leve para álbuns não visíveis */}
           {!visibleIndexes.has(index) && (
-            <div className="bg-goinft-darker/30 rounded-xl w-[260px] mx-auto" style={{ height: '350px' }}></div> // Reduced from 390px to 350px height
+            <div className="bg-goinft-darker/30 rounded-xl w-[220px] mx-auto" style={{ height: '350px' }}></div>
           )}
         </div>
       ))}

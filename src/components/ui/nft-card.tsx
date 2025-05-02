@@ -70,9 +70,9 @@ export function NFTCard({
             !imageLoaded && "opacity-0"
           )}
           onLoad={() => setImageLoaded(true)}
-          width="80"
-          height="112"
-          quality={20}
+          width="230" // Aumentado de 80 para 230 para melhor visualização
+          height="320" // Ajustado proporcionalmente
+          quality={80} // Aumentado de 20 para 80 para garantir qualidade suficiente
           priority={priority}
         />
         
