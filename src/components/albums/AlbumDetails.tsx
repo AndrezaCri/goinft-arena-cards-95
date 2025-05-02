@@ -56,16 +56,19 @@ const NFTCardWithVirtualization = memo(function NFTCardWithVirtualization({
   isVisible,
   ...card 
 }: NFTCardWithVirtualizationProps) {
-  return isVisible || isPriority ? (
-    <NFTCard {...card} priority={isPriority} />
-  ) : (
-    <div className="aspect-[230/320] bg-goinft-darker/30 rounded-lg animate-pulse"></div>
-  );
+  // Simplified to ensure visibility works correctly
+  if (!isVisible && !isPriority) {
+    return (
+      <div className="aspect-[230/320] bg-goinft-darker/30 rounded-lg animate-pulse"></div>
+    );
+  }
+  
+  return <NFTCard {...card} priority={isPriority} />;
 });
 
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
-  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1])); // Primeiros 2 cards visíveis por padrão
+  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1, 2])); // Increased initial visibility
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   // Use useCallback for event handlers
@@ -82,18 +85,18 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   useEffect(() => {
     if (!cardsContainerRef.current) return;
     
-    const cardElements = cardsContainerRef.current.querySelectorAll('.nft-card-container');
     const observer = new IntersectionObserver(
       (entries) => {
         const newVisibleIndexes = new Set(visibleCardIndexes);
         
         entries.forEach(entry => {
-          const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+          const element = entry.target as HTMLElement;
+          const index = parseInt(element.getAttribute('data-index') || '0', 10);
           
           if (entry.isIntersecting) {
             newVisibleIndexes.add(index);
             
-            // Pre-load next two cards
+            // Pre-load next cards
             if (index + 1 < cards.length) newVisibleIndexes.add(index + 1);
             if (index + 2 < cards.length) newVisibleIndexes.add(index + 2);
           }
@@ -102,11 +105,13 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         setVisibleCardIndexes(newVisibleIndexes);
       },
       {
-        rootMargin: '100px 0px 100px 0px',
+        rootMargin: '200px 0px 200px 0px', // Increased margin to load earlier
         threshold: 0.1
       }
     );
     
+    // Find all card containers and observe them
+    const cardElements = cardsContainerRef.current.querySelectorAll('.nft-card-container');
     cardElements.forEach(element => {
       observer.observe(element);
     });
@@ -114,7 +119,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     return () => {
       observer.disconnect();
     };
-  }, [cards.length]);
+  }, [cards.length]); // Removed visibleCardIndexes dependency to prevent observer recreation
 
   // Use useMemo for derived values that don't need to be recalculated on every render
   const placeholderCards = useMemo(() => 
@@ -136,7 +141,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const preparedCards = useMemo(() => 
     cards.map((card, index) => ({
       ...card,
-      isPriority: index < 2 // Apenas os primeiros 2 cards são prioritários
+      isPriority: index < 4 // Increased priority cards
     })),
     [cards]
   );

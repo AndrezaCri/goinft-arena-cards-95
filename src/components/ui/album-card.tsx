@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -33,6 +33,10 @@ export function AlbumCard({
 }: AlbumCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
+  
   return (
     <Card
       className={cn(
@@ -53,10 +57,10 @@ export function AlbumCard({
             src={coverImage} 
             alt={name} 
             className="absolute inset-0 w-full h-full object-cover"
-            onLoad={() => setImageLoaded(true)}
+            onLoad={handleImageLoad}
             width="190"
             height="210"
-            priority={true}
+            priority={priority}
           />
         )}
         
