@@ -14,6 +14,7 @@ interface NFTCardProps {
   isOwned?: boolean;
   onClick?: () => void;
   priority?: boolean;
+  className?: string; // Added className prop to fix the TypeScript errors
 }
 
 const rarityColors = {
@@ -40,6 +41,7 @@ export function NFTCard({
   isOwned = false,
   onClick,
   priority = false,
+  className, // Added className to the destructured props
 }: NFTCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -50,7 +52,8 @@ export function NFTCard({
         "bg-goinft-card border-2",
         rarityColors[rarity],
         !isOwned && "opacity-60 grayscale",
-        isOwned && "hover:scale-105"
+        isOwned && "hover:scale-105",
+        className // Added className to the cn function
       )}
       onClick={onClick}
     >
