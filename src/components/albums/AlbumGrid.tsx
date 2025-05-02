@@ -39,7 +39,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
             {...album}
             className={`${!album.isUnlocked ? "opacity-60 grayscale" : ""}`}
             locked={!album.isUnlocked}
-            priority={album.isPriority}
+            priority={album.isPriority}  // This now matches the interface
           />
         </div>
       ))}

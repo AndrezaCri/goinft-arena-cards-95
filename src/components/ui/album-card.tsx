@@ -16,6 +16,7 @@ interface AlbumCardProps {
   onClick?: () => void;
   className?: string;
   locked?: boolean;
+  priority?: boolean;  // Added the priority prop as optional
 }
 
 export function AlbumCard({
@@ -28,6 +29,7 @@ export function AlbumCard({
   onClick,
   className,
   locked = false,
+  priority = false,  // Added default value
 }: AlbumCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   
@@ -56,7 +58,7 @@ export function AlbumCard({
           onLoad={() => setImageLoaded(true)}
           width="280"
           height="390"
-          priority={id === "1"} // Prioriza apenas o primeiro álbum
+          priority={priority} // Using the priority prop here
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
