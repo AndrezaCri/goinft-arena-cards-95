@@ -56,11 +56,15 @@ export function AlbumCard({
           <OptimizedImage 
             src={coverImage} 
             alt={name} 
-            className="absolute inset-0 w-full h-full object-cover"
+            className={cn(
+              "absolute inset-0 w-full h-full",
+              imageLoaded ? "opacity-100" : "opacity-0"
+            )}
             onLoad={handleImageLoad}
             width="190"
             height="210"
             priority={priority}
+            objectFit="cover"
           />
         )}
         

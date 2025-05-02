@@ -1,5 +1,5 @@
 
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -39,10 +39,16 @@ export const NFTCard = memo(function NFTCard({
   className,
   priority = false,
 }: NFTCardProps) {
-  // Usando useCallback para o handler de clique
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Usando useCallback para o handler de clique e carregamento
   const handleClick = useCallback(() => {
     if (onClick) onClick();
   }, [onClick]);
+  
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
 
   return (
     <Card
@@ -58,10 +64,15 @@ export const NFTCard = memo(function NFTCard({
         <OptimizedImage 
           src={image} 
           alt={name}
-          className="absolute inset-0 w-full h-full object-cover"
+          className={cn(
+            "absolute inset-0 w-full h-full",
+            imageLoaded ? "opacity-100" : "opacity-0"
+          )}
           width="230"
           height="320"
           priority={priority}
+          objectFit="cover"
+          onLoad={handleImageLoad}
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

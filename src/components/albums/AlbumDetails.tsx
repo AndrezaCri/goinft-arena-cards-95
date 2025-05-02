@@ -4,6 +4,7 @@ import type { Album, AlbumCard } from "@/types/album";
 import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
+import { NFTCardWithVirtualization } from "@/components/albums/NFTCardWithVirtualization";
 
 interface AlbumDetailsProps {
   album: Album;
@@ -46,30 +47,9 @@ const PlaceholderCard = memo(function PlaceholderCard({ index }: PlaceholderCard
   );
 });
 
-interface NFTCardWithVirtualizationProps extends AlbumCard {
-  isPriority: boolean;
-  isVisible: boolean;
-}
-
-// Componente memoizado para renderizar NFT Cards com virtualização
-const NFTCardWithVirtualization = memo(function NFTCardWithVirtualization({ 
-  isPriority, 
-  isVisible,
-  ...card 
-}: NFTCardWithVirtualizationProps) {
-  // Simplified to ensure visibility works correctly
-  if (!isVisible && !isPriority) {
-    return (
-      <div className="aspect-[230/320] bg-goinft-darker/30 rounded-lg animate-pulse"></div>
-    );
-  }
-  
-  return <NFTCard {...card} priority={isPriority} />;
-});
-
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
-  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1, 2])); // Increased initial visibility
+  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1, 2, 3, 4, 5])); // Aumentado número inicial de cards visíveis
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   // Use useCallback for event handlers
@@ -86,30 +66,32 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   useEffect(() => {
     if (!cardsContainerRef.current) return;
     
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const newVisibleIndexes = new Set(visibleCardIndexes);
+    const options = {
+      rootMargin: '300px 0px 300px 0px', // Aumentado margem para carregar mais cedo
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      const newVisibleIndexes = new Set(visibleCardIndexes);
+      
+      entries.forEach(entry => {
+        const element = entry.target as HTMLElement;
+        const index = parseInt(element.getAttribute('data-index') || '0', 10);
         
-        entries.forEach(entry => {
-          const element = entry.target as HTMLElement;
-          const index = parseInt(element.getAttribute('data-index') || '0', 10);
+        if (entry.isIntersecting) {
+          // Adicionar o card atual e pré-carregar os próximos
+          newVisibleIndexes.add(index);
           
-          if (entry.isIntersecting) {
-            newVisibleIndexes.add(index);
-            
-            // Pre-load next cards
-            if (index + 1 < cards.length) newVisibleIndexes.add(index + 1);
-            if (index + 2 < cards.length) newVisibleIndexes.add(index + 2);
-          }
-        });
-        
-        setVisibleCardIndexes(newVisibleIndexes);
-      },
-      {
-        rootMargin: '200px 0px 200px 0px', // Increased margin to load earlier
-        threshold: 0.1
-      }
-    );
+          // Pré-carregar mais cards para evitar problemas de carregamento
+          if (index + 1 < cards.length) newVisibleIndexes.add(index + 1);
+          if (index + 2 < cards.length) newVisibleIndexes.add(index + 2);
+          if (index + 3 < cards.length) newVisibleIndexes.add(index + 3);
+          if (index + 4 < cards.length) newVisibleIndexes.add(index + 4);
+        }
+      });
+      
+      setVisibleCardIndexes(newVisibleIndexes);
+    }, options);
     
     // Find all card containers and observe them
     const cardElements = cardsContainerRef.current.querySelectorAll('.nft-card-container');
@@ -120,7 +102,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     return () => {
       observer.disconnect();
     };
-  }, [cards.length]); // Removed visibleCardIndexes dependency to prevent observer recreation
+  }, [cards.length]); // Removida dependência de visibleCardIndexes para evitar recriação do observer
 
   // Use useMemo for derived values that don't need to be recalculated on every render
   const placeholderCards = useMemo(() => 
@@ -142,7 +124,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const preparedCards = useMemo(() => 
     cards.map((card, index) => ({
       ...card,
-      isPriority: index < 4 // Increased priority cards
+      isPriority: index < 8 // Aumentado número de cards prioritários
     })),
     [cards]
   );
@@ -170,6 +152,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               width="175"
               height="230"
               priority={true}
+              objectFit="cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
           </div>

@@ -1,6 +1,7 @@
 
 import React, { memo, useState, useEffect, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface OptimizedImageProps {
   src: string;
@@ -10,6 +11,7 @@ interface OptimizedImageProps {
   height?: string;
   priority?: boolean;
   onLoad?: () => void;
+  objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
 }
 
 export const OptimizedImage = memo(function OptimizedImage({ 
@@ -19,12 +21,33 @@ export const OptimizedImage = memo(function OptimizedImage({
   width = "64",
   height = "64",
   priority = false,
-  onLoad
+  onLoad,
+  objectFit = "cover"
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
   
-  // Simplifying the loading process
+  // Use effect to handle src changes and preloading
+  useEffect(() => {
+    if (!src) return;
+    
+    setLoaded(false);
+    setError(false);
+    
+    // Create a new Image to preload
+    const img = new Image();
+    img.src = src;
+    setImgSrc(src);
+    
+    // Clean up on unmount or src change
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [src]);
+  
+  // Optimized handlers with useCallback to prevent recreations
   const handleImageLoad = useCallback(() => {
     setLoaded(true);
     if (onLoad) onLoad();
@@ -35,24 +58,29 @@ export const OptimizedImage = memo(function OptimizedImage({
     setError(true);
   }, [src]);
 
-  // Reset states when src changes
-  useEffect(() => {
-    if (src) {
-      setLoaded(false);
-      setError(false);
-    }
-  }, [src]);
+  const objectFitClass = {
+    cover: "object-cover",
+    contain: "object-contain",
+    fill: "object-fill",
+    none: "object-none",
+    "scale-down": "object-scale-down"
+  }[objectFit];
   
   return (
     <div className="relative w-full h-full">
       {!loaded && !error && (
         <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />
       )}
-      {src && (
+      {imgSrc && (
         <img 
-          src={src} 
+          src={imgSrc} 
           alt={alt}
-          className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+          className={cn(
+            className || 'w-full h-full',
+            objectFitClass,
+            loaded ? 'opacity-100' : 'opacity-0',
+            'transition-opacity duration-300'
+          )}
           onLoad={handleImageLoad}
           onError={handleImageError}
           loading={priority ? "eager" : "lazy"}
