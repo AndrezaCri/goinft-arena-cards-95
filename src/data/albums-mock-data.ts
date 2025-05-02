@@ -1,3 +1,4 @@
+
 import { Album, AlbumCard } from "@/types/album";
 
 export const albums: Album[] = [
@@ -107,15 +108,7 @@ export const worldCupCards: AlbumCard[] = [
     position: "Forward",
     isOwned: false,
   },
-  {
-    id: "wc8",
-    name: "Corinthians Fem - Atleta",
-    image: "/lovable-uploads/cdeb02f9-00e3-439a-b98d-22b8f5b19b96.png",
-    rarity: "epic",
-    team: "Corinthians",
-    position: "Forward",
-    isOwned: false,
-  },
+  // Removing the duplicated Corinthians card (id: wc8)
   {
     id: "wc9",
     name: "Corinthians Fem - Mundial",
