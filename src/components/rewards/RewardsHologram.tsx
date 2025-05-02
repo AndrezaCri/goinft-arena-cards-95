@@ -13,55 +13,21 @@ interface RewardsHologramProps {
 export const RewardsHologram = memo(function RewardsHologram({ currentTab }: RewardsHologramProps) {
   const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
   
-  // Reset visible rewards when tab changes
+  // Show all rewards immediately for better performance
   useEffect(() => {
-    // Clear previous state
-    setVisibleRewards([]);
+    // Show all rewards based on the current tab
+    const numRewards = {
+      daily: 7,
+      weekly: 5,
+      albums: 4,
+      rank: 3
+    }[currentTab];
     
-    let isMounted = true;
-    let timeoutId: NodeJS.Timeout;
+    // Create an array with all indices visible
+    const allRewards = Array.from({ length: numRewards }, (_, i) => i);
     
-    const showRewards = () => {
-      const numRewards = {
-        daily: 7,
-        weekly: 5,
-        albums: 4,
-        rank: 3
-      }[currentTab];
-      
-      // Create an array from 0 to numRewards-1
-      const allIndexes = Array.from({ length: numRewards }, (_, i) => i);
-      
-      // Show all rewards at once initially to fix the Day 1 issue
-      setVisibleRewards(allIndexes);
-      
-      // Optional: You can still animate them by adding a small delay between each
-      // but ensure all are visible from the start
-      /*
-      let currentIndex = 0;
-      
-      const addNextReward = () => {
-        if (!isMounted) return;
-        
-        if (currentIndex < numRewards) {
-          setVisibleRewards(prev => [...prev, currentIndex]);
-          currentIndex++;
-          timeoutId = setTimeout(addNextReward, 200);
-        }
-      };
-      
-      // Start animation
-      timeoutId = setTimeout(addNextReward, 100);
-      */
-    };
-    
-    // Start after a small delay
-    timeoutId = setTimeout(showRewards, 100);
-    
-    return () => {
-      isMounted = false;
-      clearTimeout(timeoutId);
-    };
+    // Show all rewards immediately
+    setVisibleRewards(allRewards);
   }, [currentTab]);
   
   // Use useMemo for elements that don't change frequently

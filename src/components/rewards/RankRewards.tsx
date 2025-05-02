@@ -31,14 +31,16 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
               }
             >
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="h-40 w-40">
+                <div className="h-40 w-40 flex items-center justify-center">
                   <OptimizedImage 
                     src={`/lovable-uploads/${rankImages[index]}`} 
                     alt={`Recompensa ${index + 1}`}
-                    className="h-40 w-40 object-contain"
+                    className="h-40 w-40"
+                    objectFit="contain"
                     width="160"
                     height="160"
-                    priority={index === 0} // Priorizar a primeira recompensa
+                    priority={true}
+                    containerClassName="flex items-center justify-center"
                   />
                 </div>
               </div>

@@ -12,6 +12,7 @@ interface OptimizedImageProps {
   priority?: boolean;
   onLoad?: () => void;
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
+  containerClassName?: string;
 }
 
 export const OptimizedImage = memo(function OptimizedImage({ 
@@ -22,7 +23,8 @@ export const OptimizedImage = memo(function OptimizedImage({
   height = "64",
   priority = false,
   onLoad,
-  objectFit = "cover"
+  objectFit = "cover",
+  containerClassName
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -67,7 +69,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   }[objectFit];
   
   return (
-    <div className="relative w-full h-full">
+    <div className={cn("relative w-full h-full flex items-center justify-center", containerClassName)}>
       {!loaded && !error && (
         <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />
       )}
@@ -87,6 +89,7 @@ export const OptimizedImage = memo(function OptimizedImage({
           width={width}
           height={height}
           decoding="async"
+          fetchPriority={priority ? "high" : "auto"}
         />
       )}
     </div>
