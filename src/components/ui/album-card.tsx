@@ -33,7 +33,7 @@ export function AlbumCard({
   return (
     <Card
       className={cn(
-        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[23%]",
+        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[280px] mx-auto",
         "bg-goinft-card border-none hover:shadow-lg",
         !locked && "hover:scale-105",
         className
@@ -54,8 +54,8 @@ export function AlbumCard({
           )}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
-          width="230"
-          height="320"
+          width="280"
+          height="390"
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
