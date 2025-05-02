@@ -35,16 +35,17 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
   }, [onAlbumClick]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-wrap justify-center gap-6 pt-4">
       {processedAlbums.map((album) => (
         <div 
           key={album.id}
-          className="album-card-container"
+          className="album-card-container relative"
           onClick={() => handleAlbumClick(album.id, album.isUnlocked)}
         >
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl blur-sm opacity-50"></div>
           <AlbumCard 
             {...album}
-            className={`${!album.isUnlocked ? "opacity-60 grayscale" : ""}`}
+            className={`${!album.isUnlocked ? "opacity-60 grayscale" : ""} relative`}
             locked={!album.isUnlocked}
             priority={true}
           />

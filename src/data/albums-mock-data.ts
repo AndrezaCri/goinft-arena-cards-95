@@ -1,11 +1,10 @@
-
 import { Album, AlbumCard } from "@/types/album";
 
 export const albums: Album[] = [
   {
     id: "1",
     name: "Paulista Feminino 2025",
-    coverImage: "/lovable-uploads/a92218ae-3952-4fd1-83c0-443361b2838d.png", // Palmeiras
+    coverImage: "/lovable-uploads/efdeb2b4-d53b-4f15-b23e-1a83805170f2.png", // Updated to new cyberpunk cover
     progress: 70,
     totalCards: 12,
     collectedCards: 8,

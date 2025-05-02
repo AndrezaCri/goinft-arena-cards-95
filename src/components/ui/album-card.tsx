@@ -55,10 +55,12 @@ export function AlbumCard({
           onLoad={() => setImageLoaded(true)}
           width="190"
           height="210"
-          priority={true} // Sempre usar prioridade para todas as imagens para garantir carregamento
+          priority={true}
         />
         
+        {/* Add cyberpunk glow effect overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 mix-blend-color-dodge opacity-50" />
         
         {locked && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 z-10">
@@ -69,8 +71,16 @@ export function AlbumCard({
           </div>
         )}
         
+        <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/50 to-transparent p-2">
+          <div className="w-full flex justify-center">
+            <span className="text-neon-blue font-orbitron text-xs px-3 py-1 rounded-full bg-black/50 border border-neon-blue/30 shadow-glow-sm">
+              GoINft
+            </span>
+          </div>
+        </div>
+        
         <div className="absolute bottom-0 left-0 right-0 p-3">
-          <h3 className="text-white font-orbitron text-sm font-bold mb-1">{name}</h3>
+          <h3 className="text-white font-orbitron text-sm font-bold mb-1 drop-shadow-glow">{name}</h3>
           
           <div className="flex justify-between text-white/80 text-xs mb-1">
             <span>{collectedCards} / {totalCards}</span>
