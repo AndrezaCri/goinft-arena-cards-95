@@ -13,16 +13,15 @@ interface RewardsHologramProps {
 export const RewardsHologram = memo(function RewardsHologram({ currentTab }: RewardsHologramProps) {
   const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
   
-  // Reset visible rewards when tab changes and show them immediately
+  // Reset visible rewards when tab changes
   useEffect(() => {
     // Clear previous state
     setVisibleRewards([]);
     
     let isMounted = true;
+    let timeoutId: NodeJS.Timeout;
     
     const showRewards = () => {
-      if (!isMounted) return;
-      
       const numRewards = {
         daily: 7,
         weekly: 5,
@@ -33,15 +32,35 @@ export const RewardsHologram = memo(function RewardsHologram({ currentTab }: Rew
       // Create an array from 0 to numRewards-1
       const allIndexes = Array.from({ length: numRewards }, (_, i) => i);
       
-      // Show all rewards immediately
+      // Show all rewards at once initially to fix the Day 1 issue
       setVisibleRewards(allIndexes);
+      
+      // Optional: You can still animate them by adding a small delay between each
+      // but ensure all are visible from the start
+      /*
+      let currentIndex = 0;
+      
+      const addNextReward = () => {
+        if (!isMounted) return;
+        
+        if (currentIndex < numRewards) {
+          setVisibleRewards(prev => [...prev, currentIndex]);
+          currentIndex++;
+          timeoutId = setTimeout(addNextReward, 200);
+        }
+      };
+      
+      // Start animation
+      timeoutId = setTimeout(addNextReward, 100);
+      */
     };
     
-    // Start immediately
-    showRewards();
+    // Start after a small delay
+    timeoutId = setTimeout(showRewards, 100);
     
     return () => {
       isMounted = false;
+      clearTimeout(timeoutId);
     };
   }, [currentTab]);
   
@@ -72,9 +91,7 @@ export const RewardsHologram = memo(function RewardsHologram({ currentTab }: Rew
       <div className="relative mt-2">
         <div className="absolute inset-0 bg-circuit-pattern opacity-10 pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-neon-purple/5 to-transparent pointer-events-none"></div>
-        <div className="flex items-center justify-center w-full">
-          {renderRewards()}
-        </div>
+        {renderRewards()}
       </div>
     </div>
   );
