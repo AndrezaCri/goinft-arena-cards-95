@@ -3,7 +3,7 @@ import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { memo } from "react";
 import { OptimizedImage } from "./OptimizedImage";
 
-export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
+export const RankRewards = memo(function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
   // Image sources
   const rankImages = [
     "3ed65cb1-f49f-4076-be44-44a53cff5153.png", 
@@ -12,7 +12,7 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6 w-full">
       {Array.from({ length: 3 }).map((_, index) => (
         <div key={index} className={`flex flex-col items-center transition-opacity duration-500 ${visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'}`}>
           <div className="text-center mb-2">
@@ -20,9 +20,9 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
               {["Elite", "Lenda", "Hall da Fama"][index]}
             </span>
           </div>
-          <div className="relative">
+          <div className="relative w-full flex items-center justify-center">
             <NFTFloatingCard 
-              className="h-48 w-full" 
+              className="h-48 w-full flex items-center justify-center" 
               isHolographic
               glowColor={
                 index === 0 ? "rgba(0, 217, 255, 0.8)" : 
@@ -30,17 +30,15 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
                 "rgba(255, 113, 225, 0.8)"
               }
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="h-40 w-40">
-                  <OptimizedImage 
-                    src={`/lovable-uploads/${rankImages[index]}`} 
-                    alt={`Recompensa ${index + 1}`}
-                    className="h-40 w-40 object-contain"
-                    width="160"
-                    height="160"
-                    priority={index === 0} // Priorizar a primeira recompensa
-                  />
-                </div>
+              <div className="flex items-center justify-center w-full h-full">
+                <OptimizedImage 
+                  src={`/lovable-uploads/${rankImages[index]}`} 
+                  alt={`Recompensa ${index + 1}`}
+                  className="h-40 w-40 object-contain"
+                  width="160"
+                  height="160"
+                  priority={true} // Prioritize all rank images for immediate loading
+                />
               </div>
             </NFTFloatingCard>
             <div className="absolute -top-4 -right-4 bg-goinft-dark border-2 border-neon-purple px-3 py-1 rounded-full font-orbitron text-white text-sm">
@@ -61,4 +59,4 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
       ))}
     </div>
   );
-}
+});

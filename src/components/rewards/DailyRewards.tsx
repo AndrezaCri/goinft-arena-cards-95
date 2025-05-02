@@ -60,7 +60,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
   ];
 
   return (
-    <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} gap-2 mt-4 items-end justify-items-center`}>
+    <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} gap-2 mt-4 items-center justify-items-center`}>
       {Array.from({ length: 7 }).map((_, index) => {
         // For mobile, we'll show all cards but arrange them in two rows
         const mobileRow = Math.floor(index / 3);
@@ -76,10 +76,10 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
             <div className="text-center mb-2">
               <span className="font-orbitron text-sm text-white">Dia {index + 1}</span>
             </div>
-            <div className="relative h-28 md:h-36 w-full">
+            <div className="relative h-28 md:h-36 w-full flex items-center justify-center">
               {index < 5 ? (
                 <div 
-                  className="absolute inset-0 flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-105 active:scale-95"
                   onClick={() => index <= loginStreak && handleDailyLogin()}
                 >
                   <div 
@@ -93,7 +93,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                       src={rewardImages[index % 5]}
                       alt={`Reward ${index + 1}`}
                       className="w-full h-full p-1 object-contain"
-                      priority={index <= loginStreak}
+                      priority={index <= loginStreak + 1}
                     />
                     <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                     {index <= loginStreak && (
@@ -105,16 +105,19 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                 </div>
               ) : (
                 <NFTFloatingCard 
-                  className="h-full w-full" 
+                  className="h-full w-full flex items-center justify-center" 
                   size="sm" 
                   isHolographic
                   glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
                 >
-                  <OptimizedImage 
-                    src={index === 5 ? rewardImages[5] : rewardImages[6]}
-                    alt={`NFT Reward ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="flex items-center justify-center w-full h-full">
+                    <OptimizedImage 
+                      src={index === 5 ? rewardImages[5] : rewardImages[6]}
+                      alt={`NFT Reward ${index + 1}`}
+                      className="w-full h-full object-contain p-2"
+                      priority={index === 5 || index === 6}
+                    />
+                  </div>
                 </NFTFloatingCard>
               )}
             </div>

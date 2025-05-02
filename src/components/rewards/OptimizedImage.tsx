@@ -22,7 +22,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   height = "64",
   priority = false,
   onLoad,
-  objectFit = "cover"
+  objectFit = "contain"
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -37,17 +37,42 @@ export const OptimizedImage = memo(function OptimizedImage({
     
     // Create a new Image to preload
     const img = new Image();
-    img.src = src;
-    setImgSrc(src);
+    
+    img.onload = () => {
+      setImgSrc(src);
+      // Only trigger state update when component is still mounted
+      setLoaded(true);
+      if (onLoad) onLoad();
+    };
+    
+    img.onerror = () => {
+      console.error(`Failed to load image: ${src}`);
+      setError(true);
+    };
+    
+    if (priority) {
+      // For priority images, load immediately
+      img.src = src;
+    } else {
+      // For non-priority images, use requestIdleCallback or setTimeout as fallback
+      const handleLoad = () => {
+        img.src = src;
+      };
+      
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(handleLoad);
+      } else {
+        setTimeout(handleLoad, 200);
+      }
+    }
     
     // Clean up on unmount or src change
     return () => {
       img.onload = null;
       img.onerror = null;
     };
-  }, [src]);
+  }, [src, priority, onLoad]);
   
-  // Optimized handlers with useCallback to prevent recreations
   const handleImageLoad = useCallback(() => {
     setLoaded(true);
     if (onLoad) onLoad();
@@ -67,7 +92,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   }[objectFit];
   
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full flex items-center justify-center">
       {!loaded && !error && (
         <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />
       )}
