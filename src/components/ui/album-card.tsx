@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -32,6 +32,22 @@ export function AlbumCard({
   priority = false,  // Added default value
 }: AlbumCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [errorLoading, setErrorLoading] = useState(false);
+  
+  // Forçar carregamento após um tempo
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!imageLoaded && !errorLoading) {
+        // Se a imagem não carregou, tente novamente
+        setErrorLoading(true);
+        setTimeout(() => {
+          setErrorLoading(false);
+        }, 100);
+      }
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, [imageLoaded, errorLoading]);
   
   return (
     <Card

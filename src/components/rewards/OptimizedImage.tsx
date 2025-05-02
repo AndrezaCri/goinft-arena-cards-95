@@ -1,5 +1,5 @@
 
-import { memo, useState, useEffect, useCallback, useRef } from "react";
+import React, { memo, useState, useEffect, useCallback, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface OptimizedImageProps {
@@ -38,6 +38,20 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
+  // Carrega imagem mesmo se não for prioridade
+  useEffect(() => {
+    // Set image src after a short timeout to ensure it loads even if not priority
+    if (!imgSrc && src) {
+      const timer = setTimeout(() => {
+        if (isMounted.current) {
+          setImgSrc(src);
+        }
+      }, priority ? 0 : 300); // Small delay for non-priority images
+      
+      return () => clearTimeout(timer);
+    }
+  }, [src, imgSrc, priority]);
+  
   // Implementing lazy loading with Intersection Observer
   useEffect(() => {
     // For priority images, load immediately
@@ -54,7 +68,7 @@ export const OptimizedImage = memo(function OptimizedImage({
           observerRef.current?.disconnect();
         }
       }, {
-        rootMargin: '200px', // Preload when within 200px distance
+        rootMargin: '250px', // Increased preload distance
         threshold: 0.01
       });
       
@@ -84,7 +98,7 @@ export const OptimizedImage = memo(function OptimizedImage({
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 2000); // 2 seconds max wait time (reduced from 3)
+      }, 1500); // 1.5 seconds max wait time (reduced from 2)
       
       return () => clearTimeout(timeout);
     }
