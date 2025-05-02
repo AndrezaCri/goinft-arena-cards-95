@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Lock } from "lucide-react";
 import { useState } from "react";
+import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 interface AlbumCardProps {
   id: string;
@@ -45,7 +46,7 @@ export function AlbumCard({
           <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
         )}
         
-        <img 
+        <OptimizedImage 
           src={coverImage} 
           alt={name} 
           className={cn(
@@ -53,9 +54,9 @@ export function AlbumCard({
             !imageLoaded && "opacity-0"
           )}
           onLoad={() => setImageLoaded(true)}
-          loading="lazy"
           width="280"
           height="390"
+          priority={id === "1"} // Prioriza apenas o primeiro álbum
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

@@ -3,6 +3,7 @@ import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 interface AlbumDetailsProps {
   album: Album;
@@ -25,7 +26,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
             {!albumImageLoaded && (
               <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '230/320' }}></div>
             )}
-            <img 
+            <OptimizedImage 
               src={album.coverImage} 
               alt={album.name}
               className={cn(
@@ -33,10 +34,9 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
                 !albumImageLoaded && "opacity-0"
               )}
               onLoad={() => setAlbumImageLoaded(true)}
-              loading="lazy"
               width="230"
               height="320"
-              style={{ aspectRatio: '230/320' }}
+              priority={true}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
           </div>
@@ -87,8 +87,8 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
       </div>
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {cards.map((card) => (
-          <NFTCard key={card.id} {...card} />
+        {cards.map((card, index) => (
+          <NFTCard key={card.id} {...card} priority={index < 4} /> // Prioriza os primeiros 4 cards
         ))}
         
         {Array.from({ length: 4 }).map((_, index) => (
