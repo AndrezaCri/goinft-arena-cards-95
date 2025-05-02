@@ -1,5 +1,5 @@
 
-import { useState, useCallback, useMemo, Suspense, memo } from "react";
+import { useState, useCallback, useMemo, Suspense, memo, useEffect } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AlbumGrid } from "@/components/albums/AlbumGrid";
 import { AlbumDetails } from "@/components/albums/AlbumDetails";
