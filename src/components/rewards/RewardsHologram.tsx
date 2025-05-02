@@ -11,31 +11,32 @@ interface RewardsHologramProps {
 }
 
 export const RewardsHologram = memo(function RewardsHologram({ currentTab }: RewardsHologramProps) {
-  const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
+  // Memoize the number of rewards for each tab to prevent recalculation
+  const numRewardsMap = useMemo(() => ({
+    daily: 7,
+    weekly: 5,
+    albums: 4,
+    rank: 3
+  }), []);
   
   // Show all rewards immediately for better performance
+  const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
+  
+  // Update visible rewards when tab changes
   useEffect(() => {
-    // Show all rewards based on the current tab
-    const numRewards = {
-      daily: 7,
-      weekly: 5,
-      albums: 4,
-      rank: 3
-    }[currentTab];
-    
+    const numRewards = numRewardsMap[currentTab];
     // Create an array with all indices visible
     const allRewards = Array.from({ length: numRewards }, (_, i) => i);
-    
     // Show all rewards immediately
     setVisibleRewards(allRewards);
-  }, [currentTab]);
+  }, [currentTab, numRewardsMap]);
   
-  // Use useMemo for elements that don't change frequently
+  // Memoize title to prevent re-rendering
   const title = useMemo(() => (
     <h3 className="font-orbitron text-lg text-white">Recompensas</h3>
   ), []);
   
-  // Use useCallback for conditional rendering functions
+  // Use useCallback for current tab rendering to prevent function recreation
   const renderRewards = useCallback(() => {
     switch (currentTab) {
       case "daily":

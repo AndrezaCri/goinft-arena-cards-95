@@ -1,5 +1,5 @@
 
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, { memo, useState, useEffect, useCallback, useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,9 @@ interface OptimizedImageProps {
   containerClassName?: string;
 }
 
+// Global image cache to prevent reloading the same images
+const imageCache = new Map<string, boolean>();
+
 export const OptimizedImage = memo(function OptimizedImage({ 
   src, 
   alt, 
@@ -26,33 +29,56 @@ export const OptimizedImage = memo(function OptimizedImage({
   objectFit = "cover",
   containerClassName
 }: OptimizedImageProps) {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(imageCache.has(src) || false);
   const [error, setError] = useState(false);
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
   
-  // Use effect to handle src changes and preloading
+  // Use memoized object fit class to prevent recreation
+  const objectFitClass = useMemo(() => {
+    return {
+      cover: "object-cover",
+      contain: "object-contain",
+      fill: "object-fill",
+      none: "object-none",
+      "scale-down": "object-scale-down"
+    }[objectFit];
+  }, [objectFit]);
+  
+  // Optimized image loading effect
   useEffect(() => {
     if (!src) return;
+    
+    // If image is already in cache, set loaded to true immediately
+    if (imageCache.has(src)) {
+      setLoaded(true);
+      if (onLoad) onLoad();
+      return;
+    }
     
     setLoaded(false);
     setError(false);
     
-    // Create a new Image to preload
+    // Preload the image
     const img = new Image();
     img.src = src;
-    setImgSrc(src);
     
-    // If priority is true, we'll set loaded to true when the image loads
+    const handleLoad = () => {
+      setLoaded(true);
+      imageCache.set(src, true);
+      if (onLoad) onLoad();
+    };
+    
+    const handleError = () => {
+      console.error(`Failed to load image: ${src}`);
+      setError(true);
+    };
+    
+    // Add event listeners
+    img.onload = handleLoad;
+    img.onerror = handleError;
+    
+    // If priority is true, we use the Image() API to preload
     if (priority) {
-      img.onload = () => {
-        setLoaded(true);
-        if (onLoad) onLoad();
-      };
-      
-      img.onerror = () => {
-        console.error(`Failed to load image: ${src}`);
-        setError(true);
-      };
+      // The browser will load this with higher priority
     }
     
     // Clean up on unmount or src change
@@ -65,30 +91,23 @@ export const OptimizedImage = memo(function OptimizedImage({
   // Optimized handlers with useCallback to prevent recreations
   const handleImageLoad = useCallback(() => {
     setLoaded(true);
+    imageCache.set(src, true);
     if (onLoad) onLoad();
-  }, [onLoad]);
+  }, [onLoad, src]);
   
   const handleImageError = useCallback(() => {
     console.error(`Failed to load image: ${src}`);
     setError(true);
   }, [src]);
-
-  const objectFitClass = {
-    cover: "object-cover",
-    contain: "object-contain",
-    fill: "object-fill",
-    none: "object-none",
-    "scale-down": "object-scale-down"
-  }[objectFit];
   
   return (
     <div className={cn("relative w-full h-full flex items-center justify-center", containerClassName)}>
       {!loaded && !error && (
         <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />
       )}
-      {imgSrc && (
+      {src && (
         <img 
-          src={imgSrc} 
+          src={src} 
           alt={alt}
           className={cn(
             className || 'w-full h-full',

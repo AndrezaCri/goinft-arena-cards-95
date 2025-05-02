@@ -6,6 +6,19 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Trophy, Ticket, MapPin } from "lucide-react";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
+// Preload key images
+const preloadImages = [
+  "/lovable-uploads/e8f16d84-3c1d-47c8-8448-9c4979f17b2e.png",
+  "/lovable-uploads/01c12234-3e5e-44b6-9ce4-c79e8dbd242f.png",
+  "/lovable-uploads/a2fab7d0-7400-45db-9400-0c302e08a2a9.png"
+];
+
+// Pre-cache images on module load
+preloadImages.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
 const experiences = [
   {
     id: 1,
@@ -129,7 +142,7 @@ const Experiences = () => {
   const preparedExperiences = useMemo(() => {
     return experiences.map((exp, index) => ({
       ...exp,
-      isPriority: index < 2 // First two items are prioritized for faster loading
+      isPriority: index < 3 // All cards are prioritized for faster loading
     }));
   }, []);
   
