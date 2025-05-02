@@ -1,7 +1,7 @@
 
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
-import { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
+import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
