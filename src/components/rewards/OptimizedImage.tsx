@@ -22,11 +22,13 @@ export const OptimizedImage = memo(function OptimizedImage({
   onLoad
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
-  const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
+  // Sempre definir imgSrc com o valor de src - não usar lazy loading condicional
+  const [imgSrc, setImgSrc] = useState<string>(src);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
+  const retryCount = useRef(0);
   
   // Cleanup function to prevent memory leaks
   useEffect(() => {
@@ -38,50 +40,35 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
-  // Carrega imagem mesmo se não for prioridade
+  // Se o src mudar, atualizar imgSrc
   useEffect(() => {
-    // Set image src after a short timeout to ensure it loads even if not priority
-    if (!imgSrc && src) {
-      const timer = setTimeout(() => {
-        if (isMounted.current) {
-          setImgSrc(src);
-        }
-      }, priority ? 0 : 300); // Small delay for non-priority images
-      
-      return () => clearTimeout(timer);
-    }
-  }, [src, imgSrc, priority]);
-  
-  // Implementing lazy loading with Intersection Observer
-  useEffect(() => {
-    // For priority images, load immediately
-    if (priority && !imgSrc && src) {
+    if (src && src !== imgSrc) {
       setImgSrc(src);
-      return;
     }
-    
-    // For non-priority images, use Intersection Observer
-    if (!priority && !imgSrc && imageWrapperRef.current) {
-      observerRef.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && isMounted.current) {
-          setImgSrc(src);
-          observerRef.current?.disconnect();
+  }, [src, imgSrc]);
+  
+  // Função de retry para garantir que a imagem seja carregada
+  useEffect(() => {
+    if (!loaded && imgSrc) {
+      const timeout = setTimeout(() => {
+        if (isMounted.current && retryCount.current < 3) {
+          retryCount.current += 1;
+          // Forçar recarga da imagem se não carregou
+          setImgSrc('');
+          setTimeout(() => {
+            if (isMounted.current) {
+              setImgSrc(src);
+            }
+          }, 50);
+        } else if (isMounted.current) {
+          // Se não conseguimos carregar após 3 tentativas, setamos como carregado
+          setLoaded(true);
         }
-      }, {
-        rootMargin: '250px', // Increased preload distance
-        threshold: 0.01
-      });
+      }, 2000); // 2 segundos de espera
       
-      observerRef.current.observe(imageWrapperRef.current);
+      return () => clearTimeout(timeout);
     }
-    
-    // Cleanup when component unmounts or src changes
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [priority, src, imgSrc]);
+  }, [loaded, imgSrc, src]);
   
   // Optimizing callback function
   const handleImageLoad = useCallback(() => {
@@ -91,18 +78,21 @@ export const OptimizedImage = memo(function OptimizedImage({
     }
   }, [onLoad]);
   
-  // Remove skeleton after a maximum time
-  useEffect(() => {
-    if (!loaded && imgSrc) {
-      const timeout = setTimeout(() => {
+  const handleImageError = useCallback(() => {
+    if (isMounted.current && retryCount.current < 3) {
+      retryCount.current += 1;
+      // Recarregar imagem em caso de erro
+      setImgSrc('');
+      setTimeout(() => {
         if (isMounted.current) {
-          setLoaded(true);
+          setImgSrc(src);
         }
-      }, 1500); // 1.5 seconds max wait time (reduced from 2)
-      
-      return () => clearTimeout(timeout);
+      }, 300);
+    } else if (isMounted.current) {
+      // Se várias tentativas falharem, considerar como carregado para não travar a UI
+      setLoaded(true);
     }
-  }, [loaded, imgSrc]);
+  }, [src]);
   
   return (
     <div ref={imageWrapperRef} className="relative w-full h-full">
@@ -114,10 +104,11 @@ export const OptimizedImage = memo(function OptimizedImage({
           alt={alt}
           className={`${className || 'w-full h-full object-cover'} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
           onLoad={handleImageLoad}
-          loading={priority ? "eager" : "lazy"}
+          onError={handleImageError}
+          loading="eager" // Sempre carregamento eager para evitar problemas
           width={width}
           height={height}
-          decoding={priority ? "sync" : "async"}
+          decoding="async"
         />
       )}
     </div>

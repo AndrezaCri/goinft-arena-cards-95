@@ -14,7 +14,10 @@ interface AlbumGridProps {
 export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   const isMobile = useIsMobile();
   const gridRef = useRef<HTMLDivElement>(null);
-  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1, 2, 3, 4])); // Mostrar primeiros 5 álbuns por padrão
+  // Aumentamos os álbuns inicialmente carregados para 8
+  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(
+    new Set(Array.from({ length: 8 }, (_, i) => i))
+  ); 
   
   // Pré-processando os álbuns para evitar cálculos repetidos durante a renderização
   const processedAlbums = useMemo(() => 
@@ -23,7 +26,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
       return {
         ...album,
         isUnlocked,
-        isPriority: index < 5 // Cinco primeiros álbuns são prioritários
+        isPriority: index < 8 // Oito primeiros álbuns são prioritários
       };
     }),
     [albums, unlockedAlbums]
@@ -51,18 +54,23 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
           if (entry.isIntersecting) {
             newVisibleIndexes.add(index);
             
-            // Pre-load next three albums
-            if (index + 1 < processedAlbums.length) newVisibleIndexes.add(index + 1);
-            if (index + 2 < processedAlbums.length) newVisibleIndexes.add(index + 2);
-            if (index + 3 < processedAlbums.length) newVisibleIndexes.add(index + 3);
+            // Aumentamos o número de pré-carregamento para 5 álbuns futuros
+            for (let i = 1; i <= 5; i++) {
+              if (index + i < processedAlbums.length) {
+                newVisibleIndexes.add(index + i);
+              }
+            }
+          } else {
+            // Importante: NÃO removemos itens ao sair da viewport
+            // Isso impede que as imagens desapareçam ao rolar
           }
         });
         
         setVisibleIndexes(newVisibleIndexes);
       },
       {
-        rootMargin: '150px 0px 150px 0px',
-        threshold: 0.1
+        rootMargin: '300px 0px 300px 0px', // Aumentamos a margem de observação
+        threshold: 0.01 // Diminuímos o threshold para disparar mais cedo
       }
     );
     
@@ -84,18 +92,13 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
           data-index={index}
           onClick={() => handleAlbumClick(album.id, album.isUnlocked)}
         >
-          {visibleIndexes.has(index) && (
-            <AlbumCard 
-              {...album}
-              className={`${!album.isUnlocked ? "opacity-60 grayscale" : ""}`}
-              locked={!album.isUnlocked}
-              priority={album.isPriority}
-            />
-          )}
-          {/* Placeholder de tamanho fixo para álbuns não visíveis */}
-          {!visibleIndexes.has(index) && (
-            <div className="bg-goinft-darker/30 rounded-xl w-[280px] mx-auto" style={{ aspectRatio: '230/320' }}></div>
-          )}
+          {/* Sempre renderizamos o componente, não importa se está visível ou não */}
+          <AlbumCard 
+            {...album}
+            className={`${!album.isUnlocked ? "opacity-60 grayscale" : ""}`}
+            locked={!album.isUnlocked}
+            priority={album.isPriority}
+          />
         </div>
       ))}
     </div>
