@@ -42,12 +42,25 @@ export const OptimizedImage = memo(function OptimizedImage({
     img.src = src;
     setImgSrc(src);
     
+    // If priority is true, we'll set loaded to true when the image loads
+    if (priority) {
+      img.onload = () => {
+        setLoaded(true);
+        if (onLoad) onLoad();
+      };
+      
+      img.onerror = () => {
+        console.error(`Failed to load image: ${src}`);
+        setError(true);
+      };
+    }
+    
     // Clean up on unmount or src change
     return () => {
       img.onload = null;
       img.onerror = null;
     };
-  }, [src]);
+  }, [src, priority, onLoad]);
   
   // Optimized handlers with useCallback to prevent recreations
   const handleImageLoad = useCallback(() => {
@@ -89,7 +102,6 @@ export const OptimizedImage = memo(function OptimizedImage({
           width={width}
           height={height}
           decoding="async"
-          fetchPriority={priority ? "high" : "auto"}
         />
       )}
     </div>

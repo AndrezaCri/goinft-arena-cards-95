@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, memo, useMemo, useCallback } from 'react';
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -93,10 +94,12 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, on
               <OptimizedImage
                 src={experience.thumbnailImage}
                 alt={experience.title}
-                className="object-contain w-full h-full max-h-32 group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full"
+                objectFit="contain"
                 width="150"
                 height="111"
                 priority={isPriority}
+                containerClassName="flex items-center justify-center"
               />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
@@ -126,9 +129,9 @@ const Experiences = () => {
   const preparedExperiences = useMemo(() => {
     return experiences.map((exp, index) => ({
       ...exp,
-      isPriority: index === 0 // Apenas o primeiro item é prioritário
+      isPriority: index < 2 // First two items are prioritized for faster loading
     }));
-  }, []); // Empty dependency array since experiences is static
+  }, []);
   
   // Using useCallback for any event handlers
   const handleExperienceVisible = useCallback((id: number) => {
@@ -147,7 +150,7 @@ const Experiences = () => {
       </CyberpunkHeading>
 
       <div className="flex justify-center">
-        <div className="flex gap-6">
+        <div className="flex flex-wrap gap-6 justify-center">
           {preparedExperiences.map((experience) => (
             <ExperienceCard 
               key={experience.id} 
