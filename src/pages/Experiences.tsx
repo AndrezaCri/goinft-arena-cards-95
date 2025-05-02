@@ -85,6 +85,7 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, on
       ref={cardRef}
       key={experience.id} 
       className="group bg-goinft-darker border-neon-purple/20 hover:border-neon-purple/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-neon-purple/20"
+      style={{ width: '200px', height: '230px' }}
     >
       <CardHeader className="p-0">
         <AspectRatio ratio={16 / 9}>
@@ -93,9 +94,9 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, on
               <OptimizedImage
                 src={experience.thumbnailImage}
                 alt={experience.title}
-                className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
-                width="400"
-                height="225"
+                className="object-contain w-full h-full max-h-40 group-hover:scale-105 transition-transform duration-300"
+                width="200"
+                height="112"
                 priority={isPriority}
               />
             )}
@@ -103,15 +104,15 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, on
           </div>
         </AspectRatio>
       </CardHeader>
-      <CardContent className="p-6">
-        <div className="flex items-center gap-2 mb-2">
-          <experience.icon className="w-5 h-5 text-neon-purple" />
-          <p className="text-white/50 text-sm">{experience.date}</p>
+      <CardContent className="p-3">
+        <div className="flex items-center gap-2 mb-1">
+          <experience.icon className="w-4 h-4 text-neon-purple" />
+          <p className="text-white/50 text-xs">{experience.date}</p>
         </div>
-        <h3 className="text-xl font-orbitron text-white mb-2 bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
+        <h3 className="text-sm font-orbitron text-white mb-1 bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent truncate">
           {experience.title}
         </h3>
-        <p className="text-white/70">
+        <p className="text-white/70 text-xs line-clamp-2">
           {experience.description}
         </p>
       </CardContent>
@@ -146,7 +147,7 @@ const Experiences = () => {
         Minhas Experiências
       </CyberpunkHeading>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
         {preparedExperiences.map((experience) => (
           <ExperienceCard 
             key={experience.id} 
