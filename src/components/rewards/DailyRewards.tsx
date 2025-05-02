@@ -62,9 +62,8 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
   return (
     <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} gap-2 mt-4 items-end justify-items-center`}>
       {Array.from({ length: 7 }).map((_, index) => {
-        // For mobile, determine which row this card should be in
+        // For mobile, we'll show all cards but arrange them in two rows
         const mobileRow = Math.floor(index / 3);
-        const isVisibleForCurrentRow = !isMobile || (mobileRow === 0 || visibleRewards.includes(index));
         
         return (
           <div 
@@ -72,7 +71,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
             className={`flex flex-col items-center transition-opacity duration-500 
               ${visibleRewards.includes(index) ? 'opacity-100' : 'opacity-0'}
               ${isMobile && index >= 3 ? 'mt-6' : ''}
-              ${isVisibleForCurrentRow ? '' : 'hidden'}`}
+            `}
           >
             <div className="text-center mb-2">
               <span className="font-orbitron text-sm text-white">Dia {index + 1}</span>

@@ -15,7 +15,7 @@ export const RewardsHologram = memo(function RewardsHologram({ currentTab }: Rew
   
   // Reset visible rewards when tab changes
   useEffect(() => {
-    // Limpar estado anterior
+    // Clear previous state
     setVisibleRewards([]);
     
     let isMounted = true;
@@ -29,6 +29,15 @@ export const RewardsHologram = memo(function RewardsHologram({ currentTab }: Rew
         rank: 3
       }[currentTab];
       
+      // Create an array from 0 to numRewards-1
+      const allIndexes = Array.from({ length: numRewards }, (_, i) => i);
+      
+      // Show all rewards at once initially to fix the Day 1 issue
+      setVisibleRewards(allIndexes);
+      
+      // Optional: You can still animate them by adding a small delay between each
+      // but ensure all are visible from the start
+      /*
       let currentIndex = 0;
       
       const addNextReward = () => {
@@ -41,11 +50,12 @@ export const RewardsHologram = memo(function RewardsHologram({ currentTab }: Rew
         }
       };
       
-      // Inicie a animação
+      // Start animation
       timeoutId = setTimeout(addNextReward, 100);
+      */
     };
     
-    // Inicie após um pequeno delay
+    // Start after a small delay
     timeoutId = setTimeout(showRewards, 100);
     
     return () => {
@@ -54,12 +64,12 @@ export const RewardsHologram = memo(function RewardsHologram({ currentTab }: Rew
     };
   }, [currentTab]);
   
-  // Use useMemo para elementos que não mudam frequentemente
+  // Use useMemo for elements that don't change frequently
   const title = useMemo(() => (
     <h3 className="font-orbitron text-lg text-white">Recompensas</h3>
   ), []);
   
-  // Use useCallback para funções de renderização condicional
+  // Use useCallback for conditional rendering functions
   const renderRewards = useCallback(() => {
     switch (currentTab) {
       case "daily":
