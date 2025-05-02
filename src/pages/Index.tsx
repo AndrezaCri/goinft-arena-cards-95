@@ -75,8 +75,8 @@ const Index = () => {
                       src={sticker.img}
                       alt={sticker.name}
                       className="w-full h-full object-cover"
-                      width={sticker.width}
-                      height={sticker.height}
+                      width={sticker.width.toString()}
+                      height={sticker.height.toString()}
                       priority={i === 0} // Priorizar a primeira imagem
                     />
                   </NFTFloatingCard>
