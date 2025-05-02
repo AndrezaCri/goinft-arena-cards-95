@@ -8,5 +8,5 @@ export interface MarketplaceCard {
   team: string;
   position: string;
   price?: number;
-  isOwned?: boolean;
+  isOwned?: boolean; // Make this optional to align with NFTCardProps
 }

@@ -11,7 +11,7 @@ interface NFTCardProps {
   rarity: "common" | "rare" | "epic" | "legendary";
   team: string;
   position: string;
-  isOwned: boolean;
+  isOwned?: boolean; // Changed from required to optional
   onClick?: () => void;
   className?: string;
   priority?: boolean;
@@ -24,7 +24,7 @@ export function NFTCard({
   rarity,
   team,
   position,
-  isOwned = false,
+  isOwned = false, // Keep the default value
   onClick,
   className,
   priority = false,
