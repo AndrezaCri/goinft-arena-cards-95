@@ -1,13 +1,10 @@
 
-import { useRewards } from "@/contexts/RewardsContext";
-import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { memo } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { OptimizedImage } from "./OptimizedImage";
 
 export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
-  const { completedAlbums, handleCompleteAlbum } = useRewards();
   const isMobile = useIsMobile();
 
   // Image sources
@@ -19,7 +16,7 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
   ];
 
   return (
-    <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-2 md:grid-cols-4'} gap-4 mt-6 justify-items-center`}>
+    <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-2 md:grid-cols-4'} gap-6 mt-6 justify-items-center`}>
       {Array.from({ length: 4 }).map((_, index) => {
         // For mobile, determine which row this card should be in
         const mobileRow = Math.floor(index / 3);
@@ -33,13 +30,8 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
               ${isMobile && index >= 3 ? 'mt-6' : ''}
               ${isVisibleForCurrentRow ? '' : 'hidden'}`}
           >
-            <div className="text-center mb-2">
-              <span className="font-orbitron text-sm text-white">
-                {["Álbum Copa SP", "Álbum Brasileirão", "Álbum Libertadores", "Álbum Legends"][index]}
-              </span>
-            </div>
             <NFTFloatingCard 
-              className="h-40 w-full" 
+              className="h-48 w-full" 
               isHolographic
               glowColor={index === 3 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
             >
@@ -47,35 +39,13 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
                 <OptimizedImage 
                   src={`/lovable-uploads/${albumImages[index]}`}
                   alt={`Álbum ${index + 1}`}
-                  className="h-32 w-32 object-contain"
-                  width="128"
-                  height="128"
+                  className="h-40 w-40 object-contain"
+                  width="160"
+                  height="160"
                   priority={index === 0} // Priorizar o primeiro álbum
                 />
               </div>
             </NFTFloatingCard>
-            <div className="mt-3 text-center">
-              <h4 className="text-white text-sm font-orbitron mb-1">Recompensa</h4>
-              <div className="flex items-center justify-center gap-2">
-                <span className="bg-goinft-dark px-2 py-1 rounded text-xs text-neon-blue">
-                  {index !== 3 ? "10 CHZ" : "50 CHZ"}
-                </span>
-                <span className="bg-goinft-dark px-2 py-1 rounded text-xs text-neon-green">
-                  NFT Exclusivo
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-row gap-2 mt-2">
-              <CyberpunkButton 
-                size="sm" 
-                variant={completedAlbums.includes(`album${index + 1}`) ? "accent" : "accent"}
-                className="text-xs px-2 py-1 h-auto"
-                onClick={() => handleCompleteAlbum(`album${index + 1}`)}
-                disabled={completedAlbums.includes(`album${index + 1}`)}
-              >
-                {completedAlbums.includes(`album${index + 1}`) ? "Coletado" : "Coletar"}
-              </CyberpunkButton>
-            </div>
           </div>
         );
       })}
