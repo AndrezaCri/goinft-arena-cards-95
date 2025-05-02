@@ -20,13 +20,17 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
         const isUnlocked = album.id === "1" || unlockedAlbums.includes(album.id);
         
         return (
-          <AlbumCard 
-            key={album.id} 
-            {...album} 
+          <div 
+            key={album.id}
+            className={`${!isUnlocked ? "" : "cursor-pointer"}`}
             onClick={() => isUnlocked ? onAlbumClick(album.id) : undefined}
-            className={`${!isUnlocked ? "opacity-60 grayscale" : ""} ${isMobile ? "w-[30%]" : ""}`}
-            locked={!isUnlocked}
-          />
+          >
+            <AlbumCard 
+              {...album}
+              className={`${!isUnlocked ? "opacity-60 grayscale" : ""} ${isMobile ? "w-[30%]" : ""}`}
+              locked={!isUnlocked}
+            />
+          </div>
         );
       })}
     </div>

@@ -70,7 +70,7 @@ export function NFTCard({
   return (
     <Card
       className={cn(
-        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform",
+        "relative rounded-xl overflow-hidden w-full",
         "bg-goinft-card border-none",
         getRarityGlow(),
         isHovered ? "scale-105" : "scale-100",

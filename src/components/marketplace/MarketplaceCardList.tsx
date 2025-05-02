@@ -30,12 +30,16 @@ export const MarketplaceCardList = memo(function MarketplaceCardList({ cards, on
   return (
     <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'} gap-4 justify-items-center`}>
       {cards.map((card) => (
-        <NFTCard 
+        <div 
           key={card.id} 
-          {...card} 
+          className="w-full cursor-pointer"
           onClick={() => onCardClick(card)}
-          className={`transform hover:scale-105 transition-transform duration-300 ${isMobile ? 'w-full' : ''}`} 
-        />
+        >
+          <NFTCard 
+            {...card}
+            className={`transform hover:scale-105 transition-transform duration-300 ${isMobile ? 'w-full' : ''}`}
+          />
+        </div>
       ))}
     </div>
   );
