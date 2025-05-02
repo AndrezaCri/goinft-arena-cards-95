@@ -11,6 +11,30 @@ interface AlbumDetailsProps {
   onBack: () => void;
 }
 
+// Componente isolado para os cards de estatísticas do álbum
+const StatCard = memo(function StatCard({ label, value, colorClass }) {
+  return (
+    <div className="cyberpunk-card p-4">
+      <span className={`block text-sm ${colorClass}`}>{label}</span>
+      <span className="block text-xl font-bold text-white">{value}</span>
+    </div>
+  );
+});
+
+// Componente isolado para o placeholder card
+const PlaceholderCard = memo(function PlaceholderCard({ index }) {
+  return (
+    <div 
+      key={`empty-${index}`} 
+      className="aspect-[230/320] rounded-xl border-2 border-dashed border-neon-purple/30 bg-goinft-card/50 flex items-center justify-center group hover:border-neon-purple/50 transition-colors duration-300"
+    >
+      <span className="text-white/30 font-orbitron group-hover:text-white/50 transition-colors duration-300">
+        Espaço Vazio
+      </span>
+    </div>
+  );
+});
+
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
 
@@ -22,16 +46,26 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   // Use useMemo para os placeholder cards
   const placeholderCards = useMemo(() => 
     Array.from({ length: 4 }).map((_, index) => (
-      <div 
-        key={`empty-${index}`} 
-        className="aspect-[230/320] rounded-xl border-2 border-dashed border-neon-purple/30 bg-goinft-card/50 flex items-center justify-center group hover:border-neon-purple/50 transition-colors duration-300"
-      >
-        <span className="text-white/30 font-orbitron group-hover:text-white/50 transition-colors duration-300">
-          Espaço Vazio
-        </span>
-      </div>
+      <PlaceholderCard key={index} index={index} />
     )),
     []
+  );
+  
+  // Preparar estatísticas do álbum com useMemo
+  const albumStats = useMemo(() => [
+    { label: "Total de Cards", value: album.totalCards, colorClass: "text-neon-purple/70" },
+    { label: "Colecionados", value: album.collectedCards, colorClass: "text-neon-blue/70" },
+    { label: "Progresso", value: `${Math.round(album.progress)}%`, colorClass: "text-neon-pink/70" },
+    { label: "Faltando", value: album.totalCards - album.collectedCards, colorClass: "text-neon-green/70" },
+  ], [album]);
+  
+  // Preparar cards para renderização otimizada
+  const preparedCards = useMemo(() => 
+    cards.map((card, index) => ({
+      ...card,
+      isPriority: index < 2 // Apenas os primeiros 2 cards são prioritários
+    })),
+    [cards]
   );
 
   return (
@@ -67,27 +101,14 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
             </h2>
             
             <div className="grid grid-cols-2 gap-4 text-white/70 mb-6">
-              <div className="cyberpunk-card p-4">
-                <span className="block text-sm text-neon-purple/70">Total de Cards</span>
-                <span className="block text-xl font-bold text-white">{album.totalCards}</span>
-              </div>
-              
-              <div className="cyberpunk-card p-4">
-                <span className="block text-sm text-neon-blue/70">Colecionados</span>
-                <span className="block text-xl font-bold text-white">{album.collectedCards}</span>
-              </div>
-              
-              <div className="cyberpunk-card p-4">
-                <span className="block text-sm text-neon-pink/70">Progresso</span>
-                <span className="block text-xl font-bold text-white">{Math.round(album.progress)}%</span>
-              </div>
-              
-              <div className="cyberpunk-card p-4">
-                <span className="block text-sm text-neon-green/70">Faltando</span>
-                <span className="block text-xl font-bold text-white">
-                  {album.totalCards - album.collectedCards}
-                </span>
-              </div>
+              {albumStats.map((stat, index) => (
+                <StatCard 
+                  key={index}
+                  label={stat.label}
+                  value={stat.value}
+                  colorClass={stat.colorClass}
+                />
+              ))}
             </div>
             
             <div className="w-full bg-goinft-darker rounded-full h-2.5 mb-6 relative overflow-hidden">
@@ -107,11 +128,11 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
       </div>
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {cards.map((card, index) => (
+        {preparedCards.map((card) => (
           <NFTCard 
             key={card.id} 
             {...card} 
-            priority={index < 4} // Priorizar apenas os primeiros 4 cards para melhorar o carregamento
+            priority={card.isPriority}
           />
         ))}
         

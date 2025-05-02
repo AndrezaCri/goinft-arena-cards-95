@@ -1,7 +1,7 @@
 
 import { AlbumCard } from "@/components/ui/album-card";
 import type { Album as AlbumType } from "@/types/album";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AlbumGridProps {
@@ -10,11 +10,11 @@ interface AlbumGridProps {
   unlockedAlbums: string[];
 }
 
-// Usando memo para evitar re-renderizações desnecessárias
+// Memoizando o componente para evitar re-renderizações desnecessárias
 export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   const isMobile = useIsMobile();
   
-  // Pré-processar os álbuns para evitar cálculos repetidos durante a renderização
+  // Pré-processando os álbuns para evitar cálculos repetidos durante a renderização
   const processedAlbums = useMemo(() => 
     albums.map((album) => {
       const isUnlocked = album.id === "1" || unlockedAlbums.includes(album.id);
@@ -27,13 +27,20 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
     [albums, unlockedAlbums]
   );
   
+  // Usando useCallback para evitar recriação da função a cada renderização
+  const handleAlbumClick = useCallback((albumId: string, isUnlocked: boolean) => {
+    if (isUnlocked) {
+      onAlbumClick(albumId);
+    }
+  }, [onAlbumClick]);
+  
   return (
     <div className="flex flex-wrap justify-center gap-6">
       {processedAlbums.map((album) => (
         <div 
           key={album.id}
           className={`${!album.isUnlocked ? "" : "cursor-pointer"}`}
-          onClick={() => album.isUnlocked ? onAlbumClick(album.id) : undefined}
+          onClick={() => handleAlbumClick(album.id, album.isUnlocked)}
         >
           <AlbumCard 
             {...album}

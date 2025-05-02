@@ -1,5 +1,5 @@
 
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,14 @@ interface NFTCardProps {
   priority?: boolean;
 }
 
+// Dados estáticos definidos fora do componente
+const rarityColors = {
+  common: "bg-blue-500",
+  rare: "bg-purple-500",
+  epic: "bg-pink-500",
+  legendary: "bg-amber-500",
+};
+
 // Usando memo para evitar re-renderizações desnecessárias
 export const NFTCard = memo(function NFTCard({
   id,
@@ -31,13 +39,10 @@ export const NFTCard = memo(function NFTCard({
   className,
   priority = false,
 }: NFTCardProps) {
-  // Defina valores que não mudam fora do corpo do componente
-  const rarityColors = {
-    common: "bg-blue-500",
-    rare: "bg-purple-500",
-    epic: "bg-pink-500",
-    legendary: "bg-amber-500",
-  };
+  // Usando useCallback para o handler de clique
+  const handleClick = useCallback(() => {
+    if (onClick) onClick();
+  }, [onClick]);
 
   return (
     <Card
@@ -47,11 +52,9 @@ export const NFTCard = memo(function NFTCard({
         rarity === "legendary" && "border-t-2 border-amber-500",
         className
       )}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <div className="relative" style={{ aspectRatio: '230/320' }}>
-        <div className="absolute inset-0 bg-goinft-darker animate-pulse"></div>
-        
         <OptimizedImage 
           src={image} 
           alt={name}

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -36,9 +36,53 @@ const experiences = [
   }
 ];
 
+// Componente de Card de Experiência memoizado
+const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }) {
+  return (
+    <Card 
+      key={experience.id} 
+      className="group bg-goinft-darker border-neon-purple/20 hover:border-neon-purple/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-neon-purple/20"
+    >
+      <CardHeader className="p-0">
+        <AspectRatio ratio={16 / 9}>
+          <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-t-lg">
+            <OptimizedImage
+              src={experience.thumbnailImage}
+              alt={experience.title}
+              className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
+              width="400"
+              height="225"
+              priority={isPriority} // Apenas a primeira imagem é prioritária
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
+          </div>
+        </AspectRatio>
+      </CardHeader>
+      <CardContent className="p-6">
+        <div className="flex items-center gap-2 mb-2">
+          <experience.icon className="w-5 h-5 text-neon-purple" />
+          <p className="text-white/50 text-sm">{experience.date}</p>
+        </div>
+        <h3 className="text-xl font-orbitron text-white mb-2 bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
+          {experience.title}
+        </h3>
+        <p className="text-white/70">
+          {experience.description}
+        </p>
+      </CardContent>
+    </Card>
+  );
+});
+
 const Experiences = () => {
-  // We don't need to track loaded images manually when using OptimizedImage
-  
+  // Usando useMemo para preparar as experiências com a flag de prioridade
+  const preparedExperiences = useMemo(() => {
+    return experiences.map((exp, index) => ({
+      ...exp,
+      isPriority: index === 0 // Apenas o primeiro item é prioritário
+    }));
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <CyberpunkHeading 
@@ -51,39 +95,12 @@ const Experiences = () => {
       </CyberpunkHeading>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {experiences.map((experience) => (
-          <Card 
+        {preparedExperiences.map((experience) => (
+          <ExperienceCard 
             key={experience.id} 
-            className="group bg-goinft-darker border-neon-purple/20 hover:border-neon-purple/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-neon-purple/20"
-          >
-            <CardHeader className="p-0">
-              <AspectRatio ratio={16 / 9}>
-                <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-t-lg">
-                  <OptimizedImage
-                    src={experience.thumbnailImage}
-                    alt={experience.title}
-                    className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
-                    width="400"
-                    height="225"
-                    priority={experience.id === 1} // Only prioritize the first image
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
-                </div>
-              </AspectRatio>
-            </CardHeader>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-2 mb-2">
-                <experience.icon className="w-5 h-5 text-neon-purple" />
-                <p className="text-white/50 text-sm">{experience.date}</p>
-              </div>
-              <h3 className="text-xl font-orbitron text-white mb-2 bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
-                {experience.title}
-              </h3>
-              <p className="text-white/70">
-                {experience.description}
-              </p>
-            </CardContent>
-          </Card>
+            experience={experience} 
+            isPriority={experience.isPriority} 
+          />
         ))}
       </div>
     </div>

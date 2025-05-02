@@ -24,20 +24,35 @@ export const OptimizedImage = memo(function OptimizedImage({
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
   
-  // Use useEffect com dependências corretas
+  // Implementando carregamento progressivo baseado no Intersection Observer
   useEffect(() => {
     let isMounted = true;
     
+    // Para imagens prioritárias, carregue imediatamente
+    if (priority && !imgSrc && src) {
+      setImgSrc(src);
+      return;
+    }
+    
+    // Para imagens não prioritárias, use Intersection Observer
     if (!priority && !imgSrc) {
-      // Definir um timeout para carregar imagens não prioritárias de forma escalonada
-      const timeoutId = setTimeout(() => {
-        if (isMounted) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && isMounted) {
           setImgSrc(src);
+          observer.disconnect();
         }
-      }, 100); // Pequeno delay para escalonar carregamentos
+      }, {
+        rootMargin: '200px', // Pré-carrega quando estiver a 200px de distância
+        threshold: 0.01
+      });
       
+      // Elemento temporário para observação
+      const element = document.createElement('div');
+      observer.observe(element);
+      
+      // Limpeza
       return () => {
-        clearTimeout(timeoutId);
+        observer.disconnect();
         isMounted = false;
       };
     }
@@ -47,15 +62,26 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, [priority, src, imgSrc]);
   
-  // Use useCallback para funções de evento
+  // Otimizando função de callback com useCallback
   const handleImageLoad = useCallback(() => {
     setLoaded(true);
     if (onLoad) onLoad();
   }, [onLoad]);
   
+  // Removendo o skeleton após um tempo máximo, mesmo se a imagem não carregar
+  useEffect(() => {
+    if (!loaded && imgSrc) {
+      const timeout = setTimeout(() => {
+        setLoaded(true);
+      }, 5000); // 5 segundos máximo de espera
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [loaded, imgSrc]);
+  
   return (
     <div className="relative w-full h-full">
-      {!loaded && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
+      {!loaded && imgSrc && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
       {imgSrc && (
         <img 
           src={imgSrc} 
@@ -65,7 +91,7 @@ export const OptimizedImage = memo(function OptimizedImage({
           loading={priority ? "eager" : "lazy"}
           width={width}
           height={height}
-          decoding="async"
+          decoding={priority ? "sync" : "async"}
         />
       )}
     </div>
