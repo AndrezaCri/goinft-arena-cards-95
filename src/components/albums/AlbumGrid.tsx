@@ -15,7 +15,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {albums.map((album) => {
         const isUnlocked = album.id === "1" || unlockedAlbums.includes(album.id);
         
@@ -27,7 +27,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
           >
             <AlbumCard 
               {...album}
-              className={`${!isUnlocked ? "opacity-60 grayscale" : ""} ${isMobile ? "w-[30%]" : ""}`}
+              className={`${!isUnlocked ? "opacity-60 grayscale" : ""}`}
               locked={!isUnlocked}
             />
           </div>
