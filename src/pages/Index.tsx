@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { Trophy, Zap } from "lucide-react";
-import { Suspense, lazy, useState } from "react"; // Added useState import
-import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense, lazy } from "react"; 
+import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 // Define stickers outside component to prevent re-creation on render
 const STICKERS = [
@@ -33,26 +33,6 @@ const STICKERS = [
     height: 280,
   },
 ];
-
-// Image component with loading state
-const OptimizedImage = ({ src, alt, className, width = 200, height = 280 }: { src: string; alt: string; className?: string; width?: number; height?: number }) => {
-  const [loaded, setLoaded] = useState(false);
-  
-  return (
-    <>
-      {!loaded && <Skeleton className={`${className} absolute inset-0`} />}
-      <img
-        src={src}
-        alt={alt}
-        className={`${className} ${loaded ? '' : 'opacity-0'} transition-opacity duration-300`}
-        onLoad={() => setLoaded(true)}
-        loading="lazy"
-        width={width}
-        height={height}
-      />
-    </>
-  );
-};
 
 const Index = () => {
   const navigate = useNavigate();
@@ -97,6 +77,7 @@ const Index = () => {
                       className="w-full h-full object-cover"
                       width={sticker.width}
                       height={sticker.height}
+                      priority={i === 0} // Priorizar a primeira imagem
                     />
                   </NFTFloatingCard>
                 </div>

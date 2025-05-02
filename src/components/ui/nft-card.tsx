@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
+import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 interface NFTCardProps {
   id: string;
@@ -34,8 +34,6 @@ export function NFTCard({
   className,
 }: NFTCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [playerImageLoaded, setPlayerImageLoaded] = useState(false);
 
   const getRarityColor = () => {
     switch (rarity) {
@@ -90,15 +88,10 @@ export function NFTCard({
         <div className="relative pb-[140%]">
           {/* Background frame */}
           <div className="absolute inset-0 rounded-lg overflow-hidden">
-            {!imageLoaded && (
-              <Skeleton className="absolute inset-0 bg-goinft-darker/80" />
-            )}
-            <img 
+            <OptimizedImage 
               src={image} 
               alt={name} 
-              className={`absolute inset-0 w-full h-full object-cover blur-sm opacity-50 ${imageLoaded ? '' : 'opacity-0'}`}
-              onLoad={() => setImageLoaded(true)}
-              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover blur-sm opacity-50"
               width="150"
               height="210"
             />
@@ -107,15 +100,10 @@ export function NFTCard({
           
           {/* Player image */}
           <div className="absolute inset-0 flex items-center justify-center">
-            {!playerImageLoaded && (
-              <Skeleton className="w-[90%] h-[90%] rounded-lg bg-goinft-darker/60" />
-            )}
-            <img 
+            <OptimizedImage 
               src={playerImage || image} 
               alt={name} 
-              className={`w-[90%] h-[90%] object-contain rounded-lg ${playerImageLoaded ? '' : 'opacity-0'}`}
-              onLoad={() => setPlayerImageLoaded(true)}
-              loading="lazy"
+              className="w-[90%] h-[90%] object-contain rounded-lg"
               width="135"
               height="189"
             />

@@ -1,27 +1,7 @@
 
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { useState, memo } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-
-// Optimized image component
-const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
-  const [loaded, setLoaded] = useState(false);
-  
-  return (
-    <div className="relative w-full h-full">
-      {!loaded && <Skeleton className="absolute inset-0 h-40 w-40 bg-goinft-darker/60 rounded-lg" />}
-      <img 
-        src={src} 
-        alt={alt}
-        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 w-full h-full object-contain`}
-        onLoad={() => setLoaded(true)}
-        loading="lazy"
-        width="160"
-        height="160"
-      />
-    </div>
-  );
-});
+import { memo } from "react";
+import { OptimizedImage } from "./OptimizedImage";
 
 export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
   // Image sources
@@ -56,6 +36,9 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
                     src={`/lovable-uploads/${rankImages[index]}`} 
                     alt={`Recompensa ${index + 1}`}
                     className="h-40 w-40 object-contain"
+                    width="160"
+                    height="160"
+                    priority={index === 0} // Priorizar a primeira recompensa
                   />
                 </div>
               </div>

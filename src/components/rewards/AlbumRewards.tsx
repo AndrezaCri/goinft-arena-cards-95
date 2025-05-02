@@ -2,29 +2,9 @@
 import { useRewards } from "@/contexts/RewardsContext";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { useState, memo } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { memo } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-// Optimized image component
-const OptimizedImage = memo(function OptimizedImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
-  const [loaded, setLoaded] = useState(false);
-  
-  return (
-    <div className="relative w-full h-full">
-      {!loaded && <Skeleton className="absolute inset-0 h-full w-full bg-goinft-darker/60 rounded-lg" />}
-      <img 
-        src={src} 
-        alt={alt}
-        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 w-full h-full object-contain`}
-        onLoad={() => setLoaded(true)}
-        loading="lazy"
-        width="128"
-        height="128"
-      />
-    </div>
-  );
-});
+import { OptimizedImage } from "./OptimizedImage";
 
 export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { completedAlbums, handleCompleteAlbum } = useRewards();
@@ -68,6 +48,9 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
                   src={`/lovable-uploads/${albumImages[index]}`}
                   alt={`Álbum ${index + 1}`}
                   className="h-32 w-32 object-contain"
+                  width="128"
+                  height="128"
+                  priority={index === 0} // Priorizar o primeiro álbum
                 />
               </div>
             </NFTFloatingCard>
