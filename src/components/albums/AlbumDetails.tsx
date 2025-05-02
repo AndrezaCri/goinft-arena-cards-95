@@ -117,13 +117,13 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
     []
   );
   
-  // Album stats calculation
+  // Album stats using the provided fixed numbers
   const albumStats = useMemo(() => [
-    { label: "Total de Cards", value: album.totalCards, colorClass: "text-neon-purple/70" },
-    { label: "Colecionados", value: album.collectedCards, colorClass: "text-neon-blue/70" },
-    { label: "Progresso", value: `${Math.round(album.progress)}%`, colorClass: "text-neon-pink/70" },
-    { label: "Faltando", value: album.totalCards - album.collectedCards, colorClass: "text-neon-green/70" },
-  ], [album.totalCards, album.collectedCards, album.progress]);
+    { label: "Total de Cards", value: 12, colorClass: "text-neon-purple/70" },
+    { label: "Colecionados", value: 8, colorClass: "text-neon-blue/70" },
+    { label: "Progresso", value: "70%", colorClass: "text-neon-pink/70" },
+    { label: "Faltando", value: 4, colorClass: "text-neon-green/70" },
+  ], []);
   
   // Prepared cards with priority flag
   const preparedCards = useMemo(() => 
@@ -153,7 +153,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               width="100"
               height="140"
               priority={true}
-              quality={20}
+              quality={80}
             />
           </div>
           
@@ -176,7 +176,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
             <div className="w-full bg-goinft-darker rounded-full h-2 mb-4 relative overflow-hidden">
               <div 
                 className="absolute inset-0 bg-gradient-to-r from-neon-purple via-neon-blue to-neon-pink h-2"
-                style={{ width: `${album.progress}%` }}
+                style={{ width: `70%` }}
               ></div>
             </div>
           </div>
