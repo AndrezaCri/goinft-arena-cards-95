@@ -25,6 +25,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
+  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
   
   // Cleanup function to prevent memory leaks
@@ -37,7 +38,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
-  // Implementing progressive loading based on Intersection Observer
+  // Implementing lazy loading with Intersection Observer
   useEffect(() => {
     // For priority images, load immediately
     if (priority && !imgSrc && src) {
@@ -46,9 +47,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     }
     
     // For non-priority images, use Intersection Observer
-    if (!priority && !imgSrc) {
-      const element = document.createElement('div');
-      
+    if (!priority && !imgSrc && imageWrapperRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && isMounted.current) {
           setImgSrc(src);
@@ -59,8 +58,15 @@ export const OptimizedImage = memo(function OptimizedImage({
         threshold: 0.01
       });
       
-      observerRef.current.observe(element);
+      observerRef.current.observe(imageWrapperRef.current);
     }
+    
+    // Cleanup when component unmounts or src changes
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
   }, [priority, src, imgSrc]);
   
   // Optimizing callback function
@@ -78,14 +84,14 @@ export const OptimizedImage = memo(function OptimizedImage({
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 3000); // 3 seconds max wait time (reduced from 5)
+      }, 2000); // 2 seconds max wait time (reduced from 3)
       
       return () => clearTimeout(timeout);
     }
   }, [loaded, imgSrc]);
   
   return (
-    <div className="relative w-full h-full">
+    <div ref={imageWrapperRef} className="relative w-full h-full">
       {!loaded && imgSrc && <Skeleton className="h-full w-full bg-goinft-darker/60 rounded-lg absolute inset-0" />}
       {imgSrc && (
         <img 

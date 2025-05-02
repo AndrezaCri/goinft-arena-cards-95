@@ -1,7 +1,7 @@
 
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
-import { useState, useCallback, useMemo, memo } from "react";
+import { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
@@ -46,8 +46,28 @@ const PlaceholderCard = memo(function PlaceholderCard({ index }: PlaceholderCard
   );
 });
 
+interface NFTCardWithVirtualizationProps extends AlbumCard {
+  isPriority: boolean;
+  isVisible: boolean;
+}
+
+// Componente memoizado para renderizar NFT Cards com virtualização
+const NFTCardWithVirtualization = memo(function NFTCardWithVirtualization({ 
+  isPriority, 
+  isVisible,
+  ...card 
+}: NFTCardWithVirtualizationProps) {
+  return isVisible || isPriority ? (
+    <NFTCard {...card} priority={isPriority} />
+  ) : (
+    <div className="aspect-[230/320] bg-goinft-darker/30 rounded-lg animate-pulse"></div>
+  );
+});
+
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
+  const [visibleCardIndexes, setVisibleCardIndexes] = useState<Set<number>>(new Set([0, 1])); // Primeiros 2 cards visíveis por padrão
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   // Use useCallback for event handlers
   const handleImageLoad = useCallback(() => {
@@ -58,6 +78,44 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const handleBackClick = useCallback(() => {
     onBack();
   }, [onBack]);
+  
+  // Implementar observador de interseção para virtualizar os cards
+  useEffect(() => {
+    if (!cardsContainerRef.current) return;
+    
+    const cardElements = cardsContainerRef.current.querySelectorAll('.nft-card-container');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const newVisibleIndexes = new Set(visibleCardIndexes);
+        
+        entries.forEach(entry => {
+          const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+          
+          if (entry.isIntersecting) {
+            newVisibleIndexes.add(index);
+            
+            // Pre-load next two cards
+            if (index + 1 < cards.length) newVisibleIndexes.add(index + 1);
+            if (index + 2 < cards.length) newVisibleIndexes.add(index + 2);
+          }
+        });
+        
+        setVisibleCardIndexes(newVisibleIndexes);
+      },
+      {
+        rootMargin: '100px 0px 100px 0px',
+        threshold: 0.1
+      }
+    );
+    
+    cardElements.forEach(element => {
+      observer.observe(element);
+    });
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, [cards.length]);
 
   // Use useMemo for derived values that don't need to be recalculated on every render
   const placeholderCards = useMemo(() => 
@@ -143,13 +201,15 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         </div>
       </div>
       
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {preparedCards.map((card) => (
-          <NFTCard 
-            key={card.id} 
-            {...card} 
-            priority={card.isPriority}
-          />
+      <div ref={cardsContainerRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {preparedCards.map((card, index) => (
+          <div key={card.id} className="nft-card-container" data-index={index}>
+            <NFTCardWithVirtualization 
+              {...card} 
+              isPriority={card.isPriority}
+              isVisible={visibleCardIndexes.has(index)}
+            />
+          </div>
         ))}
         
         {placeholderCards}

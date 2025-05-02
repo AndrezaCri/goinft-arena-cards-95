@@ -48,31 +48,57 @@ interface ExperienceCardProps {
     date: string;
   };
   isPriority: boolean;
+  onVisible?: () => void;
 }
 
 // Componente de Card de Experiência memoizado
-const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }: ExperienceCardProps) {
-  // Using useCallback for any event handlers (if we had any)
-  const handleCardClick = useCallback(() => {
-    // Handle click event if needed
-  }, []);
+const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, onVisible }: ExperienceCardProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Use intersection observer to detect when card is visible
+  useEffect(() => {
+    if (!cardRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+          if (onVisible) onVisible();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '100px'
+      }
+    );
+    
+    observer.observe(cardRef.current);
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, [isVisible, onVisible]);
 
   return (
     <Card 
+      ref={cardRef}
       key={experience.id} 
       className="group bg-goinft-darker border-neon-purple/20 hover:border-neon-purple/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-neon-purple/20"
     >
       <CardHeader className="p-0">
         <AspectRatio ratio={16 / 9}>
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-t-lg">
-            <OptimizedImage
-              src={experience.thumbnailImage}
-              alt={experience.title}
-              className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
-              width="400"
-              height="225"
-              priority={isPriority}
-            />
+            {(isPriority || isVisible) && (
+              <OptimizedImage
+                src={experience.thumbnailImage}
+                alt={experience.title}
+                className="object-contain w-full h-full max-h-56 group-hover:scale-105 transition-transform duration-300"
+                width="400"
+                height="225"
+                priority={isPriority}
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-goinft-darker to-transparent opacity-60" />
           </div>
         </AspectRatio>
@@ -94,6 +120,8 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority }: 
 });
 
 const Experiences = () => {
+  const [visibleExperienceIds, setVisibleExperienceIds] = useState<Set<number>>(new Set());
+
   // Using useMemo for derived state to prevent re-calculations
   const preparedExperiences = useMemo(() => {
     return experiences.map((exp, index) => ({
@@ -102,9 +130,9 @@ const Experiences = () => {
     }));
   }, []); // Empty dependency array since experiences is static
   
-  // Using useCallback for any event handlers (if we had any)
-  const handleExperienceClick = useCallback((id: number) => {
-    // Handle click event if needed
+  // Using useCallback for any event handlers
+  const handleExperienceVisible = useCallback((id: number) => {
+    setVisibleExperienceIds(prev => new Set(prev).add(id));
   }, []);
 
   return (
@@ -123,7 +151,8 @@ const Experiences = () => {
           <ExperienceCard 
             key={experience.id} 
             experience={experience} 
-            isPriority={experience.isPriority} 
+            isPriority={experience.isPriority}
+            onVisible={() => handleExperienceVisible(experience.id)}
           />
         ))}
       </div>

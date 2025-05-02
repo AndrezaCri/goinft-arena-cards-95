@@ -1,5 +1,5 @@
 
-import { useState, useCallback, useMemo, Suspense } from "react";
+import { useState, useCallback, useMemo, Suspense, memo } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AlbumGrid } from "@/components/albums/AlbumGrid";
 import { AlbumDetails } from "@/components/albums/AlbumDetails";
@@ -11,21 +11,29 @@ import { useRewards } from "@/contexts/RewardsContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Componente de fallback para carregamento
-const LoadingSkeleton = () => (
-  <div className="space-y-4">
-    <Skeleton className="h-64 w-full rounded-xl" />
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <Skeleton key={i} className="h-64 w-full rounded-xl" />
-      ))}
+const LoadingSkeleton = memo(function LoadingSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-64 w-full rounded-xl" />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <Skeleton key={i} className="h-64 w-full rounded-xl" />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+});
 
 const Albums = () => {
   const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("all-albums");
   const { completedAlbums } = useRewards();
+  const [isClientSide, setIsClientSide] = useState(false);
+
+  // Habilitar renderização apenas do lado do cliente para evitar problemas de hidratação
+  useEffect(() => {
+    setIsClientSide(true);
+  }, []);
 
   // Otimizando handlers com useCallback
   const handleAlbumClick = useCallback((albumId: string) => {
@@ -45,7 +53,9 @@ const Albums = () => {
   );
 
   // Renderizando condicionalmente os componentes pesados apenas quando necessário
-  const renderActiveContent = () => {
+  const renderActiveContent = useCallback(() => {
+    if (!isClientSide) return <LoadingSkeleton />;
+
     if (activeTab === "all-albums") {
       return (
         <AlbumGrid 
@@ -84,7 +94,7 @@ const Albums = () => {
         unlockedAlbums={completedAlbums} 
       />
     );
-  };
+  }, [activeTab, selectedAlbum, currentAlbum, handleAlbumClick, handleBackToAlbums, completedAlbums, isClientSide]);
 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
