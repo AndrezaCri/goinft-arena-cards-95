@@ -1,3 +1,4 @@
+
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
 import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
@@ -154,8 +155,14 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               priority={true}
               objectFit="cover"
             />
-            {/* Gradient overlay that covers the full height of the image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
+            {/* Ajustado para ter a altura igual à da imagem (230px) */}
+            <div className="absolute bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg" 
+              style={{ 
+                top: 0, 
+                left: 0, 
+                right: 0, 
+                height: '230px' 
+              }}></div>
           </div>
           
           <div className="flex-1">
