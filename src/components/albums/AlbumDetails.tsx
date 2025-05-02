@@ -1,4 +1,3 @@
-
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
 import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
@@ -163,7 +162,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               )}
               onLoad={handleImageLoad}
               width="175"
-              height="230"
+              height="175"
               priority={true}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
