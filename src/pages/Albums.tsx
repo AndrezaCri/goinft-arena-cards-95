@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useMemo, Suspense, memo, useEffect } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AlbumGrid } from "@/components/albums/AlbumGrid";
@@ -15,7 +16,7 @@ const LoadingSkeleton = memo(function LoadingSkeleton() {
     <div className="space-y-4">
       <Skeleton className="h-64 w-full rounded-xl" />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {Array.from({ length: 8 }).map((_, i) => (
+        {Array.from({ length: 4 }).map((_, i) => ( // Reduzido de 8 para 4 skeletons
           <Skeleton key={i} className="h-64 w-full rounded-xl" />
         ))}
       </div>
@@ -28,6 +29,7 @@ const Albums = () => {
   const [activeTab, setActiveTab] = useState("all-albums");
   const { completedAlbums } = useRewards();
   const [isClientSide, setIsClientSide] = useState(false);
+  const [isAlbumDetailsLoaded, setIsAlbumDetailsLoaded] = useState(false);
 
   // Habilitar renderização apenas do lado do cliente para evitar problemas de hidratação
   useEffect(() => {
@@ -38,6 +40,8 @@ const Albums = () => {
   const handleAlbumClick = useCallback((albumId: string) => {
     setSelectedAlbum(albumId);
     setActiveTab("album-view");
+    // Resetar o estado de carregamento quando mudar de álbum
+    setIsAlbumDetailsLoaded(false);
   }, []);
 
   const handleBackToAlbums = useCallback(() => {
@@ -50,6 +54,18 @@ const Albums = () => {
     albums.find(a => a.id === selectedAlbum), 
     [selectedAlbum]
   );
+
+  // Carregamento em segundo plano de detalhes do álbum
+  useEffect(() => {
+    if (currentAlbum && !isAlbumDetailsLoaded) {
+      // Simular carregamento com um pequeno atraso
+      const timer = setTimeout(() => {
+        setIsAlbumDetailsLoaded(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [currentAlbum, isAlbumDetailsLoaded]);
 
   // Renderizando condicionalmente os componentes pesados apenas quando necessário
   const renderActiveContent = useCallback(() => {
@@ -68,11 +84,15 @@ const Albums = () => {
     if (activeTab === "album-view" && selectedAlbum && currentAlbum) {
       return (
         <Suspense fallback={<LoadingSkeleton />}>
-          <AlbumDetails 
-            album={currentAlbum}
-            cards={worldCupCards}
-            onBack={handleBackToAlbums}
-          />
+          {isAlbumDetailsLoaded ? (
+            <AlbumDetails 
+              album={currentAlbum}
+              cards={worldCupCards}
+              onBack={handleBackToAlbums}
+            />
+          ) : (
+            <LoadingSkeleton />
+          )}
         </Suspense>
       );
     }
@@ -93,17 +113,14 @@ const Albums = () => {
         unlockedAlbums={completedAlbums} 
       />
     );
-  }, [activeTab, selectedAlbum, currentAlbum, handleAlbumClick, handleBackToAlbums, completedAlbums, isClientSide]);
+  }, [activeTab, selectedAlbum, currentAlbum, handleAlbumClick, handleBackToAlbums, completedAlbums, isClientSide, isAlbumDetailsLoaded]);
 
+  // Simplifique o backdrop para reduzir a carga de renderização
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
       <div className="container mx-auto px-4 py-8">
         <div className="relative">
-          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-neon-purple/10 filter blur-[100px] animate-pulse"></div>
-            <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-neon-blue/10 filter blur-[100px] animate-pulse"></div>
-          </div>
-          
+          {/* Simplificado para apenas um elemento de fundo */}
           <div className="absolute inset-0 bg-circuit-bg opacity-5 z-0"></div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="relative z-10">

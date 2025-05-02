@@ -10,6 +10,7 @@ interface OptimizedImageProps {
   height?: string;
   priority?: boolean;
   onLoad?: () => void;
+  quality?: number; // Adicionado controle de qualidade
 }
 
 export const OptimizedImage = memo(function OptimizedImage({ 
@@ -19,7 +20,8 @@ export const OptimizedImage = memo(function OptimizedImage({
   width = "64",
   height = "64",
   priority = false,
-  onLoad
+  onLoad,
+  quality = 75 // Usando qualidade média por padrão
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
@@ -27,6 +29,24 @@ export const OptimizedImage = memo(function OptimizedImage({
   const imageRef = useRef<HTMLImageElement | null>(null);
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
+  
+  // Modificação para usar placeholders e imagens menores
+  const getOptimizedSrc = useCallback((originalSrc: string): string => {
+    if (!originalSrc) return originalSrc;
+    
+    // Se já for uma URL externa otimizada, não modificar
+    if (originalSrc.includes('unsplash.com') || originalSrc.includes('placeholder.com')) {
+      return originalSrc;
+    }
+    
+    // Para imagens locais, adicionar parâmetro de qualidade se for URL
+    if (originalSrc.startsWith('http')) {
+      const separator = originalSrc.includes('?') ? '&' : '?';
+      return `${originalSrc}${separator}q=${quality}&w=${parseInt(width) * 1.5}`;
+    }
+    
+    return originalSrc;
+  }, [width, quality]);
   
   // Cleanup function to prevent memory leaks
   useEffect(() => {
@@ -42,7 +62,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   useEffect(() => {
     // For priority images, load immediately
     if (priority && !imgSrc && src) {
-      setImgSrc(src);
+      setImgSrc(getOptimizedSrc(src));
       return;
     }
     
@@ -50,7 +70,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     if (!priority && !imgSrc && imageWrapperRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && isMounted.current) {
-          setImgSrc(src);
+          setImgSrc(getOptimizedSrc(src));
           observerRef.current?.disconnect();
         }
       }, {
@@ -67,7 +87,7 @@ export const OptimizedImage = memo(function OptimizedImage({
         observerRef.current.disconnect();
       }
     };
-  }, [priority, src, imgSrc]);
+  }, [priority, src, imgSrc, getOptimizedSrc]);
   
   // Optimizing callback function
   const handleImageLoad = useCallback(() => {
@@ -84,7 +104,7 @@ export const OptimizedImage = memo(function OptimizedImage({
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 2000); // 2 seconds max wait time (reduced from 3)
+      }, 1500); // 1.5 seconds max wait time (reduzido ainda mais)
       
       return () => clearTimeout(timeout);
     }

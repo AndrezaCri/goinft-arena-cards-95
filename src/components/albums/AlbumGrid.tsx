@@ -14,7 +14,7 @@ interface AlbumGridProps {
 export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlockedAlbums }: AlbumGridProps) {
   const isMobile = useIsMobile();
   const gridRef = useRef<HTMLDivElement>(null);
-  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1, 2, 3])); // Mostrar primeiros 4 por padrão
+  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1])); // Mostrar apenas 2 primeiros por padrão (reduzido)
   
   // Pré-processando os álbuns para evitar cálculos repetidos durante a renderização
   const processedAlbums = useMemo(() => 
@@ -23,7 +23,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
       return {
         ...album,
         isUnlocked,
-        isPriority: index === 0 || index === 1 // Apenas os dois primeiros álbuns são prioritários
+        isPriority: index === 0 // Apenas o primeiro álbum é prioritário (reduzido)
       };
     }),
     [albums, unlockedAlbums]
@@ -51,16 +51,20 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
           if (entry.isIntersecting) {
             newVisibleIndexes.add(index);
             
-            // Pre-load next two albums
+            // Pre-load apenas o próximo álbum (reduzido)
             if (index + 1 < processedAlbums.length) newVisibleIndexes.add(index + 1);
-            if (index + 2 < processedAlbums.length) newVisibleIndexes.add(index + 2);
+          } else {
+            // Remover álbuns que não estão visíveis para economizar memória
+            if (index !== 0 && !entry.isIntersecting) { // Mantenha sempre o primeiro
+              newVisibleIndexes.delete(index);
+            }
           }
         });
         
         setVisibleIndexes(newVisibleIndexes);
       },
       {
-        rootMargin: '100px 0px 100px 0px',
+        rootMargin: '50px 0px', // Reduzido para carregar somente quando estiver mais próximo
         threshold: 0.1
       }
     );
@@ -91,9 +95,9 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
               priority={album.isPriority}
             />
           )}
-          {/* Placeholder de tamanho fixo para álbuns não visíveis */}
+          {/* Placeholder menor e mais leve para álbuns não visíveis */}
           {!visibleIndexes.has(index) && (
-            <div className="bg-goinft-darker/30 rounded-xl w-[280px] mx-auto" style={{ aspectRatio: '230/320' }}></div>
+            <div className="bg-goinft-darker/30 rounded-xl w-[280px] mx-auto" style={{ height: '390px' }}></div>
           )}
         </div>
       ))}
