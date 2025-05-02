@@ -1,5 +1,5 @@
 
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface OptimizedImageProps {
@@ -24,19 +24,34 @@ export const OptimizedImage = memo(function OptimizedImage({
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
   
+  // Use useEffect com dependências corretas
   useEffect(() => {
+    let isMounted = true;
+    
     if (!priority && !imgSrc) {
-      // Pré-carregar imagens não prioritárias
-      const preloadImage = new Image();
-      preloadImage.src = src;
-      setImgSrc(src);
+      // Definir um timeout para carregar imagens não prioritárias de forma escalonada
+      const timeoutId = setTimeout(() => {
+        if (isMounted) {
+          setImgSrc(src);
+        }
+      }, 100); // Pequeno delay para escalonar carregamentos
+      
+      return () => {
+        clearTimeout(timeoutId);
+        isMounted = false;
+      };
     }
+    
+    return () => {
+      isMounted = false;
+    };
   }, [priority, src, imgSrc]);
   
-  const handleImageLoad = () => {
+  // Use useCallback para funções de evento
+  const handleImageLoad = useCallback(() => {
     setLoaded(true);
     if (onLoad) onLoad();
-  };
+  }, [onLoad]);
   
   return (
     <div className="relative w-full h-full">

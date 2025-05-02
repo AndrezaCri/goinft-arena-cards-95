@@ -1,7 +1,7 @@
 
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
@@ -13,6 +13,26 @@ interface AlbumDetailsProps {
 
 export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
   const [albumImageLoaded, setAlbumImageLoaded] = useState(false);
+
+  // Use useCallback para funções de evento
+  const handleImageLoad = useCallback(() => {
+    setAlbumImageLoaded(true);
+  }, []);
+
+  // Use useMemo para os placeholder cards
+  const placeholderCards = useMemo(() => 
+    Array.from({ length: 4 }).map((_, index) => (
+      <div 
+        key={`empty-${index}`} 
+        className="aspect-[230/320] rounded-xl border-2 border-dashed border-neon-purple/30 bg-goinft-card/50 flex items-center justify-center group hover:border-neon-purple/50 transition-colors duration-300"
+      >
+        <span className="text-white/30 font-orbitron group-hover:text-white/50 transition-colors duration-300">
+          Espaço Vazio
+        </span>
+      </div>
+    )),
+    []
+  );
 
   return (
     <>
@@ -33,7 +53,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
                 "w-full h-auto rounded-lg border border-neon-purple/30 transition-transform duration-300 group-hover:scale-[1.02]",
                 !albumImageLoaded && "opacity-0"
               )}
-              onLoad={() => setAlbumImageLoaded(true)}
+              onLoad={handleImageLoad}
               width="230"
               height="320"
               priority={true}
@@ -88,19 +108,14 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {cards.map((card, index) => (
-          <NFTCard key={card.id} {...card} priority={index < 4} /> // Prioriza os primeiros 4 cards
+          <NFTCard 
+            key={card.id} 
+            {...card} 
+            priority={index < 4} // Priorizar apenas os primeiros 4 cards para melhorar o carregamento
+          />
         ))}
         
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div 
-            key={`empty-${index}`} 
-            className="aspect-[230/320] rounded-xl border-2 border-dashed border-neon-purple/30 bg-goinft-card/50 flex items-center justify-center group hover:border-neon-purple/50 transition-colors duration-300"
-          >
-            <span className="text-white/30 font-orbitron group-hover:text-white/50 transition-colors duration-300">
-              Espaço Vazio
-            </span>
-          </div>
-        ))}
+        {placeholderCards}
       </div>
     </>
   );

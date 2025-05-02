@@ -1,4 +1,5 @@
 
+import { memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -11,24 +12,26 @@ interface NFTCardProps {
   rarity: "common" | "rare" | "epic" | "legendary";
   team: string;
   position: string;
-  isOwned?: boolean; // Changed from required to optional
+  isOwned?: boolean;
   onClick?: () => void;
   className?: string;
   priority?: boolean;
 }
 
-export function NFTCard({
+// Usando memo para evitar re-renderizações desnecessárias
+export const NFTCard = memo(function NFTCard({
   id,
   name,
   image,
   rarity,
   team,
   position,
-  isOwned = false, // Keep the default value
+  isOwned = false,
   onClick,
   className,
   priority = false,
 }: NFTCardProps) {
+  // Defina valores que não mudam fora do corpo do componente
   const rarityColors = {
     common: "bg-blue-500",
     rare: "bg-purple-500",
@@ -75,4 +78,4 @@ export function NFTCard({
       </div>
     </Card>
   );
-}
+});
