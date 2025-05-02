@@ -35,7 +35,7 @@ export const AlbumGrid = memo(function AlbumGrid({ albums, onAlbumClick, unlocke
   }, [onAlbumClick]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-6">
+    <div className="flex flex-wrap justify-center gap-4">
       {processedAlbums.map((album) => (
         <div 
           key={album.id}

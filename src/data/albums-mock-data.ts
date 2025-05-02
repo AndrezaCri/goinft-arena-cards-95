@@ -80,7 +80,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc1",
     name: "Palmeiras Fem",
-    image: "/lovable-uploads/a92218ae-3952-4fd1-83c0-443361b2838d.png",
+    image: "/lovable-uploads/0080bc04-5bbb-43d3-8bba-667ebdf80693.png", // Atualizado com a nova imagem Palmeiras neon verde
     rarity: "legendary",
     team: "Palmeiras",
     position: "Forward",
@@ -89,7 +89,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc2",
     name: "Portuguesa Fem",
-    image: "/lovable-uploads/6e6b2306-aa13-40ce-9639-95c59c83ea9c.png",
+    image: "/lovable-uploads/fc885b14-8717-4a8c-86aa-4a29e60b4828.png", // Atualizado com a nova imagem Portuguesa neon vermelha
     rarity: "epic",
     team: "Portuguesa",
     position: "Forward",
@@ -98,7 +98,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc3",
     name: "Santos Fem",
-    image: "/lovable-uploads/fd7ded3b-b6d9-4e5c-bff7-a86da3f01956.png",
+    image: "/lovable-uploads/229eaccc-a2ef-44cf-a6e8-c71f2e8f05dc.png", // Atualizado com a nova imagem Santos neon azul claro
     rarity: "legendary",
     team: "Santos",
     position: "Forward",
@@ -107,7 +107,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc4",
     name: "São Paulo Fem",
-    image: "/lovable-uploads/5dbf01f7-195f-419e-ae8f-6cbaf4da5276.png",
+    image: "/lovable-uploads/720352ca-7fba-4892-9bf5-bc3aff74f0b5.png", // Atualizado com a nova imagem São Paulo neon vermelha
     rarity: "epic",
     team: "São Paulo",
     position: "Forward",
@@ -116,7 +116,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc5",
     name: "Ferroviária Fem",
-    image: "/lovable-uploads/a4e016f1-6575-4096-9a6b-15d27a988dd8.png",
+    image: "/lovable-uploads/7271f199-6e1c-4d6f-8b6d-43c50a6081f1.png", // Atualizado com a nova imagem Ferroviária neon vermelha
     rarity: "rare",
     team: "Ferroviária",
     position: "Forward",
@@ -125,7 +125,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc6",
     name: "Corinthians Fem - Azul",
-    image: "/lovable-uploads/f9929074-04ed-4bb7-8be6-8ede5133f460.png",
+    image: "/lovable-uploads/9c6d96f4-1b53-403b-baa5-d6b8812d10ed.png", // Atualizado com a nova imagem Corinthians jogadora
     rarity: "rare",
     team: "Corinthians",
     position: "Forward",
@@ -134,7 +134,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc7",
     name: "Corinthians Fem - Roxo",
-    image: "/lovable-uploads/675d76af-fadf-439d-b9ad-748450ddc027.png",
+    image: "/lovable-uploads/17844654-5998-4c64-9dad-1cba342cba3e.png", // Atualizado com a nova imagem Corinthians neon roxo
     rarity: "rare",
     team: "Corinthians",
     position: "Forward",
@@ -152,7 +152,7 @@ export const worldCupCards: AlbumCard[] = [
   {
     id: "wc9",
     name: "Corinthians Fem - Mundial",
-    image: "/lovable-uploads/e705d9ff-bc2e-4ace-a4e6-ef2511d34a56.png",
+    image: "/lovable-uploads/0fa8db7a-a961-4216-a60b-36b363c4e570.png", // Atualizado com a nova imagem Corinthians neon azul
     rarity: "legendary",
     team: "Corinthians",
     position: "Forward",
