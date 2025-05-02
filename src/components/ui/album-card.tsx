@@ -1,9 +1,9 @@
 
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Lock } from "lucide-react";
-import { useState } from "react";
 import { OptimizedImage } from "@/components/rewards/OptimizedImage";
 
 interface AlbumCardProps {

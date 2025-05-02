@@ -1,7 +1,7 @@
 
 import { AlbumCard } from "@/components/ui/album-card";
 import type { Album as AlbumType } from "@/types/album";
-import { memo, useMemo, useCallback, useRef, useState, useEffect } from "react";
+import React, { memo, useMemo, useCallback, useRef, useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AlbumGridProps {
