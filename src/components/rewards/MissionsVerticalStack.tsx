@@ -1,5 +1,6 @@
 
 import { MissionCard } from "./MissionCard";
+import { memo } from "react";
 
 interface MissionsVerticalStackProps {
   missions: Array<{
@@ -14,7 +15,7 @@ interface MissionsVerticalStackProps {
   startIndex: number;
 }
 
-export function MissionsVerticalStack({
+export const MissionsVerticalStack = memo(function MissionsVerticalStack({
   missions,
   completedMissions,
   onCompleteMission,
@@ -49,4 +50,4 @@ export function MissionsVerticalStack({
       })}
     </>
   );
-}
+});

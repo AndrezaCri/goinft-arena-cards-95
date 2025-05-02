@@ -3,7 +3,7 @@ import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { memo } from "react";
 import { OptimizedImage } from "./OptimizedImage";
 
-export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
+export const RankRewards = memo(function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
   // Image sources
   const rankImages = [
     "3ed65cb1-f49f-4076-be44-44a53cff5153.png", 
@@ -61,4 +61,4 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
       ))}
     </div>
   );
-}
+});
