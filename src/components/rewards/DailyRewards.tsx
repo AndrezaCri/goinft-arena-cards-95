@@ -3,50 +3,36 @@ import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
 import { useState, memo, useMemo, useEffect } from "react";
-import { OptimizedImage } from "./OptimizedImage";
+import { OptimizedImage, preloadCriticalImages } from "./OptimizedImage";
 import { TouchpadIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+// Define all reward images in a module-level constant so they can be preloaded immediately
+const REWARD_IMAGES = [
+  "/lovable-uploads/fec225a0-7769-4430-9324-ff998d02cff7.png", // Updated with Corinthians NFT image
+  "/lovable-uploads/d7073944-876d-4bf4-a27f-37856e26104f.png", // Updated with Palmeiras NFT image
+  "/lovable-uploads/7a2ce23a-6caa-4056-9830-219bcbc3a2e3.png", // Updated with new Corinthians NFT image
+  "/lovable-uploads/f5ca40fa-5902-446b-803a-01f463e6e203.png", // Updated with São Paulo NFT image
+  "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
+  "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
+  "/lovable-uploads/506f8852-1303-4875-ae3d-6068e947cb1d.png"
+];
+
+// Start preloading immediately when this module is imported
+preloadCriticalImages(REWARD_IMAGES.slice(0, 5));
+
 export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { loginStreak, handleDailyLogin } = useRewards();
-  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
   const isMobile = useIsMobile();
 
   // Predefine image sources to prevent recalculation on render
-  const rewardImages = useMemo(() => [
-    "/lovable-uploads/fec225a0-7769-4430-9324-ff998d02cff7.png", // Updated with Corinthians NFT image
-    "/lovable-uploads/d7073944-876d-4bf4-a27f-37856e26104f.png", // Updated with Palmeiras NFT image
-    "/lovable-uploads/7a2ce23a-6caa-4056-9830-219bcbc3a2e3.png", // Updated with new Corinthians NFT image
-    "/lovable-uploads/f5ca40fa-5902-446b-803a-01f463e6e203.png", // Updated with São Paulo NFT image
-    "/lovable-uploads/c7c901dd-d2db-46de-9129-42fb4c41c341.png",
-    "/lovable-uploads/1cb631c9-795d-4a11-8750-3e34509f594d.png",
-    "/lovable-uploads/506f8852-1303-4875-ae3d-6068e947cb1d.png"
-  ], []);
+  const rewardImages = useMemo(() => REWARD_IMAGES, []);
 
-  // Preload key images on component mount
+  // Preload all images on component mount
   useEffect(() => {
-    const preloadImages = async () => {
-      // Prioritize first 5 images for preloading
-      const imagesToPreload = rewardImages.slice(0, 5);
-      
-      // Only preload images we haven't loaded yet
-      const newImagesToLoad = imagesToPreload.filter(img => !preloadedImages.includes(img));
-      
-      if (newImagesToLoad.length > 0) {
-        await Promise.all(newImagesToLoad.map(src => {
-          return new Promise<void>((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve();
-            img.src = src;
-          });
-        }));
-        
-        setPreloadedImages(prev => [...prev, ...newImagesToLoad]);
-      }
-    };
-    
-    preloadImages();
-  }, [rewardImages, preloadedImages]);
+    // Preload remaining images (6-7) once the component is mounted
+    preloadCriticalImages(rewardImages.slice(5));
+  }, [rewardImages]);
 
   // Define neon colors for each card
   const neonColors = [
@@ -92,7 +78,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                       alt={`Reward ${index + 1}`}
                       className="w-full h-full p-1"
                       objectFit="contain"
-                      priority={true} // Prioritize first 5 images
+                      priority={true} // Prioritize all first 5 images
                       containerClassName="flex items-center justify-center"
                     />
                     <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
@@ -110,11 +96,11 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                   isHolographic
                   glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
                 >
-                  <img 
+                  <OptimizedImage 
                     src={index === 5 ? rewardImages[5] : rewardImages[6]}
                     alt={`NFT Reward ${index + 1}`}
                     className="w-full h-full object-cover"
-                    loading="lazy"
+                    priority={false}
                   />
                 </NFTFloatingCard>
               )}

@@ -2,21 +2,29 @@
 import { useRewards } from "@/contexts/RewardsContext";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { OptimizedImage } from "./OptimizedImage";
+import { OptimizedImage, preloadCriticalImages } from "./OptimizedImage";
 
-export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
+// Define all album images in a module-level constant
+const ALBUM_IMAGES = [
+  "/lovable-uploads/f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png", 
+  "/lovable-uploads/9832dfdf-6d17-4325-8a48-c213e974b590.png", 
+  "/lovable-uploads/d9140fa2-0a1d-43c3-b0a7-58d2465593b5.png", 
+  "/lovable-uploads/fa413546-ff6e-44d1-a74a-edfe85745477.png"
+];
+
+// Start preloading immediately when this module is imported
+preloadCriticalImages(ALBUM_IMAGES.slice(0, 2));
+
+export const AlbumRewards = memo(function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
   const { completedAlbums, handleCompleteAlbum } = useRewards();
   const isMobile = useIsMobile();
 
-  // Image sources
-  const albumImages = [
-    "f71a92ea-61b6-45ba-9ec3-f8dcddc3e308.png", 
-    "9832dfdf-6d17-4325-8a48-c213e974b590.png", 
-    "d9140fa2-0a1d-43c3-b0a7-58d2465593b5.png", 
-    "fa413546-ff6e-44d1-a74a-edfe85745477.png"
-  ];
+  // Preload the rest of the images when component mounts
+  useEffect(() => {
+    preloadCriticalImages(ALBUM_IMAGES.slice(2));
+  }, []);
 
   return (
     <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-2 md:grid-cols-4'} gap-4 mt-6 justify-items-center`}>
@@ -45,12 +53,12 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
             >
               <div className="absolute inset-0 flex items-center justify-center">
                 <OptimizedImage 
-                  src={`/lovable-uploads/${albumImages[index]}`}
+                  src={`/lovable-uploads/${ALBUM_IMAGES[index].split('/').pop()}`}
                   alt={`Álbum ${index + 1}`}
                   className="h-32 w-32 object-contain"
                   width="128"
                   height="128"
-                  priority={index === 0} // Priorizar o primeiro álbum
+                  priority={index < 2} // Prioritize first two albums
                 />
               </div>
             </NFTFloatingCard>
@@ -81,4 +89,4 @@ export function AlbumRewards({ visibleRewards }: { visibleRewards: number[] }) {
       })}
     </div>
   );
-}
+});

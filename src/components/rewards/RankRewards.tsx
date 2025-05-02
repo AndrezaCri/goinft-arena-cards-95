@@ -1,16 +1,19 @@
 
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
-import { memo } from "react";
-import { OptimizedImage } from "./OptimizedImage";
+import { memo, useEffect } from "react";
+import { OptimizedImage, preloadCriticalImages } from "./OptimizedImage";
 
-export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
-  // Image sources
-  const rankImages = [
-    "3ed65cb1-f49f-4076-be44-44a53cff5153.png", 
-    "784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png", 
-    "83efb069-d2ec-496b-81f2-330f7015674f.png"
-  ];
+// Define all rank images in a module-level constant
+const RANK_IMAGES = [
+  "/lovable-uploads/3ed65cb1-f49f-4076-be44-44a53cff5153.png", 
+  "/lovable-uploads/784d0ec2-86ff-4108-b22f-d1e611e0c4cc.png", 
+  "/lovable-uploads/83efb069-d2ec-496b-81f2-330f7015674f.png"
+];
 
+// Start preloading immediately
+preloadCriticalImages(RANK_IMAGES);
+
+export const RankRewards = memo(function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
       {Array.from({ length: 3 }).map((_, index) => (
@@ -33,7 +36,7 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="h-40 w-40 flex items-center justify-center">
                   <OptimizedImage 
-                    src={`/lovable-uploads/${rankImages[index]}`} 
+                    src={`/lovable-uploads/${RANK_IMAGES[index].split('/').pop()}`} 
                     alt={`Recompensa ${index + 1}`}
                     className="h-40 w-40"
                     objectFit="contain"
@@ -63,4 +66,4 @@ export function RankRewards({ visibleRewards }: { visibleRewards: number[] }) {
       ))}
     </div>
   );
-}
+});

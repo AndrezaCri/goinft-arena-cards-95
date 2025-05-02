@@ -10,26 +10,31 @@ interface RewardsHologramProps {
   currentTab: "daily" | "weekly" | "albums" | "rank";
 }
 
+// Define number of rewards per tab at module level for better optimizations
+const NUM_REWARDS_MAP = {
+  daily: 7,
+  weekly: 5,
+  albums: 4,
+  rank: 3
+};
+
 export const RewardsHologram = memo(function RewardsHologram({ currentTab }: RewardsHologramProps) {
-  // Memoize the number of rewards for each tab to prevent recalculation
-  const numRewardsMap = useMemo(() => ({
-    daily: 7,
-    weekly: 5,
-    albums: 4,
-    rank: 3
-  }), []);
+  // Use module-level constant instead of recreating it on each render
+  const numRewardsMap = useMemo(() => NUM_REWARDS_MAP, []);
   
-  // Show all rewards immediately for better performance
-  const [visibleRewards, setVisibleRewards] = useState<number[]>([]);
+  // Create all visible rewards arrays upfront to prevent recreations
+  const allVisibleRewardsMap = useMemo(() => ({
+    daily: Array.from({ length: numRewardsMap.daily }, (_, i) => i),
+    weekly: Array.from({ length: numRewardsMap.weekly }, (_, i) => i),
+    albums: Array.from({ length: numRewardsMap.albums }, (_, i) => i),
+    rank: Array.from({ length: numRewardsMap.rank }, (_, i) => i),
+  }), [numRewardsMap]);
   
-  // Update visible rewards when tab changes
-  useEffect(() => {
-    const numRewards = numRewardsMap[currentTab];
-    // Create an array with all indices visible
-    const allRewards = Array.from({ length: numRewards }, (_, i) => i);
-    // Show all rewards immediately
-    setVisibleRewards(allRewards);
-  }, [currentTab, numRewardsMap]);
+  // Use the pre-calculated visible rewards based on current tab
+  const visibleRewards = useMemo(() => 
+    allVisibleRewardsMap[currentTab], 
+    [currentTab, allVisibleRewardsMap]
+  );
   
   // Memoize title to prevent re-rendering
   const title = useMemo(() => (

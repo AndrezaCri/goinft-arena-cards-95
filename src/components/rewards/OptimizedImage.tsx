@@ -18,6 +18,19 @@ interface OptimizedImageProps {
 // Global image cache to prevent reloading the same images
 const imageCache = new Map<string, boolean>();
 
+// Initialize a preloader for critical images
+const preloadCriticalImages = (sources: string[]) => {
+  sources.forEach(src => {
+    if (!imageCache.has(src)) {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        imageCache.set(src, true);
+      };
+    }
+  });
+};
+
 export const OptimizedImage = memo(function OptimizedImage({ 
   src, 
   alt, 
@@ -43,7 +56,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     }[objectFit];
   }, [objectFit]);
   
-  // Optimized image loading effect
+  // Optimized image loading effect with eager loading for priority images
   useEffect(() => {
     if (!src) return;
     
@@ -57,9 +70,13 @@ export const OptimizedImage = memo(function OptimizedImage({
     setLoaded(false);
     setError(false);
     
-    // Preload the image
+    // Create a new image element to preload
     const img = new Image();
-    img.src = src;
+    
+    // If priority is true, use fetchpriority attribute
+    if (priority) {
+      img.fetchPriority = "high";
+    }
     
     const handleLoad = () => {
       setLoaded(true);
@@ -75,11 +92,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     // Add event listeners
     img.onload = handleLoad;
     img.onerror = handleError;
-    
-    // If priority is true, we use the Image() API to preload
-    if (priority) {
-      // The browser will load this with higher priority
-    }
+    img.src = src;
     
     // Clean up on unmount or src change
     return () => {
@@ -118,11 +131,15 @@ export const OptimizedImage = memo(function OptimizedImage({
           onLoad={handleImageLoad}
           onError={handleImageError}
           loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
           width={width}
           height={height}
-          decoding="async"
+          decoding={priority ? "sync" : "async"}
         />
       )}
     </div>
   );
 });
+
+// Export the preload function for direct use in other components
+export { preloadCriticalImages };
