@@ -94,9 +94,9 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, on
               <OptimizedImage
                 src={experience.thumbnailImage}
                 alt={experience.title}
-                className="object-contain w-full h-full max-h-40 group-hover:scale-105 transition-transform duration-300"
-                width="200"
-                height="112"
+                className="object-contain w-full h-full max-h-32 group-hover:scale-105 transition-transform duration-300"
+                width="180"
+                height="100"
                 priority={isPriority}
               />
             )}
@@ -147,15 +147,17 @@ const Experiences = () => {
         Minhas Experiências
       </CyberpunkHeading>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
-        {preparedExperiences.map((experience) => (
-          <ExperienceCard 
-            key={experience.id} 
-            experience={experience} 
-            isPriority={experience.isPriority}
-            onVisible={() => handleExperienceVisible(experience.id)}
-          />
-        ))}
+      <div className="flex justify-center">
+        <div className="flex gap-6">
+          {preparedExperiences.map((experience) => (
+            <ExperienceCard 
+              key={experience.id} 
+              experience={experience} 
+              isPriority={experience.isPriority}
+              onVisible={() => handleExperienceVisible(experience.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
