@@ -31,13 +31,13 @@ export const RankRewards = memo(function RankRewards({ visibleRewards }: { visib
               }
             >
               <div className="flex items-center justify-center w-full h-full">
-                <OptimizedImage 
+                {/* Use regular img tag instead of OptimizedImage to maintain original implementation */}
+                <img 
                   src={`/lovable-uploads/${rankImages[index]}`} 
                   alt={`Recompensa ${index + 1}`}
                   className="h-40 w-40 object-contain"
                   width="160"
                   height="160"
-                  priority={true} // Prioritize all rank images for immediate loading
                 />
               </div>
             </NFTFloatingCard>

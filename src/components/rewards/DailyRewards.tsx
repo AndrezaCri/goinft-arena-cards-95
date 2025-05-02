@@ -1,4 +1,3 @@
-
 import { NFTFloatingCard } from "@/components/ui/nft-floating-card";
 import { CyberpunkButton } from "@/components/ui/cyberpunk-button";
 import { useRewards } from "@/contexts/RewardsContext";
@@ -28,7 +27,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
     const preloadImages = async () => {
       // Only preload visible images with priority to the one for current streak
       const imagesToPreload = visibleRewards
-        .filter(idx => idx <= loginStreak + 1) // Current day and next day
+        .filter(idx => idx <= loginStreak + 1 && idx < 5) // Current day and next day, but only for the first 5 images
         .map(idx => rewardImages[idx % rewardImages.length]);
       
       // Only preload images we haven't loaded yet
@@ -104,6 +103,7 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                   </div>
                 </div>
               ) : (
+                // For images 6 and 7, use the NFTFloatingCard without OptimizedImage to keep as they were
                 <NFTFloatingCard 
                   className="h-full w-full flex items-center justify-center" 
                   size="sm" 
@@ -111,11 +111,11 @@ export const DailyRewards = memo(function DailyRewards({ visibleRewards }: { vis
                   glowColor={index === 6 ? "rgba(255, 113, 225, 0.8)" : "rgba(155, 135, 245, 0.6)"}
                 >
                   <div className="flex items-center justify-center w-full h-full">
-                    <OptimizedImage 
+                    {/* Use regular img tag for days 6 and 7 as per original implementation */}
+                    <img 
                       src={index === 5 ? rewardImages[5] : rewardImages[6]}
                       alt={`NFT Reward ${index + 1}`}
                       className="w-full h-full object-contain p-2"
-                      priority={index === 5 || index === 6}
                     />
                   </div>
                 </NFTFloatingCard>
