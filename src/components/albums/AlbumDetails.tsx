@@ -1,3 +1,4 @@
+
 import { NFTCard } from "@/components/ui/nft-card";
 import type { Album, AlbumCard } from "@/types/album";
 import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
@@ -156,7 +157,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
         <div className="flex flex-col sm:flex-row gap-6 relative z-10">
           <div className="w-full sm:w-44 relative group">
             {!albumImageLoaded && (
-              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ aspectRatio: '3/4' }}></div>
+              <div className="w-full h-full absolute inset-0 bg-goinft-darker animate-pulse rounded-lg" style={{ height: '230px' }}></div>
             )}
             <OptimizedImage 
               src={album.coverImage} 
@@ -167,7 +168,7 @@ export function AlbumDetails({ album, cards, onBack }: AlbumDetailsProps) {
               )}
               onLoad={handleImageLoad}
               width="175"
-              height="175"
+              height="230"
               priority={true}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-lg"></div>
