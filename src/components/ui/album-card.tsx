@@ -36,7 +36,7 @@ export function AlbumCard({
   return (
     <Card
       className={cn(
-        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[280px] mx-auto",
+        "relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 transform w-[260px] mx-auto", // Reduced width from 280px to 260px
         "bg-goinft-card border-none hover:shadow-lg",
         !locked && "hover:scale-105",
         className
@@ -56,10 +56,10 @@ export function AlbumCard({
             !imageLoaded && "opacity-0"
           )}
           onLoad={() => setImageLoaded(true)}
-          width="200" // Reduzido de 280
-          height="278" // Reduzido proporcionalmente
+          width="120" // Dramatically reduced from 200 to 120
+          height="167" // Proportionally reduced
           priority={priority}
-          quality={60} // Qualidade reduzida para melhor desempenho
+          quality={30} // Further reduced quality for better performance
         />
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

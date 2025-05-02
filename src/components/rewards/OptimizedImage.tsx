@@ -10,7 +10,7 @@ interface OptimizedImageProps {
   height?: string;
   priority?: boolean;
   onLoad?: () => void;
-  quality?: number; // Adicionado controle de qualidade
+  quality?: number;
 }
 
 export const OptimizedImage = memo(function OptimizedImage({ 
@@ -21,7 +21,7 @@ export const OptimizedImage = memo(function OptimizedImage({
   height = "64",
   priority = false,
   onLoad,
-  quality = 75 // Usando qualidade média por padrão
+  quality = 40 // Reduced quality from 75 to 40
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(priority ? src : null);
@@ -30,25 +30,31 @@ export const OptimizedImage = memo(function OptimizedImage({
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const isMounted = useRef(true);
   
-  // Modificação para usar placeholders e imagens menores
+  // Optimize image source - reduce size aggressively
   const getOptimizedSrc = useCallback((originalSrc: string): string => {
     if (!originalSrc) return originalSrc;
     
-    // Se já for uma URL externa otimizada, não modificar
-    if (originalSrc.includes('unsplash.com') || originalSrc.includes('placeholder.com')) {
+    // For external images, use a tiny placeholder
+    if (originalSrc.includes('unsplash.com')) {
+      return originalSrc.replace(/w=\d+/, 'w=100').replace(/q=\d+/, 'q=30');
+    }
+    
+    if (originalSrc.includes('placeholder.com')) {
       return originalSrc;
     }
     
-    // Para imagens locais, adicionar parâmetro de qualidade se for URL
+    // For other URLs, add quality params
     if (originalSrc.startsWith('http')) {
       const separator = originalSrc.includes('?') ? '&' : '?';
-      return `${originalSrc}${separator}q=${quality}&w=${parseInt(width) * 1.5}`;
+      // Reduce requested width dramatically to improve load times
+      const requestedWidth = Math.min(parseInt(width), 150); // Cap at 150px
+      return `${originalSrc}${separator}q=${quality}&w=${requestedWidth}`;
     }
     
     return originalSrc;
   }, [width, quality]);
   
-  // Cleanup function to prevent memory leaks
+  // Cleanup function
   useEffect(() => {
     return () => {
       isMounted.current = false;
@@ -58,15 +64,15 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, []);
   
-  // Implementing lazy loading with Intersection Observer
+  // Use Intersection Observer for extreme lazy loading
   useEffect(() => {
-    // For priority images, load immediately
+    // Load priority images immediately but with optimized source
     if (priority && !imgSrc && src) {
       setImgSrc(getOptimizedSrc(src));
       return;
     }
     
-    // For non-priority images, use Intersection Observer
+    // For non-priority images, use more aggressive Intersection Observer
     if (!priority && !imgSrc && imageWrapperRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && isMounted.current) {
@@ -74,14 +80,14 @@ export const OptimizedImage = memo(function OptimizedImage({
           observerRef.current?.disconnect();
         }
       }, {
-        rootMargin: '200px', // Preload when within 200px distance
-        threshold: 0.01
+        rootMargin: '100px', // Reduced from 200px to 100px for more just-in-time loading
+        threshold: 0.1 // Increased threshold so image loads when more visible
       });
       
       observerRef.current.observe(imageWrapperRef.current);
     }
     
-    // Cleanup when component unmounts or src changes
+    // Cleanup
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
@@ -89,7 +95,7 @@ export const OptimizedImage = memo(function OptimizedImage({
     };
   }, [priority, src, imgSrc, getOptimizedSrc]);
   
-  // Optimizing callback function
+  // Handle image load
   const handleImageLoad = useCallback(() => {
     if (isMounted.current) {
       setLoaded(true);
@@ -97,14 +103,14 @@ export const OptimizedImage = memo(function OptimizedImage({
     }
   }, [onLoad]);
   
-  // Remove skeleton after a maximum time
+  // Force skeleton to disappear after a very short time
   useEffect(() => {
     if (!loaded && imgSrc) {
       const timeout = setTimeout(() => {
         if (isMounted.current) {
           setLoaded(true);
         }
-      }, 1500); // 1.5 seconds max wait time (reduzido ainda mais)
+      }, 800); // Further reduced from 1500ms to 800ms
       
       return () => clearTimeout(timeout);
     }

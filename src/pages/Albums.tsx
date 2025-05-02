@@ -10,14 +10,14 @@ import type { Album } from "@/types/album";
 import { useRewards } from "@/contexts/RewardsContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Componente de fallback para carregamento
+// Lightweight loading skeleton
 const LoadingSkeleton = memo(function LoadingSkeleton() {
   return (
     <div className="space-y-4">
-      <Skeleton className="h-64 w-full rounded-xl" />
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {Array.from({ length: 4 }).map((_, i) => ( // Reduzido de 8 para 4 skeletons
-          <Skeleton key={i} className="h-64 w-full rounded-xl" />
+      <Skeleton className="h-40 w-full rounded-xl" /> {/* Reduced height from h-64 to h-40 */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4"> {/* Reduced from md:grid-cols-4 lg:grid-cols-5 to keep it simpler */}
+        {Array.from({ length: 2 }).map((_, i) => ( // Reduced from 4 to 2 skeletons
+          <Skeleton key={i} className="h-40 w-full rounded-xl" /> // Reduced height from h-64 to h-40
         ))}
       </div>
     </div>
@@ -31,16 +31,15 @@ const Albums = () => {
   const [isClientSide, setIsClientSide] = useState(false);
   const [isAlbumDetailsLoaded, setIsAlbumDetailsLoaded] = useState(false);
 
-  // Habilitar renderização apenas do lado do cliente para evitar problemas de hidratação
+  // Only render on client-side to avoid hydration issues
   useEffect(() => {
     setIsClientSide(true);
   }, []);
 
-  // Otimizando handlers com useCallback
+  // Optimized handlers
   const handleAlbumClick = useCallback((albumId: string) => {
     setSelectedAlbum(albumId);
     setActiveTab("album-view");
-    // Resetar o estado de carregamento quando mudar de álbum
     setIsAlbumDetailsLoaded(false);
   }, []);
 
@@ -49,25 +48,25 @@ const Albums = () => {
     setActiveTab("all-albums");
   }, []);
 
-  // Calculando currentAlbum com useMemo
+  // Memoized current album
   const currentAlbum = useMemo(() => 
     albums.find(a => a.id === selectedAlbum), 
     [selectedAlbum]
   );
 
-  // Carregamento em segundo plano de detalhes do álbum
+  // Simpler background loading for album details
   useEffect(() => {
     if (currentAlbum && !isAlbumDetailsLoaded) {
-      // Simular carregamento com um pequeno atraso
+      // Shorter timeout for quicker perceived loading
       const timer = setTimeout(() => {
         setIsAlbumDetailsLoaded(true);
-      }, 100);
+      }, 50);
       
       return () => clearTimeout(timer);
     }
   }, [currentAlbum, isAlbumDetailsLoaded]);
 
-  // Renderizando condicionalmente os componentes pesados apenas quando necessário
+  // Simplified content rendering
   const renderActiveContent = useCallback(() => {
     if (!isClientSide) return <LoadingSkeleton />;
 
@@ -115,13 +114,12 @@ const Albums = () => {
     );
   }, [activeTab, selectedAlbum, currentAlbum, handleAlbumClick, handleBackToAlbums, completedAlbums, isClientSide, isAlbumDetailsLoaded]);
 
-  // Simplifique o backdrop para reduzir a carga de renderização
+  // Very simplified backdrop 
   return (
     <div className="min-h-screen bg-goinft-dark pb-16">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6"> {/* Reduced padding from py-8 to py-6 */}
         <div className="relative">
-          {/* Simplificado para apenas um elemento de fundo */}
-          <div className="absolute inset-0 bg-circuit-bg opacity-5 z-0"></div>
+          {/* Removed background elements entirely for performance */}
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="relative z-10">
             <AlbumHeader 
