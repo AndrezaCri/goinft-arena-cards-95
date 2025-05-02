@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, memo, useMemo, useCallback } from 'react';
 import { CyberpunkHeading } from "@/components/ui/cyberpunk-heading";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -95,8 +94,8 @@ const ExperienceCard = memo(function ExperienceCard({ experience, isPriority, on
                 src={experience.thumbnailImage}
                 alt={experience.title}
                 className="object-contain w-full h-full max-h-32 group-hover:scale-105 transition-transform duration-300"
-                width="180"
-                height="100"
+                width="150"
+                height="111"
                 priority={isPriority}
               />
             )}
